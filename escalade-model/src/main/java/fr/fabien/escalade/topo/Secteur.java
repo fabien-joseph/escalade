@@ -1,18 +1,40 @@
 package fr.fabien.escalade.topo;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
 
 public class Secteur {
     // ----- Attributs
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long secteur_id;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "cotationmin")
     private String cotationMin;
+
+    @Column(name = "cotationmax")
     private String cotationMax;
+
+    @Column(name = "hauteurmin")
     private Integer hauteurMin;
+
+    @Column(name = "hauteurmax")
     private Integer hauteurMax;
-    private List<Voie> voies;
+
+    @Column(name = "note")
     private Integer note;
+
+    private List<Voie> voies;
 
     // ----- Constructors
     public Secteur() {

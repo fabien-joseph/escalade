@@ -1,16 +1,32 @@
 package fr.fabien.escalade.topo;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Topo {
     // ----- Attributs
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long topo_id;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "departement")
     private Integer departement;
+
+    @Column(name = "statut")
     private String statut;
-    private List<Site> sites;
+
+    @Column(name = "note")
     private Integer note;
+
+    private List<Site> sites;
 
     // ----- Constructors
     public Topo() {

@@ -5,12 +5,26 @@ import javax.persistence.*;
 @Entity
 public class Utilisateur {
     // ----- Attributs
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long utilisateur_id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "motdepasse")
     private String motDePasse;
+
+    @Column(name = "courriel")
     private String courriel;
+
+    @Column(name = "prenom")
     private String prenom;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "isAdmin")
     private Boolean isAdmin;
 
     // ----- Constructors

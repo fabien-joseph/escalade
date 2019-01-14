@@ -1,22 +1,50 @@
 package fr.fabien.escalade.topo;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Site {
     // ----- Attributs
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long site_id;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "cotationmin")
     private String cotationMin;
+
+    @Column(name = "cotationmax")
     private String cotationMax;
+
+    @Column(name = "hauteurmin")
     private Integer hauteurMin;
+
+    @Column(name = "hauteurmax")
     private Integer hauteurMax;
+
+    @Column(name = "orientation")
     private String orientation;
+
+    @Column(name = "type")
     private String type;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "localisation")
     private String localisation;
-    private List<Secteur> secteurs;
+
+    @Column(name = "note")
     private Integer note;
+
+    private List<Secteur> secteurs;
 
     // ---- Constructors
     public Site() {

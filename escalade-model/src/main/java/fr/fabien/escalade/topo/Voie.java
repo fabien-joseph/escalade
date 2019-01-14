@@ -1,14 +1,28 @@
 package fr.fabien.escalade.topo;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Voie {
     // ----- Attributs
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long voie_id;
 
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "longueur")
     private Double longueur;
+
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "note")
     private Integer note;
 
     // ----- Constructors

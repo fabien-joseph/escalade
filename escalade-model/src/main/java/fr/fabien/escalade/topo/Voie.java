@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Voie {
     // ----- Attributs
+
     private String nom;
     private Double longueur;
     private Date date;
@@ -11,8 +12,6 @@ public class Voie {
     private Integer note;
 
     // ----- Constructors
-
-
     public Voie() {
     }
 
@@ -64,7 +63,6 @@ public class Voie {
     public void setNote(Integer note) {
         this.note = note;
     }
-
 
     // ----- Methodes
 }

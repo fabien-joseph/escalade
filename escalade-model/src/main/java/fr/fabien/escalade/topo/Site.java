@@ -18,9 +18,28 @@ public class Site {
     private List<Secteur> secteurs;
     private Integer note;
 
+    // ---- Constructors
+    public Site() {
+    }
+
+    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax,
+                String orientation, String type, String description, String localisation, List<Secteur> secteurs,
+                Integer note) {
+        this.nom = nom;
+        this.date = date;
+        this.cotationMin = cotationMin;
+        this.cotationMax = cotationMax;
+        this.hauteurMin = hauteurMin;
+        this.hauteurMax = hauteurMax;
+        this.orientation = orientation;
+        this.type = type;
+        this.description = description;
+        this.localisation = localisation;
+        this.secteurs = secteurs;
+        this.note = note;
+    }
+
     // ----- Getters / Setters
-
-
     public String getNom() {
         return nom;
     }

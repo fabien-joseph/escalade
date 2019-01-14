@@ -14,9 +14,23 @@ public class Secteur {
     private List<Voie> voies;
     private Integer note;
 
+    // ----- Constructors
+    public Secteur() {
+    }
+
+    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin,
+                   Integer hauteurMax, List<Voie> voies, Integer note) {
+        this.nom = nom;
+        this.date = date;
+        this.cotationMin = cotationMin;
+        this.cotationMax = cotationMax;
+        this.hauteurMin = hauteurMin;
+        this.hauteurMax = hauteurMax;
+        this.voies = voies;
+        this.note = note;
+    }
+
     // ----- Getters / Setters
-
-
     public String getNom() {
         return nom;
     }

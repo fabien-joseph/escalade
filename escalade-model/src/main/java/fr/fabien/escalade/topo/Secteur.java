@@ -1,12 +1,10 @@
 package fr.fabien.escalade.topo;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Secteur {
     // ----- Attributs
     @Id

@@ -1,15 +1,15 @@
-package fr.fabien.escalade.topo;
+package fr.fabien.escalade.model.topo;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Secteur {
+public class Site {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long secteur_id;
+    private Long site_id;
 
     @Column(name = "nom")
     private String nom;
@@ -29,24 +29,41 @@ public class Secteur {
     @Column(name = "hauteurmax")
     private Integer hauteurMax;
 
+    @Column(name = "orientation")
+    private String orientation;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "localisation")
+    private String localisation;
+
     @Column(name = "note")
     private Integer note;
 
-    private List<Voie> voies;
+    private List<Secteur> secteurs;
 
-    // ----- Constructors
-    public Secteur() {
+    // ---- Constructors
+    public Site() {
     }
 
-    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin,
-                   Integer hauteurMax, List<Voie> voies, Integer note) {
+    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax,
+                String orientation, String type, String description, String localisation, List<Secteur> secteurs,
+                Integer note) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
         this.cotationMax = cotationMax;
         this.hauteurMin = hauteurMin;
         this.hauteurMax = hauteurMax;
-        this.voies = voies;
+        this.orientation = orientation;
+        this.type = type;
+        this.description = description;
+        this.localisation = localisation;
+        this.secteurs = secteurs;
         this.note = note;
     }
 
@@ -99,8 +116,40 @@ public class Secteur {
         this.hauteurMax = hauteurMax;
     }
 
-    public List<Voie> getVoies() {
-        return voies;
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocalisation() {
+        return localisation;
+    }
+
+    public void setLocalisation(String localisation) {
+        this.localisation = localisation;
+    }
+
+    public List<Secteur> getSecteurs() {
+        return secteurs;
     }
 
     public Integer getNote() {
@@ -108,20 +157,20 @@ public class Secteur {
     }
 
     // ----- Methodes
-    public void ajoutSite(Voie voie) {
-        this.voies.add(voie);
+    public void ajoutSecteur(Secteur secteur) {
+        this.secteurs.add(secteur);
     }
 
-    public void supprimerSite (Voie voie) {
-        this.voies.remove(voie);
+    public void supprimerSecteur (Secteur secteur) {
+        this.secteurs.remove(secteur);
     }
 
     public void calculMoyenne() {
         int i = 0;
         int valeurTotale = 0;
 
-        while (i < voies.size()) {
-            valeurTotale = voies.get(i).getNote();
+        while (i < secteurs.size()) {
+            valeurTotale = secteurs.get(i).getNote();
             i++;
         }
         this.note = valeurTotale / i;

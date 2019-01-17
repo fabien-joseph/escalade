@@ -1,4 +1,4 @@
-package fr.fabien.escalade.topo;
+package fr.fabien.escalade.model.topo;
 
 import javax.persistence.*;
 import java.util.Date;

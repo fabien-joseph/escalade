@@ -1,4 +1,4 @@
-package fr.fabien.escalade.commentaire;
+package fr.fabien.escalade.model.commentaire;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package fr.fabien.escalade.utilisateur;
+package fr.fabien.escalade.model.utilisateur;
 
 import javax.persistence.*;
 

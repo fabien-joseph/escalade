@@ -25,12 +25,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>fr.fabien.escalade</groupId>
-            <artifactId>escalade-model</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -43,16 +37,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons-core</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <groupId>fr.fabien.escalade</groupId>
+            <artifactId>escalade-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
 

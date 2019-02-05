@@ -1,5 +1,6 @@
 package fr.fabien.escalade.webapp;
 
+import fr.fabien.escalade.business.topo.TopoManagement;
 import fr.fabien.escalade.consumer.topo.TopoRepository;
 import fr.fabien.escalade.model.topo.Topo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Controller
 public class SelectController {
-    private TopoRepository topoRepository;
+    private TopoManagement management;
 
     @RequestMapping(name = "topo")
     public String topo() {

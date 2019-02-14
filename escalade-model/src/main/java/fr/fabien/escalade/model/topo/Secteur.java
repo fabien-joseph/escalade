@@ -32,6 +32,7 @@ public class Secteur {
     @Column(name = "note")
     private Integer note;
 
+    @Transient
     private List<Voie> voies;
 
     // ----- Constructors

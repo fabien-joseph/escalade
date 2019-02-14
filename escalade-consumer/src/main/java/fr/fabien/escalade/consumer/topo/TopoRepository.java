@@ -7,3 +7,4 @@ import java.util.List;
 
 public interface TopoRepository extends CrudRepository<Topo, Long> {
 }
+

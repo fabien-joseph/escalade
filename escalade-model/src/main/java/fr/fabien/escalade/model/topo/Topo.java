@@ -2,14 +2,14 @@ package fr.fabien.escalade.model.topo;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Topo {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long topo_id;
+    private Long id;
 
     @Column(name = "nom")
     private String nom;
@@ -26,13 +26,23 @@ public class Topo {
     @Column(name = "note")
     private Integer note;
 
-    private List<Site> sites;
+    @OneToMany(mappedBy = "topo")
+    private Set<Site> sites;
+
+    public Set<Site> getSites() {
+        return sites;
+    }
+
+    public void setSites (Set<Site> sites) {
+        this.sites = sites;
+    }
 
     // ----- Constructors
+
     public Topo() {
     }
 
-    public Topo(String nom, Date date, Integer departement, String statut, List<Site> sites, Integer note) {
+    public Topo(String nom, Date date, Integer departement, String statut, Set<Site> sites, Integer note) {
         this.nom = nom;
         this.date = date;
         this.departement = departement;
@@ -40,8 +50,8 @@ public class Topo {
         this.sites = sites;
         this.note = note;
     }
-
     // ----- Getters / Setters
+
     public String getNom() {
         return nom;
     }
@@ -70,16 +80,12 @@ public class Topo {
         return statut;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-    public List<Site> getSites() {
-        return sites;
-    }
-
     public Integer getNote() {
         return note;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
 
     // ----- Methodes
@@ -89,16 +95,5 @@ public class Topo {
 
     public void supprimerSite (Site site) {
         this.sites.remove(site);
-    }
-
-    public void calculMoyenne() {
-        int i = 0;
-        int valeurTotale = 0;
-
-        while (i < sites.size()) {
-            valeurTotale = sites.get(i).getNote();
-            i++;
-        }
-        this.note = valeurTotale / i;
     }
 }

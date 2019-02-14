@@ -14,9 +14,10 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 public class TopoManagement {
-    private final TopoRepository repository;
+
+    //private final TopoRepository repository;
 
     public Iterable<Topo> findAll() {
-        return repository.findAll();
+        return null;
     }
 }

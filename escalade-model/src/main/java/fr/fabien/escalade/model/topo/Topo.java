@@ -26,7 +26,7 @@ public class Topo {
     @Column(name = "note")
     private Integer note;
 
-    @OneToMany(mappedBy = "topo")
+    //@OneToMany(mappedBy = "topo")
     private Set<Site> sites;
 
     public Set<Site> getSites() {

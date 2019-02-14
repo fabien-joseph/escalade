@@ -33,7 +33,7 @@ public class Site {
 
     private Integer note;
 
-    private List<Secteur> secteurs;
+    //private List<Secteur> secteurs;
 
     @ManyToOne
     private Topo topo;
@@ -64,7 +64,6 @@ public class Site {
         this.type = type;
         this.description = description;
         this.localisation = localisation;
-        this.secteurs = secteurs;
         this.note = note;
     }
 
@@ -149,20 +148,8 @@ public class Site {
         this.localisation = localisation;
     }
 
-    public List<Secteur> getSecteurs() {
-        return secteurs;
-    }
 
     public Integer getNote() {
         return note;
-    }
-
-    // ----- Methodes
-    public void ajoutSecteur(Secteur secteur) {
-        this.secteurs.add(secteur);
-    }
-
-    public void supprimerSecteur (Secteur secteur) {
-        this.secteurs.remove(secteur);
     }
 }

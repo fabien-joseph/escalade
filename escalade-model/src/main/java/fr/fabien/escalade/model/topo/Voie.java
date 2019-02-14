@@ -22,7 +22,7 @@ public class Voie {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "note")
+    //@Column(name = "note")
     private Integer note;
 
     // ----- Constructors

@@ -1,39 +1,37 @@
 package fr.fabien.escalade.model.utilisateur;
 
+import fr.fabien.escalade.model.commentaire.Commentaire;
+import fr.fabien.escalade.model.topo.Topo;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Utilisateur {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long utilisateur_id;
-
-    @Column(name = "login")
+    private Long id;
     private String login;
-
-    @Column(name = "motdepasse")
     private String motDePasse;
-
-    @Column(name = "courriel")
     private String courriel;
-
-    @Column(name = "prenom")
     private String prenom;
-
-    @Column(name = "nom")
     private String nom;
-
-    @Column(name = "isAdmin")
     private Boolean isAdmin;
+
+    @OneToMany (mappedBy = "utilisateur")
+    private Set<Topo> topos;
+
+    @OneToMany (mappedBy = "utilisateur")
+    private Set<Commentaire> commentaires;
 
     // ----- Constructors
     public Utilisateur() {
     }
 
-    public Utilisateur(Long utilisateur_id, String login, String motDePasse, String courriel, String prenom, String nom,
+    public Utilisateur(Long id, String login, String motDePasse, String courriel, String prenom, String nom,
                        Boolean isAdmin) {
-        this.utilisateur_id = utilisateur_id;
+        this.id = id;
         this.login = login;
         this.motDePasse = motDePasse;
         this.courriel = courriel;
@@ -44,11 +42,11 @@ public class Utilisateur {
 
     // ----- Getters / Setters
     public Long getUtilisateur_id() {
-        return utilisateur_id;
+        return id;
     }
 
-    public void setUtilisateur_id(Long utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
+    public void setUtilisateur_id(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {

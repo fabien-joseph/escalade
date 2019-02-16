@@ -1,5 +1,8 @@
 package fr.fabien.escalade.model.commentaire;
 
+import fr.fabien.escalade.model.topo.Voie;
+import fr.fabien.escalade.model.utilisateur.Utilisateur;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,13 +11,12 @@ public class Commentaire {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long commentaire_id;
-
-    @Column(name = "commentaire")
+    private Long id;
     private String commentaire;
-
-    @Column(name = "date")
     private Date date;
+
+    @ManyToOne private Voie voie;
+    @ManyToOne private Utilisateur utilisateur;
 
     // ----- Constructors
     public Commentaire() {

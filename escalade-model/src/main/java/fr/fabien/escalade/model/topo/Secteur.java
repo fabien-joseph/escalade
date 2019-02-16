@@ -3,52 +3,42 @@ package fr.fabien.escalade.model.topo;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Secteur {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long secteur_id;
+    private Long id;
 
-    @Column(name = "nom")
     private String nom;
-
-    @Column(name = "date")
     private Date date;
-
-    @Column(name = "cotationmin")
     private String cotationMin;
-
-    @Column(name = "cotationmax")
     private String cotationMax;
-
-    @Column(name = "hauteurmin")
     private Integer hauteurMin;
-
-    @Column(name = "hauteurmax")
     private Integer hauteurMax;
-
-    @Column(name = "note")
     private Integer note;
 
-    @Transient
-    private List<Voie> voies;
+    @OneToMany (mappedBy = "secteur")
+    private Set<Voie> voies;
+
+    @ManyToOne private Site site;
 
     // ----- Constructors
     public Secteur() {
     }
 
-    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin,
-                   Integer hauteurMax, List<Voie> voies, Integer note) {
+    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, Integer note, Set<Voie> voies, Site site) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
         this.cotationMax = cotationMax;
         this.hauteurMin = hauteurMin;
         this.hauteurMax = hauteurMax;
-        this.voies = voies;
         this.note = note;
+        this.voies = voies;
+        this.site = site;
     }
 
     // ----- Getters / Setters
@@ -100,31 +90,27 @@ public class Secteur {
         this.hauteurMax = hauteurMax;
     }
 
-    public List<Voie> getVoies() {
-        return voies;
-    }
-
     public Integer getNote() {
         return note;
     }
 
-    // ----- Methodes
-    public void ajoutSite(Voie voie) {
-        this.voies.add(voie);
+    public void setNote(Integer note) {
+        this.note = note;
     }
 
-    public void supprimerSite (Voie voie) {
-        this.voies.remove(voie);
+    public Site getSite() {
+        return site;
     }
 
-    public void calculMoyenne() {
-        int i = 0;
-        int valeurTotale = 0;
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
-        while (i < voies.size()) {
-            valeurTotale = voies.get(i).getNote();
-            i++;
-        }
-        this.note = valeurTotale / i;
+    public Set<Voie> getVoies() {
+        return voies;
+    }
+
+    public void setVoies(Set<Voie> voies) {
+        this.voies = voies;
     }
 }

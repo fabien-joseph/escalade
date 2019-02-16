@@ -3,57 +3,39 @@ package fr.fabien.escalade.model.topo;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Site {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long site_id;
-
+    private Long id;
     private String nom;
-
     private Date date;
-
     private String cotationMin;
-
     private String cotationMax;
-
     private Integer hauteurMin;
-
     private Integer hauteurMax;
-
     private String orientation;
-
     private String type;
-
     private String description;
-
     private String localisation;
-
     private Integer note;
-
-    //private List<Secteur> secteurs;
 
     @ManyToOne
     private Topo topo;
 
-    public void setTopo(Topo topo) {
-        this.topo = topo;
-    }
+    @OneToMany (mappedBy = "site")
+    private Set<Secteur> secteurs;
 
-    public Topo getTopo() {
-        return topo;
-    }
 
     // ---- Constructors
 
     public Site() {
     }
 
-    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax,
-                String orientation, String type, String description, String localisation, List<Secteur> secteurs,
-                Integer note) {
+    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Integer note, Topo topo) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
@@ -65,6 +47,7 @@ public class Site {
         this.description = description;
         this.localisation = localisation;
         this.note = note;
+        this.topo = topo;
     }
 
     // ----- Getters / Setters
@@ -148,8 +131,27 @@ public class Site {
         this.localisation = localisation;
     }
 
-
     public Integer getNote() {
         return note;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
+
+    public void setTopo(Topo topo) {
+        this.topo = topo;
+    }
+
+    public Topo getTopo() {
+        return topo;
+    }
+
+    public Set<Secteur> getSecteurs() {
+        return secteurs;
+    }
+
+    public void setSecteurs(Set<Secteur> secteurs) {
+        this.secteurs = secteurs;
     }
 }

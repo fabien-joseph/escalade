@@ -1,40 +1,39 @@
 package fr.fabien.escalade.model.topo;
 
+import fr.fabien.escalade.model.commentaire.Commentaire;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Voie {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long voie_id;
-
-    @Column(name = "nom")
+    private Long id;
     private String nom;
-
-    @Column(name = "longueur")
     private Double longueur;
-
-    @Column(name = "date")
     private Date date;
-
-    @Column(name = "description")
     private String description;
-
-    //@Column(name = "note")
     private Integer note;
+
+    @ManyToOne private Secteur secteur;
+
+    @OneToMany (mappedBy = "voie")
+    private Set<Commentaire> commentaires;
 
     // ----- Constructors
     public Voie() {
     }
 
-    public Voie(String nom, Double longueur, Date date, String description, Integer note) {
+    public Voie(String nom, Double longueur, Date date, String description, Integer note, Secteur secteur) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
         this.description = description;
         this.note = note;
+        this.secteur = secteur;
     }
 
     // ----- Getters / Setters
@@ -76,6 +75,14 @@ public class Voie {
 
     public void setNote(Integer note) {
         this.note = note;
+    }
+
+    public Secteur getSecteur() {
+        return secteur;
+    }
+
+    public void setSecteur(Secteur secteur) {
+        this.secteur = secteur;
     }
 
     // ----- Methodes

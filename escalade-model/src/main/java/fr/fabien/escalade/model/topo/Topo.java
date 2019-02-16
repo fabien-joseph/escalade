@@ -1,5 +1,7 @@
 package fr.fabien.escalade.model.topo;
 
+import fr.fabien.escalade.model.utilisateur.Utilisateur;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -10,32 +12,17 @@ public class Topo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "nom")
     private String nom;
-
-    @Column(name = "date")
     private Date date;
-
-    @Column(name = "departement")
     private Integer departement;
-
-    @Column(name = "statut")
     private String statut;
-
-    @Column(name = "note")
     private Integer note;
+
+    @ManyToOne
+    private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "topo")
     private Set<Site> sites;
-
-    public Set<Site> getSites() {
-        return sites;
-    }
-
-    public void setSites (Set<Site> sites) {
-        this.sites = sites;
-    }
 
     // ----- Constructors
 
@@ -87,6 +74,19 @@ public class Topo {
     public void setStatut(String statut) {
         this.statut = statut;
     }
+
+    public Set<Site> getSites() {
+        return sites;
+    }
+
+    public void setSites (Set<Site> sites) {
+        this.sites = sites;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
+
 
     // ----- Methodes
     public void ajoutSite(Site site) {

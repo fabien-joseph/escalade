@@ -1,22 +1,20 @@
-package fr.fabien.escalade.webapp;
+package fr.fabien.escalade.webapp.controller;
 
-import fr.fabien.escalade.business.topo.TopoManagement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/test")
 @RequiredArgsConstructor
+@RequestMapping("/test")
 public class AddController {
-    private TopoManagement topoManagement;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String listUsers(Model model) {
-        topoManagement.findAll();
+    @GetMapping
+    public String listUsers() {
         return "test";
     }
 }

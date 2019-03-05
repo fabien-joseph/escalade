@@ -1,8 +1,6 @@
 package fr.fabien.escalade.consumer.commentaire;
 
-import fr.fabien.escalade.model.commentaire.Commentaire;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
+import fr.fabien.escalade.model.topo.Commentaire;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

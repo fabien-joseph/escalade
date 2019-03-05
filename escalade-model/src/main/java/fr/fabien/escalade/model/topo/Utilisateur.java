@@ -1,7 +1,4 @@
-package fr.fabien.escalade.model.utilisateur;
-
-import fr.fabien.escalade.model.commentaire.Commentaire;
-import fr.fabien.escalade.model.topo.Topo;
+package fr.fabien.escalade.model.topo;
 
 import javax.persistence.*;
 import java.util.Set;

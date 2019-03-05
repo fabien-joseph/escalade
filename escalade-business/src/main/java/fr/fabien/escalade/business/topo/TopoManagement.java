@@ -21,4 +21,8 @@ public class TopoManagement {
     public List<Topo> findToposByUtilisateur_id (Long id) {
         return repository.findToposByUtilisateur_id(id);
     }
+
+    public List<Topo> findAll() {
+        return repository.findAll();
+    }
 }

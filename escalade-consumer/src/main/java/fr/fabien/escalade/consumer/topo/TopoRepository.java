@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface TopoRepository extends CrudRepository<Topo, Long> {
     List<Topo> findToposByUtilisateur_id(Long utilisateur_id);
+
+    List<Topo> findAll();
 }
 

@@ -1,20 +1,20 @@
 package fr.fabien.escalade.webapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/test")
-public class AddController {
+@RequestMapping("/connexion")
+public class ConnexionController {
 
     @GetMapping
-    public String listUsers() {
-        return "test";
+    public String connexion() {
+        return "connexion";
     }
+
 }

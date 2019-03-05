@@ -1,7 +1,7 @@
-package fr.fabien.escalade.model.commentaire;
+package fr.fabien.escalade.model.topo;
 
 import fr.fabien.escalade.model.topo.Voie;
-import fr.fabien.escalade.model.utilisateur.Utilisateur;
+import fr.fabien.escalade.model.topo.Utilisateur;
 
 import javax.persistence.*;
 import java.util.Date;

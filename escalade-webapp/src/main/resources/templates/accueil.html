@@ -1,0 +1,75 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Topo escalade</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" />
+</head>
+<body>
+<div th:replace="fragments/header.html :: header"></div>
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Connexion</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <fieldset>
+
+                <div class="field">
+                    <label class="label">Nom de compte</label>
+                    <div class="control">
+                        <input class="input" type="text">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Mot de passe</label>
+                    <div class="control">
+                        <input class="input" type="email">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success">Se connecter</button>
+            <button class="button">Annuler</button>
+        </footer>
+    </div>
+</div>
+
+<section class="hero is-fullheight-with-navbar">
+    <div class="hero-body">
+        <div class="container">
+            <div class="has-text-centered">
+                <p class="is-size-3 search">Chercher un topo :</p>
+            </div>
+
+            <form action="/recherche">
+                <div class="field has-addons has-addons-centered">
+                    <div class="control">
+                        <div class="select is-large">
+                            <label>
+                            </label>
+                            <select name="departement">
+                                <option selected>Département</option>
+                                <option th:type="text" th:each="departement : ${departements}"
+                                        th:value="${departement.key}"
+                                        th:utext="${departement.key} +' - '+${departement.value}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-primary is-large">Rechercher</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

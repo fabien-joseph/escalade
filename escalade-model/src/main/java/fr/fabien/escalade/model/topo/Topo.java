@@ -1,7 +1,5 @@
 package fr.fabien.escalade.model.topo;
 
-import fr.fabien.escalade.model.utilisateur.Utilisateur;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -14,7 +12,7 @@ public class Topo {
     private Long id;
     private String nom;
     private Date date;
-    private Integer departement;
+    private String departement;
     private String statut;
     private Integer note;
 
@@ -29,7 +27,7 @@ public class Topo {
     public Topo() {
     }
 
-    public Topo(String nom, Date date, Integer departement, String statut, Set<Site> sites, Integer note) {
+    public Topo(String nom, Date date, String departement, String statut, Set<Site> sites, Integer note) {
         this.nom = nom;
         this.date = date;
         this.departement = departement;
@@ -38,6 +36,23 @@ public class Topo {
         this.note = note;
     }
     // ----- Getters / Setters
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 
     public String getNom() {
         return nom;
@@ -55,11 +70,11 @@ public class Topo {
         this.date = date;
     }
 
-    public Integer getDepartement() {
+    public String getDepartement() {
         return departement;
     }
 
-    public void setDepartement(Integer departement) {
+    public void setDepartement(String departement) {
         this.departement = departement;
     }
 

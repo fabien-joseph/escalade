@@ -1,7 +1,5 @@
 package fr.fabien.escalade.model.topo;
 
-import fr.fabien.escalade.model.commentaire.Commentaire;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;

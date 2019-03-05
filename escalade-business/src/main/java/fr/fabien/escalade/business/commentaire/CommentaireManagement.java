@@ -1,10 +1,9 @@
 package fr.fabien.escalade.business.commentaire;
 
 import fr.fabien.escalade.consumer.commentaire.CommentaireRepository;
-import fr.fabien.escalade.model.commentaire.Commentaire;
+import fr.fabien.escalade.model.topo.Commentaire;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

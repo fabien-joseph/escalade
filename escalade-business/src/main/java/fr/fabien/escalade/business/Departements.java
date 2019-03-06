@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Departements {
-    public static final Map<String, String> departements = new HashMap<>(101);
+    public static final Map<String, String> departements = new LinkedHashMap<>(101);
 
     static {
         departements.put("1", "Ain");

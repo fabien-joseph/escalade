@@ -21,8 +21,14 @@ public class RechercheController {
     TopoManagement topoManagement;
 
     @GetMapping
-    public String listTopos(Model model) {
-        List<Topo> topos = topoManagement.findAll();
+    public String listTopos(Model model, @RequestParam(value = "departement", required = false) String departement) {
+        List<Topo> topos = null;
+        if (departement == null || departement.equals("")) {
+            topos = topoManagement.findAll();
+        } else {
+            topos = topoManagement.findToposByDepartement(departement);
+        }
+
         model.addAttribute("topos", topos);
         return "recherche";
     }

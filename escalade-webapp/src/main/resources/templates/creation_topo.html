@@ -11,11 +11,19 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
+<h3>Topo</h3>
+<form action="#" th:action="@{/topo}" th:object="${topo}" method=post>
+    <p>Nom: <label>
+        <input type="text" th:field="*{nom}"/>
+    </label></p>
+    <p>Departement: <label>
+        <input type="text" th:field="*{departement}"/>
+    </label></p>
+    <p>Statut: <label>
+        <input type="text" th:field="*{statut}"/>
+    </label></p>
 
-<h1>Result</h1>
-<p th:text="'login: ' + ${utilisateur.login}"></p>
-<p th:text="'mail: ' + ${utilisateur.courriel}"></p>
-<p th:text="'mot de passe: ' + ${utilisateur.motDePasse}"></p>
-<a href="/connexion">Submit another user</a>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
 </body>
 </html>

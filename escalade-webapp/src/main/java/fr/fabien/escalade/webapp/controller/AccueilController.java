@@ -17,8 +17,6 @@ import static fr.fabien.escalade.business.Departements.departements;
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class AccueilController {
-
-
     @GetMapping
     public String listDepartements(Model model) {
         model.addAttribute("departements", departements);

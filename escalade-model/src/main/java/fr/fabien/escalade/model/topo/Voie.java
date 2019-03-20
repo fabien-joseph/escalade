@@ -1,10 +1,16 @@
 package fr.fabien.escalade.model.topo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Voie {
     // ----- Attributs
     @Id
@@ -16,7 +22,12 @@ public class Voie {
     private String description;
     private Integer note;
 
+
     @ManyToOne private Secteur secteur;
+
+    @OneToMany(mappedBy = "voie")
+    private List<Note> notes;
+
 
     @OneToMany (mappedBy = "voie")
     private Set<Commentaire> commentaires;
@@ -33,55 +44,4 @@ public class Voie {
         this.note = note;
         this.secteur = secteur;
     }
-
-    // ----- Getters / Setters
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Double getLongueur() {
-        return longueur;
-    }
-
-    public void setLongueur(Double longueur) {
-        this.longueur = longueur;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getNote() {
-        return note;
-    }
-
-    public void setNote(Integer note) {
-        this.note = note;
-    }
-
-    public Secteur getSecteur() {
-        return secteur;
-    }
-
-    public void setSecteur(Secteur secteur) {
-        this.secteur = secteur;
-    }
-
-    // ----- Methodes
 }

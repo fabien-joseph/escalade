@@ -1,7 +1,6 @@
 package fr.fabien.escalade.webapp.controller;
 
-import fr.fabien.escalade.business.Departements;
-import fr.fabien.escalade.business.topo.TopoManagement;
+import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.model.topo.Topo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

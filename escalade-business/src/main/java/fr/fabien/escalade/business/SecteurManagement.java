@@ -1,4 +1,4 @@
-package fr.fabien.escalade.business.topo;
+package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.topo.SecteurRepository;
 import fr.fabien.escalade.model.topo.Secteur;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SecteurManagement {
-    @Autowired private final SecteurRepository repository;
+    private final SecteurRepository repository;
 
     public List<Secteur> findSecteursBySite_id (Long id) {
         return repository.findSecteursBySite_id(id);

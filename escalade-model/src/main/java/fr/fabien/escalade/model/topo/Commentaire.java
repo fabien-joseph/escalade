@@ -2,11 +2,15 @@ package fr.fabien.escalade.model.topo;
 
 import fr.fabien.escalade.model.topo.Voie;
 import fr.fabien.escalade.model.topo.Utilisateur;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class Commentaire {
     // ----- Attributs
     @Id
@@ -24,23 +28,6 @@ public class Commentaire {
 
     public Commentaire(String commentaire, Date date) {
         this.commentaire = commentaire;
-        this.date = date;
-    }
-
-    // ----- Getters / Setters
-    public String getCommentaire() {
-        return commentaire;
-    }
-
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
         this.date = date;
     }
 

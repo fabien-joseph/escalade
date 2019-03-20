@@ -1,4 +1,4 @@
-package fr.fabien.escalade.business.commentaire;
+package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.commentaire.CommentaireRepository;
 import fr.fabien.escalade.model.topo.Commentaire;

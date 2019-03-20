@@ -11,7 +11,7 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<h3>Form</h3>
+<h3>Connexion</h3>
 <form action="#" th:action="@{/connexion}" th:object="${utilisateur}" method = post>
     <p>Login: <label>
         <input type="text" th:field="*{login}" />

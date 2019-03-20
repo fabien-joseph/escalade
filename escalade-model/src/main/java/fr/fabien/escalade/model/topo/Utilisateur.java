@@ -1,9 +1,15 @@
 package fr.fabien.escalade.model.topo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Utilisateur {
     // ----- Attributs
     @Id
@@ -18,6 +24,9 @@ public class Utilisateur {
 
     @OneToMany (mappedBy = "utilisateur")
     private Set<Topo> topos;
+
+    @OneToMany (mappedBy = "utilisateur")
+    private List<Topo> notes;
 
     @OneToMany (mappedBy = "utilisateur")
     private Set<Commentaire> commentaires;
@@ -36,64 +45,6 @@ public class Utilisateur {
         this.nom = nom;
         this.isAdmin = isAdmin;
     }
-
-    // ----- Getters / Setters
-    public Long getUtilisateur_id() {
-        return id;
-    }
-
-    public void setUtilisateur_id(Long id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public String getCourriel() {
-        return courriel;
-    }
-
-    public void setCourriel(String courriel) {
-        this.courriel = courriel;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Boolean getAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
-    }
-
 
     // ----- Methodes
 }

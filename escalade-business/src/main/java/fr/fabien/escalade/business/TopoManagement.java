@@ -1,4 +1,4 @@
-package fr.fabien.escalade.business.topo;
+package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.topo.TopoRepository;
 import fr.fabien.escalade.model.topo.Topo;
@@ -28,5 +28,17 @@ public class TopoManagement {
 
     public List<Topo> findAll() {
         return repository.findAll();
+    }
+
+    public void ajout(Topo topo) {
+        Topo testTopo = repository.findFirstByNom(
+                topo.getNom()
+        );
+
+        if (testTopo != null) {
+            System.out.println("Erreur - Ce topo existe déjà, id = " + testTopo.getId());
+        } else {
+            repository.save(topo);
+        }
     }
 }

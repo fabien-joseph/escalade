@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,14 +23,18 @@
                 <div class="field">
                     <label class="label">Nom de compte</label>
                     <div class="control">
-                        <input class="input" type="text">
+                        <label>
+                            <input class="input" type="text">
+                        </label>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Mot de passe</label>
                     <div class="control">
-                        <input class="input" type="email">
+                        <label>
+                            <input class="input" type="email">
+                        </label>
                     </div>
                 </div>
             </fieldset>
@@ -55,12 +59,14 @@
                         <div class="select is-large">
                             <label>
                             </label>
-                            <select name="departement">
-                                <option selected>Département</option>
-                                <option th:type="text" th:each="departement : ${departements}"
-                                        th:value="${departement.key}"
-                                        th:utext="${departement.key} +' - '+${departement.value}"></option>
-                            </select>
+                            <label>
+                                <select name="departement">
+                                    <option selected disabled>Département</option>
+                                    <option th:type="text" th:each="departement : ${departements}"
+                                            th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
+                                            th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
+                                </select>
+                            </label>
                         </div>
                     </div>
                     <div class="control">

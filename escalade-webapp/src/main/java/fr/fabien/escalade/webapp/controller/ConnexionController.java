@@ -8,22 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class ConnexionController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
 
     @GetMapping ("/connexion")
-    public String connexion(Model model) {
-        model.addAttribute("utilisateur", new Utilisateur());
+    public String connexion(Model model, HttpServletRequest session) {
         return "connexion";
-    }
-
-    @PostMapping("/connexion")
-    public String connexionSubmit(@ModelAttribute Utilisateur utilisateur, BindingResult result, Model model) {
-        System.out.println(result);
-        model.addAttribute(utilisateur);
-        return "result";
     }
 
     @GetMapping ("/inscription")

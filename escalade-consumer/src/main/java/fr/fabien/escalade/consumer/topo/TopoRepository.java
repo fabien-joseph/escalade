@@ -10,6 +10,8 @@ import java.util.List;
 public interface TopoRepository extends CrudRepository<Topo, Long> {
     List<Topo> findToposByUtilisateur_id(Long utilisateur_id);
 
+    Topo findTopoById (Long id);
+
     List<Topo> findToposByDepartement(String departement);
 
     List<Topo> findAll();

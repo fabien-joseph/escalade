@@ -1,61 +1,120 @@
 package fr.fabien.escalade.webapp.controller;
 
-import fr.fabien.escalade.business.SiteManagement;
-import fr.fabien.escalade.business.TopoManagement;
-import fr.fabien.escalade.model.topo.Secteur;
-import fr.fabien.escalade.model.topo.Site;
-import fr.fabien.escalade.model.topo.Topo;
-import fr.fabien.escalade.model.topo.Voie;
+import fr.fabien.escalade.business.*;
+import fr.fabien.escalade.model.topo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
 public class TopoController {
-    @Autowired TopoManagement topoManagement;
-    @Autowired SiteManagement siteManagement;
+    @Autowired
+    TopoManagement topoManagement;
+    @Autowired
+    SiteManagement siteManagement;
+    @Autowired
+    SecteurManagement secteurManagement;
+    @Autowired
+    VoieManagement voieManagement;
+    @Autowired
+    UtilisateurManagement utilisateurManagement;
 
-    @GetMapping ("/topo/{id}")
-    public String topo(Model model, @PathVariable String id) {
-        model.addAttribute("topo", new Topo());
+    @GetMapping("/topo/create")
+    public String topo(Model model, HttpServletRequest session) {
+        Topo topo = new Topo();
+        model.addAttribute("utilisateur", utilisateurManagement.findByLogin(session.getUserPrincipal().getName()));
+        model.addAttribute("topo", topo);
         return "creation_topo";
     }
 
-    @PostMapping("/topo")
-    public String creation_topo(@ModelAttribute  Topo topo,Model model) {
+    @PostMapping("/topo/save")
+    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest session) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
-
         topo.setDate(date);
-
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("topo", topo);
+        topo.setUtilisateur(utilisateur);
         topoManagement.ajout(topo);
-        return "creation_topo";
+        return "show_topo";
     }
 
-    @GetMapping ("/site/{id}")
+
+    /*
+    @PostMapping("/topo/create")
+    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest session) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        Site site = new Site();
+        System.out.println(topo.getId());
+        topo.setDate(date);
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute(site);
+        topo.setUtilisateur(utilisateur);
+        topoManagement.ajout(topo);
+        return "creation_site";
+    }
+*/
+/*
+    @GetMapping("/site/{id}")
     public String site(Model model, @PathVariable String id) {
-        model.addAttribute("site", new Site());
+        model.addAttribute("site", site);
         return "creation_site";
     }
 
     @PostMapping("/site")
-    public String creation_site(@ModelAttribute  Site site,Model model) {
+    public String creation_site(@ModelAttribute Site site, Model model) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
-
+        site.setTopo(topo);
         site.setDate(date);
-
         siteManagement.ajout(site);
+        this.site = site;
         return "creation_site";
     }
+
+    @GetMapping("/secteur/{id}")
+    public String secteur(Model model, @PathVariable String id) {
+        model.addAttribute("secteur", secteur);
+        return "creation_secteur";
+    }
+
+    @PostMapping("/secteur")
+    public String creation_secteur(@ModelAttribute Secteur secteur, Model model) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        secteur.setSite(site);
+        secteur.setDate(date);
+        secteurManagement.ajout(secteur);
+        this.secteur = secteur;
+        return "creation_secteur";
+    }
+
+    @GetMapping("/voie/{id}")
+    public String voie(Model model, @PathVariable String id) {
+        model.addAttribute("voie", voie);
+        return "creation_voie";
+    }
+
+    @PostMapping("/voie")
+    public String creation_voie(@ModelAttribute Voie voie, Model model) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        voie.setSecteur(secteur);
+        voie.setDate(date);
+        voieManagement.ajout(voie);
+        return "creation_voie";
+    }
+    */
 }

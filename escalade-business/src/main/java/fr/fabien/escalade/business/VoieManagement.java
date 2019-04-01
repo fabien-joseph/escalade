@@ -17,4 +17,16 @@ public class VoieManagement {
     public Iterable<Voie> findAll() {
         return repository.findAll();
     }
+
+    public void ajout (Voie voie) {
+        Voie testVoie = repository.findFirstByNom(
+                voie.getNom()
+        );
+
+        if (testVoie != null) {
+            System.out.println("Erreur - Ce site existe déjà, id = " + testVoie.getId());
+        } else {
+            repository.save(voie);
+        }
+    }
 }

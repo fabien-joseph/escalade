@@ -8,28 +8,26 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<h3>Connexion</h3>
-<form name='f' action="/connexion" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><label>
-                <input type='text' name='username' value=''>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><label>
-                <input type='password' name='password' />
-            </label></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
+<h3>Voie</h3>
+<form action="#" th:action="@{/voie}" th:object="${voie}" method=post>
+    <p>Nom: <label>
+        <input type="text" th:field="*{nom}"/>
+    </label>
+    </p><p>Description: <label>
+        <input type="text" th:field="*{description}"/>
+    </label></p>
+    <p>Longueur: <label>
+        <input type="text" th:field="*{longueur}"/>
+    </label></p>
+    <p>Note: <label>
+        <input type="text" th:field="*{note}"/>
+    </label></p>
+
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
 </form>
 </body>
 </html>

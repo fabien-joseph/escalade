@@ -2,9 +2,12 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,28 +26,22 @@ public class Topo {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    @OneToMany(mappedBy = "topo")
-    private Set<Site> sites;
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    @ManyToMany
+    private List<Site> sites = new ArrayList<>();
 
     // ----- Constructors
+
 
     public Topo() {
     }
 
-    public Topo(String nom, Date date, String departement, String statut, Set<Site> sites) {
+    public Topo(String nom, Date date, String departement, String statut, Utilisateur utilisateur, List<Site> sites) {
         this.nom = nom;
         this.date = date;
         this.departement = departement;
         this.statut = statut;
+        this.utilisateur = utilisateur;
         this.sites = sites;
-    }
-
-    // ----- Methodes
-    public void ajoutSite(Site site) {
-        this.sites.add(site);
-    }
-
-    public void supprimerSite (Site site) {
-        this.sites.remove(site);
     }
 }

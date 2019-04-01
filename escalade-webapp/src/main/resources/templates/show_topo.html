@@ -11,25 +11,13 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<h3>Connexion</h3>
-<form name='f' action="/connexion" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><label>
-                <input type='text' name='username' value=''>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><label>
-                <input type='password' name='password' />
-            </label></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+
+<h1>Show topo</h1>
+
+<p th:text="'Nom : ' + ${topo.nom}"></p>
+<p th:text="'Département : ' + ${topo.departement}"></p>
+<p th:text="'Date d\'ajout : ' + ${topo.date}"></p>
+<p th:text="'Statut : ' + ${topo.statut}"></p>
+<p th:text="'Créateur : ' + ${topo.utilisateur.login}"></p>
 </body>
 </html>

@@ -2,8 +2,10 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +18,6 @@ public class Secteur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String nom;
     private Date date;
     private String cotationMin;
@@ -24,8 +25,9 @@ public class Secteur {
     private Integer hauteurMin;
     private Integer hauteurMax;
 
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @OneToMany (mappedBy = "secteur")
-    private Set<Voie> voies;
+    private List<Voie> voies = new ArrayList<>();
 
     @ManyToOne private Site site;
 
@@ -33,7 +35,7 @@ public class Secteur {
     public Secteur() {
     }
 
-    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, Set<Voie> voies, Site site) {
+    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, List<Voie> voies, Site site) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;

@@ -2,11 +2,12 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -27,11 +28,12 @@ public class Site {
     private String description;
     private String localisation;
 
-    @ManyToOne
-    private Topo topo;
+    @ManyToMany
+    private List<Topo> topo = new ArrayList<>();
 
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @OneToMany (mappedBy = "site")
-    private Set<Secteur> secteurs;
+    private List<Secteur> secteurs = new ArrayList<>();
 
 
     // ---- Constructors
@@ -39,7 +41,7 @@ public class Site {
     public Site() {
     }
 
-    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Topo topo) {
+    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, List<Topo> topo, List<Secteur> secteurs) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
@@ -51,5 +53,6 @@ public class Site {
         this.description = description;
         this.localisation = localisation;
         this.topo = topo;
+        this.secteurs = secteurs;
     }
 }

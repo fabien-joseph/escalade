@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,28 +24,27 @@ public class Utilisateur {
     private Boolean isAdmin;
 
     @OneToMany (mappedBy = "utilisateur")
-    private Set<Topo> topos;
+    private List<Topo> topos = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
-    private List<Topo> notes;
+    private List<Topo> notes = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
-    private Set<Commentaire> commentaires;
+    private List<Commentaire> commentaires = new ArrayList<>();
 
     // ----- Constructors
     public Utilisateur() {
     }
 
-    public Utilisateur(Long id, String login, String motDePasse, String courriel, String prenom, String nom,
-                       Boolean isAdmin) {
-        this.id = id;
+    public Utilisateur(String login, String motDePasse, String courriel, String prenom, String nom, Boolean isAdmin, List<Topo> topos, List<Topo> notes, List<Commentaire> commentaires) {
         this.login = login;
         this.motDePasse = motDePasse;
         this.courriel = courriel;
         this.prenom = prenom;
         this.nom = nom;
         this.isAdmin = isAdmin;
+        this.topos = topos;
+        this.notes = notes;
+        this.commentaires = commentaires;
     }
-
-    // ----- Methodes
 }

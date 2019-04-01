@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VoieRepository extends CrudRepository<Voie, Long> {
+
+    Voie findFirstByNom (String nom);
 }

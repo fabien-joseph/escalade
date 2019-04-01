@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,22 +27,24 @@ public class Voie {
     @ManyToOne private Secteur secteur;
 
     @OneToMany(mappedBy = "voie")
-    private List<Note> notes;
+    private List<Note> notes = new ArrayList<>();
 
 
     @OneToMany (mappedBy = "voie")
-    private Set<Commentaire> commentaires;
+    private List<Commentaire> commentaires = new ArrayList<>();
 
     // ----- Constructors
     public Voie() {
     }
 
-    public Voie(String nom, Double longueur, Date date, String description, Integer note, Secteur secteur) {
+    public Voie(String nom, Double longueur, Date date, String description, Integer note, Secteur secteur, List<Note> notes, List<Commentaire> commentaires) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
         this.description = description;
         this.note = note;
         this.secteur = secteur;
+        this.notes = notes;
+        this.commentaires = commentaires;
     }
 }

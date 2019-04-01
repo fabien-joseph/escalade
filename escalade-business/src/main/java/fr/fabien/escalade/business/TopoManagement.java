@@ -22,6 +22,10 @@ public class TopoManagement {
         return repository.findToposByUtilisateur_id(id);
     }
 
+    public Topo findTopoById(Long id) {
+        return repository.findTopoById(id);
+    }
+
     public List<Topo> findToposByDepartement(String departement) {
         return repository.findToposByDepartement(departement);
     }

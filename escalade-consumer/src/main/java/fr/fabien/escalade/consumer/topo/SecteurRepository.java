@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface SecteurRepository extends CrudRepository<Secteur, Long> {
     List<Secteur> findSecteursBySite_id (Long site_id);
+
+    Secteur findFirstByNom (String nom);
 }

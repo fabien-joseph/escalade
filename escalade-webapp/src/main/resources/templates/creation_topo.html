@@ -12,7 +12,7 @@
 <body>
 <div th:replace="fragments/header.html :: header"></div>
 <h3>Topo</h3>
-<form action="#" th:action="@{/topo}" th:object="${topo}" method=post>
+<form action="#" th:action="@{/topo/save}" th:object="${topo}" method=post>
     <p>Nom: <label>
         <input type="text" th:field="*{nom}"/>
     </label></p>

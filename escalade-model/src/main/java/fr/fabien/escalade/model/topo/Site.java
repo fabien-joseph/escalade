@@ -28,6 +28,9 @@ public class Site {
     private String description;
     private String localisation;
 
+    @ManyToOne
+    private Utilisateur utilisateur;
+
     @ManyToMany
     private List<Topo> topo = new ArrayList<>();
 

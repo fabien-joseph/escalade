@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -45,4 +47,13 @@ public class UtilisateurManagement implements UserDetailsService {
     public Utilisateur findByLogin (String login) {
         return repository.findByLogin(login);
     }
+
+    public Utilisateur findById (Long id) {
+        Optional<Utilisateur> utilisateurOptional = repository.findById(id);
+        Utilisateur utilisateur = null;
+        if(utilisateurOptional.isPresent())
+            utilisateur = utilisateurOptional.get();
+        return utilisateur;
+    }
+
 }

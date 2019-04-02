@@ -42,12 +42,30 @@ public class TopoController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         topo.setDate(date);
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("topo", topo);
         topo.setUtilisateur(utilisateur);
         topoManagement.ajout(topo);
-        return "show_topo";
+
+        String object_type = "topo";
+        String link = "/" + object_type + "/" + utilisateur.getId();
+
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("topo", topo);
+        model.addAttribute("object_type", object_type);
+        model.addAttribute("link", link);
+        return "save_success";
     }
+
+    @GetMapping("/topo/coffre")
+    public String listMesTopos(Model model,
+                               HttpServletRequest session) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("title", "Voici vos topos");
+        model.addAttribute("topos", utilisateur.getTopos());
+        return "recherche";
+    }
+
+    //@GetMapping("topo/{id}")
 
 
     /*

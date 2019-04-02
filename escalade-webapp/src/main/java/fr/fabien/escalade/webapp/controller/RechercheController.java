@@ -3,6 +3,7 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.business.UtilisateurManagement;
 import fr.fabien.escalade.model.topo.Topo;
+import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,13 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/recherche")
 public class RechercheController {
     @Autowired
     TopoManagement topoManagement;
     @Autowired
     UtilisateurManagement utilisateurManagement;
 
-    @GetMapping
+    @GetMapping("/recherche")
     public String listTopos(Model model, @RequestParam(value = "departement", required = false) String departement,
                             HttpServletRequest session) {
         List<Topo> topos = null;
@@ -32,7 +32,8 @@ public class RechercheController {
         } else {
             topos = topoManagement.findToposByDepartement(departement);
         }
-        model.addAttribute("utilisateur", utilisateurManagement.findByLogin(session.getUserPrincipal().getName()));
+        if(session.getUserPrincipal() != null)
+            model.addAttribute("utilisateur", utilisateurManagement.findByLogin(session.getUserPrincipal().getName()));
         model.addAttribute("topos", topos);
         return "recherche";
     }

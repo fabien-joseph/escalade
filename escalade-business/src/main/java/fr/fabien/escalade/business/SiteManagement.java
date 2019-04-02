@@ -13,13 +13,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SiteManagement {
-    @Autowired private final SiteRepository repository;
+    @Autowired
+    private final SiteRepository repository;
 
-    public List<Site> findSitesByTopo_id (Long id) {
+    public List<Site> findSitesByTopo_id(Long id) {
         return repository.findSitesByTopo_id(id);
     }
 
-    public void ajout (Site site) {
+    public List<Site> findSitesByUtilisateurId(Long id) {
+        return repository.findSitesByUtilisateurId(id);
+    }
+
+    public void ajout(Site site) {
         Site testSite = repository.findFirstByNom(
                 site.getNom()
         );

@@ -12,7 +12,7 @@ import java.util.List;
 public interface SiteRepository extends CrudRepository<Site, Long> {
     List<Site> findSitesByTopo_id(Long topo_id);
 
-    List<Site> findSitesByUtilisateurId (Long id);
+    List<Site> findSitesByUtilisateurId(Long id);
 
-    Site findFirstByNom (String nom);
+    Site findFirstByNom(String nom);
 }

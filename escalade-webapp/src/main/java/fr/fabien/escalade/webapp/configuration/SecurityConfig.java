@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -40,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/connexion*").permitAll()
                 .antMatchers("/inscription*").permitAll()
                 .antMatchers("/*").permitAll()
+                .antMatchers("/resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -48,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/", true)
                 //.failureUrl("/login.html?error=true")
                 .and()
-                .logout()
-                .logoutSuccessUrl("/")
-                .logoutUrl("/logout")
-                .deleteCookies("JSESSIONID");
+                .logout().invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").permitAll();
     }
 }

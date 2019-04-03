@@ -28,7 +28,7 @@ public class TopoController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
 
-    @GetMapping("/topo/create")
+    @GetMapping("/topo/")
     public String topo(Model model, HttpServletRequest session) {
         Topo topo = new Topo();
         model.addAttribute("utilisateur", utilisateurManagement.findByLogin(session.getUserPrincipal().getName()));
@@ -55,14 +55,14 @@ public class TopoController {
         return "save_success";
     }
 
-    @GetMapping("/topo/coffre")
+    @GetMapping("/topo/{id}")
     public String listMesTopos(Model model,
-                               HttpServletRequest session) {
+                               HttpServletRequest session, @PathVariable String id) {
         Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+        Long long_id = Long.parseLong(id);
         model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("title", "Voici vos topos");
-        model.addAttribute("topos", utilisateur.getTopos());
-        return "recherche";
+        model.addAttribute("topo", topoManagement.findTopoById(long_id));
+        return "show_topo";
     }
 
     //@GetMapping("topo/{id}")

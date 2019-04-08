@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SiteManagement {
-    @Autowired
     private final SiteRepository repository;
 
     public List<Site> findSitesByTopo_id(Long id) {
@@ -22,6 +21,10 @@ public class SiteManagement {
 
     public List<Site> findSitesByUtilisateurId(Long id) {
         return repository.findSitesByUtilisateurId(id);
+    }
+
+    public Site findSiteById (Long id) {
+        return repository.findSiteById(id);
     }
 
     public void ajout(Site site) {

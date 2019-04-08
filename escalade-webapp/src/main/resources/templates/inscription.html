@@ -12,7 +12,7 @@
 <body>
 <div th:replace="fragments/header.html :: header"></div>
 <h3>Inscription</h3>
-<form action="#" th:action="@{/inscription}" th:object="${utilisateur}" method=post>
+<form action="#" th:action="@{/inscription}" th:object="${utilisateur_insc}" method=post>
     <p>Mail: <label>
         <input type="text" th:field="*{courriel}"/>
     </label></p>

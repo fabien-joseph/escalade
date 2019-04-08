@@ -14,10 +14,15 @@
 
 <h1>Show topo</h1>
 
-<p th:text="'Nom : ' + ${topo.nom}"></p>
-<p th:text="'Département : ' + ${topo.departement}"></p>
-<p th:text="'Date d\'ajout : ' + ${topo.date}"></p>
-<p th:text="'Statut : ' + ${topo.isEnable}"></p>
-<p>Créateur : <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}" th:text="${topo.utilisateur.login}"></a></p>
+<p th:text="'Nom : ' + ${site.nom}"></p>
+<p th:text="'Date d\'ajout : ' + ${site.date}"></p>
+<p th:text="'Cotation min : ' + ${site.cotationMin}"></p>
+<p th:text="'Cotation max : ' + ${site.cotationMax}"></p>
+<p th:text="'Hauteur min : ' + ${site.hauteurMin}"></p>
+<p th:text="'Hauteur max : ' + ${site.hauteurMax}"></p>
+<p th:text="'Orientation : ' + ${site.orientation}"></p>
+<p th:text="'Type : ' + ${site.type}"></p>
+<p th:text="'Description : ' + ${site.description}"></p>
+<p th:text="'Localisation : ' + ${site.localisation}"></p>
 </body>
 </html>

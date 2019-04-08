@@ -14,11 +14,11 @@
 
 <h1>Profil</h1>
 
-<p th:text="'Login : ' + ${utilisateur.login}"></p>
-<p th:text="'Prénom : ' + ${utilisateur.prenom}"></p>
-<p th:text="'Nom : ' + ${utilisateur.nom}"></p>
+<p th:text="'Login : ' + ${utilisateur_show.login}"></p>
+<p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
+<p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
 
-<h1>Topos de l'utilisateurs</h1>
+<h1>Topos de l'utilisateur</h1>
 <table class="table">
     <thead>
     <tr>
@@ -35,7 +35,7 @@
     </tr>
     </tbody>
 </table>
-<h1>Sites de l'utilisateurs</h1>
+<h1>Sites de l'utilisateur</h1>
 <table class="table">
     <thead>
     <tr>

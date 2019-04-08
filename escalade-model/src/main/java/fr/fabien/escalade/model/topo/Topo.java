@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -21,8 +20,7 @@ public class Topo {
     private String nom;
     private Date date;
     private String departement;
-    private String statut;
-
+    private Boolean isEnable;
     @ManyToOne
     private Utilisateur utilisateur;
 
@@ -32,15 +30,14 @@ public class Topo {
 
     // ----- Constructors
 
-
     public Topo() {
     }
 
-    public Topo(String nom, Date date, String departement, String statut, Utilisateur utilisateur, List<Site> sites) {
+    public Topo(String nom, Date date, String departement, boolean isEnable, Utilisateur utilisateur, List<Site> sites) {
         this.nom = nom;
         this.date = date;
         this.departement = departement;
-        this.statut = statut;
+        this.isEnable = isEnable;
         this.utilisateur = utilisateur;
         this.sites = sites;
     }

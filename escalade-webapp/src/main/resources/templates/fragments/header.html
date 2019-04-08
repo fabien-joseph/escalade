@@ -19,10 +19,10 @@
             <a class="navbar-item" href="/">
                 Accueil
             </a>
-            <a th:if="${utilisateur}" class="navbar-item" href="/topo/">
+            <a th:if="${session.user}" class="navbar-item" href="/topo/">
                 Créer un topo
             </a>
-            <a th:if="${utilisateur}" class="navbar-item" href="/site/">
+            <a th:if="${session.user}" class="navbar-item" href="/site/">
                 Créer un site
             </a>
         </div>
@@ -37,7 +37,7 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <div th:if="${utilisateur}">
+                <div th:if="${session.user}">
                     <a class="button is-light" href="/profile/">
                         <p>Mon profile</p>
                     </a>
@@ -46,7 +46,7 @@
                         <strong>Déconnexion</strong>
                     </a>
                 </div>
-                <div th:if="${utilisateur} == null" class="buttons">
+                <div th:if="${session.user} == null" class="buttons">
                     <a class="button is-primary" href="/inscription">
                         <strong>S'inscrire</strong>
                     </a>

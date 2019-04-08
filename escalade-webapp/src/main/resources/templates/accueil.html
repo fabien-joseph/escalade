@@ -14,7 +14,7 @@
     <div class="hero-body">
         <div class="container">
             <div class="has-text-centered">
-                <div th:if="${utilisateur}"><p class="is-size-1" th:text="'Bonjour '+ ${utilisateur.prenom} + ' !'"></p></div>
+                <div th:if="${session.user}"><p class="is-size-1" th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
 
             </div>
             <div class="has-text-centered">

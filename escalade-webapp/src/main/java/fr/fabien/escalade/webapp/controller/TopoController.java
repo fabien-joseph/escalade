@@ -29,16 +29,16 @@ public class TopoController {
     UtilisateurManagement utilisateurManagement;
 
     @GetMapping("/topo/")
-    public String topo(Model model, HttpServletRequest session) {
+    public String topo(Model model, HttpServletRequest request) {
         Topo topo = new Topo();
-        model.addAttribute("utilisateur", utilisateurManagement.findByLogin(session.getUserPrincipal().getName()));
+        model.addAttribute("utilisateur", utilisateurManagement.findByLogin(request.getUserPrincipal().getName()));
         model.addAttribute("topo", topo);
         return "creation_topo";
     }
 
     @PostMapping("/topo/save")
-    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest session) {
-        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest request) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         topo.setDate(date);
@@ -57,21 +57,61 @@ public class TopoController {
 
     @GetMapping("/topo/{id}")
     public String listMesTopos(Model model,
-                               HttpServletRequest session, @PathVariable String id) {
-        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+                               HttpServletRequest request, @PathVariable String id) {
+        Utilisateur utilisateur = null;
+        if (request.getUserPrincipal() != null)
+            utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
         Long long_id = Long.parseLong(id);
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("topo", topoManagement.findTopoById(long_id));
         return "show_topo";
     }
 
-    //@GetMapping("topo/{id}")
+    @GetMapping("/site/")
+    public String site(Model model, HttpServletRequest request) {
+        Site site = new Site();
+        model.addAttribute("utilisateur", utilisateurManagement.findByLogin(request.getUserPrincipal().getName()));
+        model.addAttribute("site", site);
+        return "creation_site";
+    }
 
+    @PostMapping("/site/save")
+    public String creation_site(@ModelAttribute Site site, Model model, HttpServletRequest request) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        site.setDate(date);
+        site.setUtilisateur(utilisateur);
+        siteManagement.ajout(site);
+
+        String object_type = "site";
+        String link = "/" + object_type + "/" + utilisateur.getId();
+
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("site", site);
+        model.addAttribute("object_type", object_type);
+        model.addAttribute("link", link);
+        return "save_success";
+    }
+
+    @GetMapping("/site/{id}")
+    public String listMesSites(Model model,
+                               HttpServletRequest request, @PathVariable String id, HttpSession session) {
+        Long long_id = Long.parseLong(id);
+        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        model.addAttribute("site", siteManagement.findSiteById(long_id));
+        return "show_site";
+    }
+
+    @GetMapping("/site/{id_site}/secteur/[id_secteur}")
+    public String secteur() {
+        return "show_secteur";
+    }
 
     /*
     @PostMapping("/topo/create")
-    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest session) {
-        Utilisateur utilisateur = utilisateurManagement.findByLogin(session.getUserPrincipal().getName());
+    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest request) {
+        Utilisateur utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         Site site = new Site();

@@ -17,23 +17,26 @@ public class ConnexionController {
     UtilisateurManagement utilisateurManagement;
 
     @GetMapping ("/connexion")
-    public String connexion(Model model, HttpServletRequest session) {
+    public String connexion(Model model, HttpServletRequest request, HttpSession session) {
+        session.setAttribute("user", utilisateurManagement.findBySession(request));
         return "connexion";
     }
-
+    
     @GetMapping ("/inscription")
-    public String inscription(Model model) {
-        model.addAttribute("utilisateur", new Utilisateur());
+    public String inscription(Model model, HttpServletRequest request, HttpSession session) {
+        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        model.addAttribute("utilisateur_insc", new Utilisateur());
         return "inscription";
     }
 
     @PostMapping("/inscription")
-    public String inscriptionSubmit(@ModelAttribute Utilisateur utilisateur, BindingResult result, Model model){
+    public String inscriptionSubmit(@ModelAttribute Utilisateur utilisateur_insc, BindingResult result, Model model,
+                                    HttpSession session, HttpServletRequest request){
         if (result.hasErrors()) {
             return "error";
         }
-        utilisateurManagement.inscription(utilisateur);
-        model.addAttribute("utilisateur", utilisateur);
+        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        utilisateurManagement.inscription(utilisateur_insc);
         return "result";
     }
 }

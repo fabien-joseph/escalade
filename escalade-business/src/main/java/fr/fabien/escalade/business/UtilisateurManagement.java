@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -56,4 +56,10 @@ public class UtilisateurManagement implements UserDetailsService {
         return utilisateur;
     }
 
+    public Utilisateur findBySession (HttpServletRequest request) {
+        Utilisateur utilisateur = null;
+        if(request.getUserPrincipal() != null)
+            utilisateur = findByLogin(request.getUserPrincipal().getName());
+        return utilisateur;
+    }
 }

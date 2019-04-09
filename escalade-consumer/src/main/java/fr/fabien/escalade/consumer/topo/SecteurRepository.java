@@ -12,4 +12,6 @@ public interface SecteurRepository extends CrudRepository<Secteur, Long> {
     List<Secteur> findSecteursBySite_id (Long site_id);
 
     Secteur findFirstByNom (String nom);
+
+    Secteur findSecteurById(Long id);
 }

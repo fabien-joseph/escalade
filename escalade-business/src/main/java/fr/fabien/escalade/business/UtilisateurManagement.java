@@ -56,7 +56,7 @@ public class UtilisateurManagement implements UserDetailsService {
         return utilisateur;
     }
 
-    public Utilisateur findBySession (HttpServletRequest request) {
+    public Utilisateur findByRequest(HttpServletRequest request) {
         Utilisateur utilisateur = null;
         if(request.getUserPrincipal() != null)
             utilisateur = findByLogin(request.getUserPrincipal().getName());

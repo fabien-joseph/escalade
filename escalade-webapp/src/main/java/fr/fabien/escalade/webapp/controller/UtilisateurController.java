@@ -28,10 +28,10 @@ public class UtilisateurController {
     public String profile(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
         Long long_id = Long.parseLong(id);
         Utilisateur utilisateur_show = utilisateurManagement.findById(long_id);
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("utilisateur_show", utilisateur_show);
         model.addAttribute("topos", topoManagement.findToposByUtilisateur_id(long_id));
-        model.addAttribute("sites", siteManagement.findSitesByTopo_id(long_id));
+        model.addAttribute("sites", siteManagement.findSitesByUtilisateurId(long_id));
 
         return "profile";
     }

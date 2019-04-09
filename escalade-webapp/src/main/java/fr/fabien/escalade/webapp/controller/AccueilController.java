@@ -14,15 +14,14 @@ import javax.servlet.http.HttpSession;
 import static fr.fabien.escalade.business.Departements.departements;
 
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/")
+@RequiredArgsConstructor @RequestMapping("/")
 public class AccueilController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
 
     @GetMapping
     public String accueil(Model model, HttpServletRequest request, HttpSession session) {
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("departements", departements);
         return "accueil";
     }

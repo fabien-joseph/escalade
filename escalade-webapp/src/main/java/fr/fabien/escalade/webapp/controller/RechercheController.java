@@ -3,13 +3,11 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.business.UtilisateurManagement;
 import fr.fabien.escalade.model.topo.Topo;
-import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +31,7 @@ public class RechercheController {
         } else {
             topos = topoManagement.findToposByDepartement(departement);
         }
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("topos", topos);
         return "recherche";
     }

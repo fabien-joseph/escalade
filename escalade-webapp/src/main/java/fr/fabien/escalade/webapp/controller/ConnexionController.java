@@ -18,13 +18,13 @@ public class ConnexionController {
 
     @GetMapping ("/connexion")
     public String connexion(Model model, HttpServletRequest request, HttpSession session) {
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         return "connexion";
     }
     
     @GetMapping ("/inscription")
     public String inscription(Model model, HttpServletRequest request, HttpSession session) {
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("utilisateur_insc", new Utilisateur());
         return "inscription";
     }
@@ -35,7 +35,7 @@ public class ConnexionController {
         if (result.hasErrors()) {
             return "error";
         }
-        session.setAttribute("user", utilisateurManagement.findBySession(request));
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         utilisateurManagement.inscription(utilisateur_insc);
         return "result";
     }

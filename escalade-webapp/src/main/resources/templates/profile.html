@@ -13,48 +13,51 @@
 <div th:replace="fragments/header.html :: header"></div>
 
 <h1>Profil</h1>
+<div th:if="${utilisateur_show}">
 
-<p th:text="'Login : ' + ${utilisateur_show.login}"></p>
-<p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
-<p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
+    <p th:text="'Login : ' + ${utilisateur_show.login}"></p>
+    <p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
+    <p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
 
-<h1>Topos de l'utilisateur</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nom</th>
-        <th>Date</th>
-        <th>Département</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="t:${topos}">
-        <td><a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
-        <td th:text="${t.getDate()}"></td>
-        <td th:text="${t.getDepartement()}"></td>
-    </tr>
-    </tbody>
-</table>
-<h1>Sites de l'utilisateur</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nom</th>
-        <th>Cotation min</th>
-        <th>Cotation max</th>
-        <th>Hauteur min</th>
-        <th>Hauteur max</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="s:${sites}">
-        <td><a th:href="@{/site/{id}(id=${s.getId()})}" th:text="${s.getNom()}"></a></td>
-        <td th:text="${s.getCotationMin()}"></td>
-        <td th:text="${s.getCotationMax()}"></td>
-        <td th:text="${s.getHauteurMin()}"></td>
-        <td th:text="${s.getHauteurMax()}"></td>
-    </tr>
-    </tbody>
-</table>
+    <h1>Topos de l'utilisateur</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Département</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t:${topos}">
+            <td><a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
+            <td th:text="${t.getDate()}"></td>
+            <td th:text="${t.getDepartement()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>Sites de l'utilisateur</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Cotation min</th>
+            <th>Cotation max</th>
+            <th>Hauteur min</th>
+            <th>Hauteur max</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s:${sites}">
+            <td><a th:href="@{/site/{id}(id=${s.getId()})}" th:text="${s.getNom()}"></a></td>
+            <td th:text="${s.getCotationMin()}"></td>
+            <td th:text="${s.getCotationMax()}"></td>
+            <td th:text="${s.getHauteurMin()}"></td>
+            <td th:text="${s.getHauteurMax()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p th:if="${utilisateur_show == null}">Utilisateur introuvable</p>
 </body>
 </html>

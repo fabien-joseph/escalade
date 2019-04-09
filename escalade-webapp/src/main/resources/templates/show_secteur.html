@@ -8,31 +8,20 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
-
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<h3>Secteur</h3>
-<form action="#" th:action="@{/secteur/save}" th:object="${secteur}" method=post>
-    <p>Nom: <label>
-        <input type="text" th:field="*{nom}"/>
-    </label></p>
-    <p>Cotation min: <label>
-        <input type="text" th:field="*{cotationMin}"/>
-    </label></p>
-    <p>Cotation max: <label>
-        <input type="text" th:field="*{cotationMax}"/>
-    </label></p>
 
-    <p>Hauteur min: <label>
-        <input type="text" th:field="*{hauteurMin}"/>
-    </label></p>
+<h1>Show secteur</h1>
+<div th:if="${secteur}">
+    <p th:text="'Nom : ' + ${secteur.nom}"></p>
+    <p th:text="'Date d\'ajout : ' + ${secteur.date}"></p>
+    <p th:text="'Cotation min : ' + ${secteur.cotationMin}"></p>
+    <p th:text="'Cotation max : ' + ${secteur.cotationMax}"></p>
+    <p th:text="'Hauteur min : ' + ${secteur.hauteurMin}"></p>
+    <p th:text="'Hauteur max : ' + ${secteur.hauteurMax}"></p>
+</div>
+<p th:if="${secteur == null}">Secteur inexistant !</p>
 
-    <p>Hauteur max: <label>
-        <input type="text" th:field="*{hauteurMax}"/>
-    </label></p>
-
-    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-</form>
 </body>
 </html>

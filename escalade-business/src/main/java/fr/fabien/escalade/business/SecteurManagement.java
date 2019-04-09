@@ -26,9 +26,13 @@ public class SecteurManagement {
         );
 
         if (testSecteur != null) {
-            System.out.println("Erreur - Ce site existe déjà, id = " + testSecteur.getId());
+            System.out.println("Erreur - Ce secteur existe déjà, id = " + testSecteur.getId());
         } else {
             repository.save(secteur);
         }
+    }
+
+    public Secteur findSecteurById(Long id) {
+        return repository.findSecteurById(id);
     }
 }

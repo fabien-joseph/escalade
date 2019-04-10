@@ -35,4 +35,5 @@ public class SecteurManagement {
     public Secteur findSecteurById(Long id) {
         return repository.findSecteurById(id);
     }
+
 }

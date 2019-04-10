@@ -29,4 +29,7 @@ public class VoieManagement {
             repository.save(voie);
         }
     }
+    public Voie findVoieById (Long id) {
+        return repository.findVoieById(id);
+    }
 }

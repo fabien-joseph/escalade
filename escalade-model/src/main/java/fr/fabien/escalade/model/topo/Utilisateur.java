@@ -27,6 +27,9 @@ public class Utilisateur {
     private List<Topo> topos = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
+    private List<Site> sites = new ArrayList<>();
+
+    @OneToMany (mappedBy = "utilisateur")
     private List<Topo> notes = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")

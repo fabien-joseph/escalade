@@ -121,11 +121,45 @@ public class TopoController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         secteur.setDate(date);
+        System.out.println(secteur.getSite().getNom());
         secteurManagement.ajout(secteur);
 
         String object_type = "secteur";
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("secteur", secteur);
+        model.addAttribute("object_type", object_type);
+        return "save_success";
+    }
+
+    @GetMapping("/secteur/{id}/voie")
+    public String creation_voie(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
+        Voie voie = new Voie();
+        voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
+        model.addAttribute("voie", voie);
+        return "creation_voie";
+    }
+
+    @GetMapping("/voie/{id}")
+    public String voie(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
+        long long_id = Long.parseLong(id);
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
+        model.addAttribute("voie", voieManagement.findVoieById(long_id));
+        return "show_voie";
+    }
+
+    @PostMapping("/voie/save")
+    public String creation_voie(@ModelAttribute Voie voie, Model model, HttpServletRequest request) {
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        voie.setDate(date);
+        System.out.println(voie.getSecteur().getNom());
+        voieManagement.ajout(voie);
+
+        String object_type = "voie";
+        model.addAttribute("utilisateur", utilisateur);
+        model.addAttribute("voie", voie);
         model.addAttribute("object_type", object_type);
         return "save_success";
     }

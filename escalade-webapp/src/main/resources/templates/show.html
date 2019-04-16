@@ -1,0 +1,13 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
+<head th:replace="fragments/head.html :: head">
+</head>
+<body>
+<div th:replace="fragments/header.html :: header"></div>
+<div th:if="${topo}"><div th:replace="fragments/show/show_topo.html :: show_topo"></div></div>
+<div th:if="${site}"><div th:replace="fragments/show/show_site.html :: show_site"></div></div>
+<div th:if="${secteur}"><div th:replace="fragments/show/show_secteur.html :: show_secteur"></div></div>
+<div th:if="${voie}"><div th:replace="fragments/show/show_voie.html :: show_voie"></div></div>
+</body>
+</html>

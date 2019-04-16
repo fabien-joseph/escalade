@@ -12,9 +12,11 @@ import java.util.Optional;
 
 @Transactional
 @Service
-@RequiredArgsConstructor
-public class CommentaireManagement {
-    @Autowired private final CommentaireRepository repository;
+public class CommentaireManagement extends CrudManager<Commentaire, CommentaireRepository> {
+
+    public CommentaireManagement(CommentaireRepository repository) {
+        super(repository);
+    }
 
     public Optional<Commentaire> findById(Long id) {
         return repository.findById(id);

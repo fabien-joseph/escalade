@@ -11,9 +11,11 @@ import java.util.List;
 
 @Transactional
 @Service
-@RequiredArgsConstructor
-public class SiteManagement {
-    private final SiteRepository repository;
+public class SiteManagement extends CrudManager<Site, SiteRepository> {
+
+    public SiteManagement(SiteRepository repository) {
+        super(repository);
+    }
 
     public List<Site> findSitesByTopo_id(Long id) {
         return repository.findSitesByTopo_id(id);
@@ -23,19 +25,7 @@ public class SiteManagement {
         return repository.findSitesByUtilisateurId(id);
     }
 
-    public Site findSiteById (Long id) {
+    public Site findSiteById(Long id) {
         return repository.findSiteById(id);
-    }
-
-    public void ajout(Site site) {
-        Site testSite = repository.findFirstByNom(
-                site.getNom()
-        );
-
-        if (testSite != null) {
-            System.out.println("Erreur - Ce site existe déjà, id = " + testSite.getId());
-        } else {
-            repository.save(site);
-        }
     }
 }

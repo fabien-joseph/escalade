@@ -1,15 +1,10 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Topo escalade</title>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" />
+<head th:replace="fragments/head.html :: head">
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
+<!--/*@thymesVar id="title" type="java.lang.String"*/-->
 <div th:if="${title}" class="has-text-centered">
     <p th:text="${title}" class="is-size-3 search"></p>
 </div>
@@ -23,8 +18,10 @@
     </tr>
     </thead>
     <tbody>
+    <!--/*@thymesVar id="topos" type="java.util.List"*/-->
     <tr th:each="t:${topos}">
-        <td><a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
+        <td>
+        <a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
         <td th:text="${t.getDate()}"></td>
         <td th:text="${t.getDepartement()}"></td>
     </tr>

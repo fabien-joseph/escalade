@@ -1,0 +1,11 @@
+<div th:fragment="show_voie" xmlns:th="http://www.thymeleaf.org">
+    <h1>Show voie</h1>
+    <!--/*@thymesVar id="voie" type="fr.fabien.escalade.model.topo.Voie"*/-->
+    <div th:if="${voie}">
+        <p th:text="'Nom : ' + ${voie.nom}"></p>
+        <p th:text="'Date d\'ajout : ' + ${voie.date}"></p>
+        <p th:text="'Cotation min : ' + ${voie.longueur}"></p>
+        <p th:text="'Cotation max : ' + ${voie.description}"></p>
+    </div>
+    <p th:if="${voie == null}">Voie inexistante !</p>
+</div>

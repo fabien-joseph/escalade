@@ -1,0 +1,42 @@
+<div th:fragment="show_site" xmlns:th="http://www.thymeleaf.org">
+    <h1>Show site</h1>
+    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+    <div th:if="${site}">
+        <p th:text="'Nom : ' + ${site.nom}"></p>
+        <p th:text="'Date d\'ajout : ' + ${site.date}"></p>
+        <p th:text="'Cotation min : ' + ${site.cotationMin}"></p>
+        <p th:text="'Cotation max : ' + ${site.cotationMax}"></p>
+        <p th:text="'Hauteur min : ' + ${site.hauteurMin}"></p>
+        <p th:text="'Hauteur max : ' + ${site.hauteurMax}"></p>
+        <p th:text="'Orientation : ' + ${site.orientation}"></p>
+        <p th:text="'Type : ' + ${site.type}"></p>
+        <p th:text="'Description : ' + ${site.description}"></p>
+        <p th:text="'Localisation : ' + ${site.localisation}"></p>
+        <p>Créateur : <a th:href="@{/profile/{id}(id=${site.utilisateur.id})}" th:text="${site.utilisateur.login}"></a>
+        </p>
+        <a th:href="${site.id + '/secteur'}">Ajouter un secteur</a>
+
+        <h1>Sites de l'utilisateur</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Cotation min</th>
+                <th>Cotation max</th>
+                <th>Hauteur min</th>
+                <th>Hauteur max</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s:${site.getSecteurs()}">
+                <td><a th:href="@{/secteur/{id}(id=${s.getId()})}" th:text="${s.getNom()}"></a></td>
+                <td th:text="${s.getCotationMin()}"></td>
+                <td th:text="${s.getCotationMax()}"></td>
+                <td th:text="${s.getHauteurMin()}"></td>
+                <td th:text="${s.getHauteurMax()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p th:if="${site == null}">Site inexistant !</p>
+</div>

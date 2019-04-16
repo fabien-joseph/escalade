@@ -1,0 +1,32 @@
+<div th:fragment="show_secteur" xmlns:th="http://www.thymeleaf.org">
+    <h1>Show secteur</h1>
+    <!--/*@thymesVar id="secteur" type="fr.fabien.escalade.model.topo.Secteur"*/-->
+    <div th:if="${secteur}">
+        <p th:text="'Nom : ' + ${secteur.nom}"></p>
+        <p th:text="'Date d\'ajout : ' + ${secteur.date}"></p>
+        <p th:text="'Cotation min : ' + ${secteur.cotationMin}"></p>
+        <p th:text="'Cotation max : ' + ${secteur.cotationMax}"></p>
+        <p th:text="'Hauteur min : ' + ${secteur.hauteurMin}"></p>
+        <p th:text="'Hauteur max : ' + ${secteur.hauteurMax}"></p>
+
+        <h1>Sites de l'utilisateur</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Longueur</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="v:${secteur.getVoies()}">
+                <td><a th:href="@{/voie/{id}(id=${v.getId()})}" th:text="${v.getNom()}"></a></td>
+                <td th:text="${v.getLongueur()}"></td>
+                <td th:text="${v.getDescription()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="${secteur.id + '/voie'}">Ajouter une voie</a>
+    </div>
+    <p th:if="${secteur == null}">Secteur inexistant !</p>
+</div>

@@ -1,0 +1,18 @@
+<div th:fragment="creation_voie" xmlns:th="http://www.thymeleaf.org">
+    <h3>Voie</h3>
+    <!--/*@thymesVar id="voie" type="fr.fabien.escalade.model.topo.Voie"*/-->
+    <form action="#" th:action="@{/voie/save}" th:object="${voie}" method=post>
+        <p>Nom: <label>
+            <input type="text" th:field="*{nom}"/>
+        </label>
+        </p>
+        <p>Description: <label>
+            <input type="text" th:field="*{description}"/>
+        </label></p>
+        <p>Longueur: <label>
+            <input type="text" th:field="*{longueur}"/>
+        </label></p>
+        <input type="hidden" th:field="*{secteur}" th:value="${voie.secteur}">
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>

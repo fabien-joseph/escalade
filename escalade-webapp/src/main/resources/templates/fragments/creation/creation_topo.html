@@ -1,0 +1,19 @@
+<div th:fragment="creation_topo" xmlns:th="http://www.thymeleaf.org">
+    <h3>Topo</h3>
+    <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
+    <form xmlns:th="http://www.thymeleaf.org" th:fragment="creation_topo" action="#" th:action="@{/topo/save}"
+          th:object="${topo}" method=post>
+        <p>Nom: <label>
+            <input type="text" th:field="*{nom}"/>
+        </label></p>
+        <p>Departement: <label>
+            <input type="text" th:field="*{departement}"/>
+        </label></p>
+        <p>Statut: <label>
+            <input type="checkbox" th:field="*{isEnable}"/>
+        </label></p>
+        <input type="hidden" th:field="*{utilisateur}" th:value="${topo.utilisateur}">
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>
+

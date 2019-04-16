@@ -1,0 +1,41 @@
+<div th:fragment="creation_site" xmlns:th="http://www.thymeleaf.org">
+    <h3>Site</h3>
+    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+    <form action="#" th:action="@{/site/save}" th:object="${site}" method=post>
+        <p>Nom: <label>
+            <input type="text" th:field="*{nom}"/>
+        </label></p>
+        <p>Cotation min: <label>
+            <input type="text" th:field="*{cotationMin}"/>
+        </label></p>
+        <p>Cotation max: <label>
+            <input type="text" th:field="*{cotationMax}"/>
+        </label></p>
+
+        <p>Hauteur min: <label>
+            <input type="text" th:field="*{hauteurMin}"/>
+        </label></p>
+
+        <p>Hauteur max: <label>
+            <input type="text" th:field="*{hauteurMax}"/>
+        </label></p>
+
+        <p>Orientation: <label>
+            <input type="text" th:field="*{orientation}"/>
+        </label></p>
+
+        <p>Type: <label>
+            <input type="text" th:field="*{type}"/>
+        </label></p>
+
+        <p>Description: <label>
+            <input type="text" th:field="*{description}"/>
+        </label></p>
+
+        <p>Localisation: <label>
+            <input type="text" th:field="*{localisation}"/>
+        </label></p>
+        <input type="hidden" th:field="*{utilisateur}" th:value="${site.utilisateur}">
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>

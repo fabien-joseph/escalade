@@ -16,10 +16,11 @@ import java.util.Optional;
 
 @Transactional
 @Service
-@RequiredArgsConstructor
-public class UtilisateurManagement implements UserDetailsService {
-    @Autowired
-    private final UtilisateurRepository repository;
+public class UtilisateurManagement extends CrudManager<Utilisateur, UtilisateurRepository> implements UserDetailsService {
+
+    public UtilisateurManagement(UtilisateurRepository repository) {
+        super(repository);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,31 +30,9 @@ public class UtilisateurManagement implements UserDetailsService {
 
         return new UtilisateurPrincipal(utilisateur);
     }
-    public void inscription(Utilisateur utilisateur) {
-        Utilisateur testUtilisateur = repository.findFirstByCourrielOrLogin(
-                utilisateur.getCourriel(),
-                utilisateur.getLogin()
-        );
-
-        if (testUtilisateur != null) {
-            System.out.println("Erreur - Ces identifiants existent déjà, id = " + testUtilisateur.getId());
-        } else {
-            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-            utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
-            repository.save(utilisateur);
-        }
-    }
 
     public Utilisateur findByLogin (String login) {
         return repository.findByLogin(login);
-    }
-
-    public Utilisateur findById (Long id) {
-        Optional<Utilisateur> utilisateurOptional = repository.findById(id);
-        Utilisateur utilisateur = null;
-        if(utilisateurOptional.isPresent())
-            utilisateur = utilisateurOptional.get();
-        return utilisateur;
     }
 
     public Utilisateur findByRequest(HttpServletRequest request) {

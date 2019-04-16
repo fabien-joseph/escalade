@@ -1,0 +1,13 @@
+<div th:fragment="show_topo" xmlns:th="http://www.thymeleaf.org">
+    <h1>Show topo</h1>
+    <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
+    <div th:if="${topo}">
+        <p th:text="'Nom : ' + ${topo.nom}"></p>
+        <p th:text="'Département : ' + ${topo.departement}"></p>
+        <p th:text="'Date d\'ajout : ' + ${topo.date}"></p>
+        <p th:text="'Statut : ' + ${topo.isEnable}"></p>
+        <p>Créateur : <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}" th:text="${topo.utilisateur.login}"></a>
+        </p>
+    </div>
+    <p th:if="${topo == null}">Topo inexistant !</p>
+</div>

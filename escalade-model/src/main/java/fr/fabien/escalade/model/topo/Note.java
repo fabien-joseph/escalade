@@ -1,6 +1,7 @@
 package fr.fabien.escalade.model.topo;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Note {
@@ -9,6 +10,7 @@ public class Note {
     private int id;
 
     private Integer note;
+    private Date date;
 
     @ManyToOne
     private Voie voie;

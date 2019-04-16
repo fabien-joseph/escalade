@@ -2,9 +2,11 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,8 +24,10 @@ public class Utilisateur {
     private String prenom;
     private String nom;
     private Boolean isAdmin;
+    private Date date;
 
     @OneToMany (mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Topo> topos = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")

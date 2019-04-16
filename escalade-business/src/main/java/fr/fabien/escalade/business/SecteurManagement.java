@@ -12,28 +12,17 @@ import java.util.List;
 
 @Transactional
 @Service
-@RequiredArgsConstructor
-public class SecteurManagement {
-    private final SecteurRepository repository;
+public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
 
-    public List<Secteur> findSecteursBySite_id (Long id) {
-        return repository.findSecteursBySite_id(id);
+    public SecteurManagement(SecteurRepository repository) {
+        super(repository);
     }
 
-    public void ajout (Secteur secteur) {
-        Secteur testSecteur = repository.findFirstByNom(
-                secteur.getNom()
-        );
-
-        if (testSecteur != null) {
-            System.out.println("Erreur - Ce secteur existe déjà, id = " + testSecteur.getId());
-        } else {
-            repository.save(secteur);
-        }
+    public List<Secteur> findSecteursBySite_id(Long id) {
+        return repository.findSecteursBySite_id(id);
     }
 
     public Secteur findSecteurById(Long id) {
         return repository.findSecteurById(id);
     }
-
 }

@@ -4,54 +4,37 @@
 <head th:replace="fragments/head.html :: head">
 </head>
 <body>
+
 <div th:replace="fragments/header.html :: header"></div>
-
-<h1>Profil</h1>
-<div th:if="${utilisateur_show}">
-
-    <p th:text="'Login : ' + ${utilisateur_show.login}"></p>
-    <p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
-    <p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
-
-    <h1>Topos de l'utilisateur</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Date</th>
-            <th>Département</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="t:${topos}">
-            <td><a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
-            <td th:text="${t.getDate()}"></td>
-            <td th:text="${t.getDepartement()}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <h1>Sites de l'utilisateur</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Cotation min</th>
-            <th>Cotation max</th>
-            <th>Hauteur min</th>
-            <th>Hauteur max</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="s:${sites}">
-            <td><a th:href="@{/site/{id}(id=${s.getId()})}" th:text="${s.getNom()}"></a></td>
-            <td th:text="${s.getCotationMin()}"></td>
-            <td th:text="${s.getCotationMax()}"></td>
-            <td th:text="${s.getHauteurMin()}"></td>
-            <td th:text="${s.getHauteurMax()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<p th:if="${utilisateur_show == null}">Utilisateur introuvable</p>
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="has-text-centered title" th:text="'Profil de ' + ${utilisateur_show.getNom()}">
+            </h1>
+            <div th:if="${utilisateur_show}">
+                <div class="columns">
+                    <div class="column">
+                        <p th:text="'Login : ' + ${utilisateur_show.login}"></p>
+                        <p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
+                        <p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
+                    </div>
+                </div>
+                <div class="columns is-multiline">
+                        <div class="column is-one-quarter" th:each="topo:${utilisateur_show.getTopos()}">
+                            <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
+                        </div>
+                </div>
+                <div class="columns">
+                    <table>
+                        <tr th:each="site:${utilisateur_show.getSites()}">
+                            <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p th:if="${utilisateur_show == null}">Utilisateur introuvable</p>
+        </div>
+    </div>
+</section>
 </body>
 </html>

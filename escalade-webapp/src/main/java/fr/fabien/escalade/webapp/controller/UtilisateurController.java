@@ -41,7 +41,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request, HttpSession session) {
+    public String profile(Model model, HttpServletRequest request) {
         Utilisateur utilisateur = null;
         if (request.getUserPrincipal() != null)
             utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());

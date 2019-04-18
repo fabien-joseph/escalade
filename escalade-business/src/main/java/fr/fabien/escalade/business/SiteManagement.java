@@ -25,7 +25,7 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByUtilisateurId(id);
     }
 
-    public Site findSiteById(Long id) {
-        return repository.findSiteById(id);
+    public List<Site> findSitesByNom(String nom) {
+        return repository.findSitesByNomContaining(nom);
     }
 }

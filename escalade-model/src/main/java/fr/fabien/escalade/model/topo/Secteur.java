@@ -2,6 +2,8 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -29,7 +31,8 @@ public class Secteur {
     @OneToMany (mappedBy = "secteur")
     private List<Voie> voies = new ArrayList<>();
 
-    @ManyToOne private Site site;
+    @ManyToOne
+    private Site site;
 
     // ----- Constructors
     public Secteur() {

@@ -1,0 +1,25 @@
+<div th:fragment="card_site" xmlns:th="http://www.thymeleaf.org" class="card column is-one-fifth">
+    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+
+    <div class="card-image">
+        <figure class="image is-4by3">
+            <img src="https://montemedio.com/wp-content/uploads/2018/03/Grande-voie-escalade-annecy-Zig-Zag.jpg"
+                 alt="Placeholder image">
+        </figure>
+    </div>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4 has-text-centered">Site</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p th:text="${site.getDescription()}"></p>
+            <span>Par : <a th:href="@{/profile/{id}(id=${site.getUtilisateur().getId()})}"
+                           th:text="${site.getUtilisateur().getLogin()}"></a></span>
+            <br>
+            <time datetime="2016-1-1" th:text="${site.getDate()}"></time>
+        </div>
+    </div>
+</div>

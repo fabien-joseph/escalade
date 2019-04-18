@@ -2,6 +2,8 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,14 +25,15 @@ public class Voie {
     private String description;
     private Integer note;
 
-
-    @ManyToOne private Secteur secteur;
+    @ManyToOne
+    private Secteur secteur;
 
     @OneToMany(mappedBy = "voie")
     private List<Note> notes = new ArrayList<>();
 
 
     @OneToMany (mappedBy = "voie")
+    @JsonBackReference
     private List<Commentaire> commentaires = new ArrayList<>();
 
     // ----- Constructors

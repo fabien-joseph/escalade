@@ -1,20 +1,16 @@
 package fr.fabien.escalade.webapp.controller;
 
-import fr.fabien.escalade.business.TopoManagement;
-import fr.fabien.escalade.business.UtilisateurManagement;
-import fr.fabien.escalade.model.topo.Topo;
+import fr.fabien.escalade.business.*;
+import fr.fabien.escalade.model.topo.Commentaire;
 import lombok.RequiredArgsConstructor;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,18 +18,25 @@ public class RechercheController {
     @Autowired
     TopoManagement topoManagement;
     @Autowired
+    CommentaireManagement voieManagement;
+    @Autowired
+    SiteManagement siteManagement;
+    @Autowired
     UtilisateurManagement utilisateurManagement;
 
-    @GetMapping("/recherche")
-    @JsonIgnore
-    public List<Topo> listTopos(Model model, @RequestParam(value = "departement", required = false) String departement) {
-        List<Topo> topos;
-        if (departement == null || departement.equals("")) {
-            topos = topoManagement.findAll();
-        } else {
-            topos = topoManagement.findToposByDepartement(departement);
-        }
-        model.addAttribute("topos", topos);
-        return topos;
+    @RequestMapping(value = "/recherche")
+    @ResponseBody
+    public List<Pair<Long, String>> listTopos(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
+        return topoManagement.findAll()
+                .stream()
+                .map(topo -> new ImmutablePair<>(topo.getId(), topo.getNom()))
+                .collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "/test")
+    @ResponseBody
+    public Commentaire test() {
+        Optional<Commentaire> commentaire = voieManagement.findById(1L);
+        return commentaire.get();
     }
 }

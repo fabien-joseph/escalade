@@ -2,6 +2,8 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -21,8 +23,12 @@ public class Topo {
     private Date date;
     private String departement;
     private Boolean isEnable;
+
     @ManyToOne
     private Utilisateur utilisateur;
+
+    @ManyToOne
+    private Utilisateur utilisateurReserv;
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @ManyToMany

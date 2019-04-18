@@ -23,13 +23,8 @@ public class CrudManager<T, C extends CrudRepository<T, Long>> {
         Date date = new Date(System.currentTimeMillis());
         try {
             method = object.getClass().getMethod("setDate", Date.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        try {
-            assert method != null;
             method.invoke(object, date);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         repository.save(object);

@@ -88,7 +88,7 @@ public class TopoController {
                                HttpServletRequest request, @PathVariable String id, HttpSession session) {
         Long long_id = Long.parseLong(id);
         session.setAttribute("user", utilisateurManagement.findByRequest(request));
-        model.addAttribute("site", siteManagement.findSiteById(long_id));
+        model.addAttribute("site", siteManagement.findById(long_id).get());
         return "show";
     }
 
@@ -96,7 +96,7 @@ public class TopoController {
     public String creation_secteur(Model model, @PathVariable String id) {
         Secteur secteur = new Secteur();
         secteur.setDate(new Date(System.currentTimeMillis()));
-        secteur.setSite(siteManagement.findSiteById(Long.parseLong(id)));
+        secteur.setSite(siteManagement.findById(Long.parseLong(id)).get());
         model.addAttribute("secteur", secteur);
         return "creation";
     }

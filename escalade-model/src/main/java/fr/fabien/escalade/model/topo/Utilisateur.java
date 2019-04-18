@@ -2,7 +2,10 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,13 +34,20 @@ public class Utilisateur {
     private List<Topo> topos = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Site> sites = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Topo> notes = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Commentaire> commentaires = new ArrayList<>();
+
+    @OneToMany (mappedBy = "utilisateur")
+    @JsonIgnore
+    private List<Topo> reservation = new ArrayList<>();
 
     // ----- Constructors
     public Utilisateur() {

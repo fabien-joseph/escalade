@@ -4,6 +4,7 @@ import fr.fabien.escalade.model.topo.Voie;
 import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,8 +20,14 @@ public class Commentaire {
     private String commentaire;
     private Date date;
 
-    @ManyToOne private Voie voie;
-    @ManyToOne private Utilisateur utilisateur;
+    @ManyToOne
+    @JsonManagedReference
+    private Voie voie;
+
+
+    @ManyToOne
+    @JsonManagedReference
+    private Utilisateur utilisateur;
 
     // ----- Constructors
     public Commentaire() {

@@ -4,14 +4,21 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
+<form>
+    <input type="text" id="recherche"/>
+</form>
+<div id="resultat">
+</div>
+
 <section class="hero is-fullheight-with-navbar">
     <div class="hero-body">
         <div class="container">
             <div class="has-text-centered">
-                <div th:if="${session.user}"><p class="is-size-1" th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
+                <div th:if="${session.user}"><p class="is-size-1"
+                                                th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
 
             </div>
-            <div class="has-text-centered">
+            <div class="has-text-centered" id="test">
                 <p class="is-size-3 search">Chercher un topo :</p>
             </div>
 
@@ -31,7 +38,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="control">
+                    <div class="control" id="droppable">
                         <button type="submit" class="button is-primary is-large">Rechercher</button>
                     </div>
                 </div>
@@ -39,5 +46,14 @@
         </div>
     </div>
 </section>
+<style>
+</style>
+<script>
+    $(function () {
+        $('#recherche').autocomplete({
+            source : "recherche",
+        });
+    });
+</script>
 </body>
 </html>

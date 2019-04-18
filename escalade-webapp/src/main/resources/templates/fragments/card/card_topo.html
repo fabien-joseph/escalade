@@ -1,0 +1,30 @@
+<div th:fragment="card_topo" xmlns:th="http://www.thymeleaf.org" class="card">
+    <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
+    <div class="card-image">
+        <figure class="image is-4by3">
+            <img src="https://cache.cosmopolitan.fr/data/photo/w1000_ci/51/sport-femme-escalade.jpg"
+                 alt="Placeholder image">
+        </figure>
+    </div>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4 has-text-centered">Topo</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p th:text="${topo.getNom()}"></p>
+            <span>Par : <a th:href="@{/profile/{id}(id=${topo.getUtilisateur().getId()})}"
+                           th:text="${topo.getUtilisateur().getLogin()}"></a></span>
+            <br>
+            <time datetime="2016-1-1" th:text="${topo.getDate()}"></time>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
+        <a href="#" class="card-footer-item" th:text="${utilisateur_show.getId() == session.user?.getId()} ? 'Réservations' : 'Réserver'"></a>
+        <a href="#" class="card-footer-item" th:text="${utilisateur_show.getId() == session.user?.getId()} ? 'Editer' : 'Voir'"></a>
+        <a th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Supprimer</a>
+    </footer>
+</div>

@@ -9,7 +9,7 @@
 <section class="hero">
     <div class="hero-body">
         <div class="container">
-            <h1 class="has-text-centered title" th:text="'Profil de ' + ${utilisateur_show.getNom()}">
+            <h1 class="has-text-centered title" th:text="'Profil de ' + ${utilisateur_show.getLogin()}">
             </h1>
             <div th:if="${utilisateur_show}">
                 <div class="columns">
@@ -20,16 +20,14 @@
                     </div>
                 </div>
                 <div class="columns is-multiline">
-                        <div class="column is-one-quarter" th:each="topo:${utilisateur_show.getTopos()}">
+                        <div class="column is-one-fifth" th:each="topo:${utilisateur_show.getTopos()}">
                             <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
                         </div>
                 </div>
-                <div class="columns">
-                    <table>
-                        <tr th:each="site:${utilisateur_show.getSites()}">
-                            <div th:replace="fragments/card/card_site.html :: card_site"></div>
-                        </tr>
-                    </table>
+                <div class="columns is-multiline">
+                    <div class="column is-one-fifth" th:each="site:${utilisateur_show.getSites()}">
+                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                    </div>
                 </div>
             </div>
             <p th:if="${utilisateur_show == null}">Utilisateur introuvable</p>

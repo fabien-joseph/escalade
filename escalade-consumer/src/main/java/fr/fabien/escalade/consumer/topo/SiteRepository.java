@@ -14,5 +14,5 @@ public interface SiteRepository extends CrudRepository<Site, Long> {
 
     List<Site> findSitesByUtilisateurId(Long id);
 
-    List<Site> findSitesByNomContaining(String nom);
+    List<Site> findSitesByNomContainingIgnoreCase(String nom);
 }

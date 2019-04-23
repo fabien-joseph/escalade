@@ -51,7 +51,10 @@
 <script>
     $(function () {
         $('#recherche').autocomplete({
-            source : "recherche",
+            source: "recherche",
+            change: function () {
+                alert('Test' + ui.item.label);
+            }
         });
     });
 </script>

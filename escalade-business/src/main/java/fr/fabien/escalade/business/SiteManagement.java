@@ -26,6 +26,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
     }
 
     public List<Site> findSitesByNom(String nom) {
-        return repository.findSitesByNomContaining(nom);
+        return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 }

@@ -29,17 +29,9 @@ public class RechercheController {
     @RequestMapping(value = "/recherche")
     @ResponseBody
     public List<String> listTopos(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
-
         return siteManagement.findSitesByNom(term)
                 .stream()
                 .map(Site::getNom)
                 .collect(Collectors.toList());
-    }
-
-    @RequestMapping(value = "/test")
-    @ResponseBody
-    public Commentaire test() {
-        Optional<Commentaire> commentaire = voieManagement.findById(1L);
-        return commentaire.get();
     }
 }

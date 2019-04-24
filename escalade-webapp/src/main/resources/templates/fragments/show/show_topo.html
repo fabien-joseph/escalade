@@ -43,6 +43,15 @@
                         </div>
                     </div>
                 </div>
+                <div th:if="${session.user}">
+                    <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
+                </div>
+                <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                <div th:if="${commentaires}">
+                    <div th:each="comment:${commentaires}">
+                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

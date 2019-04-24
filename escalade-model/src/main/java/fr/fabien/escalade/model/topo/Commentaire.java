@@ -17,13 +17,16 @@ public class Commentaire {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String commentaire;
+    private String content;
     private Date date;
 
     @ManyToOne
     @JsonManagedReference
-    private Voie voie;
+    private Site site;
 
+    @ManyToOne
+    @JsonManagedReference
+    private Topo topo;
 
     @ManyToOne
     @JsonManagedReference
@@ -33,10 +36,13 @@ public class Commentaire {
     public Commentaire() {
     }
 
-    public Commentaire(String commentaire, Date date) {
-        this.commentaire = commentaire;
+    public Commentaire(String content, Date date, Site site, Topo topo, Utilisateur utilisateur) {
+        this.content = content;
         this.date = date;
+        this.site = site;
+        this.topo = topo;
+        this.utilisateur = utilisateur;
     }
 
-    // ----- Methodes
+// ----- Methodes
 }

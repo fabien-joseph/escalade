@@ -29,4 +29,8 @@ public class CrudManager<T, C extends CrudRepository<T, Long>> {
         }
         repository.save(object);
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

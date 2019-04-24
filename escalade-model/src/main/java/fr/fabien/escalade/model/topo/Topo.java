@@ -30,21 +30,27 @@ public class Topo {
     @ManyToOne
     private Utilisateur utilisateurReserv;
 
+
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @ManyToMany
     private List<Site> sites = new ArrayList<>();
+
+    @OneToMany(mappedBy = "topo")
+    private List<Commentaire> commentaires = new ArrayList<>();
 
     // ----- Constructors
 
     public Topo() {
     }
 
-    public Topo(String nom, Date date, String departement, boolean isEnable, Utilisateur utilisateur, List<Site> sites) {
+    public Topo(String nom, Date date, String departement, Boolean isEnable, Utilisateur utilisateur, Utilisateur utilisateurReserv, List<Commentaire> commentaires, List<Site> sites) {
         this.nom = nom;
         this.date = date;
         this.departement = departement;
         this.isEnable = isEnable;
         this.utilisateur = utilisateur;
+        this.utilisateurReserv = utilisateurReserv;
+        this.commentaires = commentaires;
         this.sites = sites;
     }
 }

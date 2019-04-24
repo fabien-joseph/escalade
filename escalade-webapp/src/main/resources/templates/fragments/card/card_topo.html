@@ -2,8 +2,9 @@
     <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
     <div class="card-image">
         <figure class="image is-4by3">
-            <img src="https://cache.cosmopolitan.fr/data/photo/w1000_ci/51/sport-femme-escalade.jpg"
-                 alt="Placeholder image">
+            <a th:href="@{/topo/{id}(id=${topo.getId()})}">
+                <img src="https://cache.cosmopolitan.fr/data/photo/w1000_ci/51/sport-femme-escalade.jpg"
+                     alt="Placeholder image"></a>
         </figure>
     </div>
     <div class="card-content">
@@ -23,8 +24,12 @@
     </div>
     <footer class="card-footer">
         <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
-        <a href="#" class="card-footer-item" th:text="${utilisateur_show.getId() == session.user?.getId()} ? 'Réservations' : 'Réserver'"></a>
-        <a href="#" class="card-footer-item" th:text="${utilisateur_show.getId() == session.user?.getId()} ? 'Editer' : 'Voir'"></a>
+        <a th:href="@{/topo/{id}/reserver(id=${topo.getId()})}"
+           th:if="${utilisateur_show.getId() != session.user?.getId()}" href="#" class="card-footer-item">Réserver</a>
+        <a th:href="@{/topo/{id}/edit(id=${topo.getId()})}"
+           th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
+        <a th:href="@{/topo/{id}(id=${topo.getId()})}"
+           th:if="${utilisateur_show.getId() != session.user?.getId()}" href="#" class="card-footer-item">Voir</a>
         <a th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Supprimer</a>
     </footer>
 </div>

@@ -27,6 +27,8 @@ public class TopoController {
     VoieManagement voieManagement;
     @Autowired
     UtilisateurManagement utilisateurManagement;
+    @Autowired
+    CommentaireManagement commentaireManagement;
 
     @GetMapping("/topo/")
     public String topo(Model model, HttpServletRequest request) {
@@ -52,10 +54,28 @@ public class TopoController {
     public String listMesTopos(Model model,
                                HttpServletRequest request, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
-        model.addAttribute("utilisateur", utilisateurManagement.findByRequest(request));
-        Optional<Topo> topoById = topoManagement.findById(long_id);
-        model.addAttribute("topo", topoById.orElse(null));
+        Topo topo = topoManagement.findById(long_id).get();
+        model.addAttribute("topo", topo);
+        Commentaire commentaire = new Commentaire();
+        commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+        commentaire.setTopo(topo);
+        model.addAttribute("commentaire_write", commentaire);
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
+        model.addAttribute("redirectionId", id);
         return "show";
+    }
+
+    @GetMapping("/topo/{id}/reserver")
+    public String reservation(@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        Optional<Topo> topoById = topoManagement.findById(long_id);
+        if (topoById.isPresent()) {
+            topoById.get().setUtilisateurReserv(utilisateurManagement.findByRequest(request));
+            topoManagement.save(topoById.get());
+            return "redirect:/topo/{id}";
+        } else {
+            return "/erreur";
+        }
     }
 
     @GetMapping("/site/")
@@ -87,8 +107,15 @@ public class TopoController {
     public String listMesSites(Model model,
                                HttpServletRequest request, @PathVariable String id, HttpSession session) {
         Long long_id = Long.parseLong(id);
-        session.setAttribute("user", utilisateurManagement.findByRequest(request));
-        model.addAttribute("site", siteManagement.findById(long_id).get());
+        Site site = siteManagement.findById(long_id).get();
+        model.addAttribute("site", site);
+
+        Commentaire commentaire = new Commentaire();
+        commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+        commentaire.setSite(site);
+        model.addAttribute("commentaire_write", commentaire);
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
+        model.addAttribute("redirectionId", id);
         return "show";
     }
 
@@ -153,5 +180,47 @@ public class TopoController {
         model.addAttribute("voie", voie);
         model.addAttribute("object_type", object_type);
         return "redirect:/profile";
+    }
+
+    @PostMapping("/comment/{id}")
+    public String comment_add (@ModelAttribute Commentaire commentaire, @PathVariable String id) {
+        commentaire.setDate(new Date(System.currentTimeMillis()));
+        commentaireManagement.save(commentaire);
+
+        String redirection = "redirect:/";
+        if (commentaire.getSite() != null) {
+            redirection += "site";
+        } else if (commentaire.getTopo() != null) {
+            redirection += "topo";
+        } else {
+            redirection += "error";
+        }
+        redirection += "/";
+        redirection += id;
+        return redirection;
+    }
+
+    @PostMapping("/comment/{id}/delete")
+    public String comment_delete (@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        String id_redirect = "";
+        String redirection = "redirect:/";
+        Commentaire commentaire = commentaireManagement.findById(long_id).get();
+        if (commentaire.getSite() != null) {
+            redirection += "site";
+            id_redirect = Long.toString(commentaire.getSite().getId());
+        } else if (commentaire.getTopo() != null) {
+            redirection += "topo";
+            id_redirect = Long.toString(commentaire.getTopo().getId());
+        } else {
+            redirection += "error";
+        }
+        redirection += "/";
+        redirection += id_redirect;
+
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        if(commentaire.getUtilisateur().getId() == utilisateur.getId())
+            commentaireManagement.deleteById(long_id);
+        return redirection;
     }
 }

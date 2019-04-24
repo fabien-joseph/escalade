@@ -23,7 +23,6 @@ public class Voie {
     private Double longueur;
     private Date date;
     private String description;
-    private Integer note;
 
     @ManyToOne
     private Secteur secteur;
@@ -31,23 +30,16 @@ public class Voie {
     @OneToMany(mappedBy = "voie")
     private List<Note> notes = new ArrayList<>();
 
-
-    @OneToMany (mappedBy = "voie")
-    @JsonBackReference
-    private List<Commentaire> commentaires = new ArrayList<>();
-
     // ----- Constructors
     public Voie() {
     }
 
-    public Voie(String nom, Double longueur, Date date, String description, Integer note, Secteur secteur, List<Note> notes, List<Commentaire> commentaires) {
+    public Voie(String nom, Double longueur, Date date, String description, Secteur secteur, List<Note> notes) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
         this.description = description;
-        this.note = note;
         this.secteur = secteur;
         this.notes = notes;
-        this.commentaires = commentaires;
     }
 }

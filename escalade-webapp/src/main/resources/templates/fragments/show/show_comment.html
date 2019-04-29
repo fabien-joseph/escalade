@@ -26,7 +26,7 @@
             </nav>
         </div>
         <div class="media-right">
-            <form th:action="@{/comment/{id}/delete (id=${comment.getId()})}" method="post">
+            <form th:if="${session.user?.getId() == comment.getUtilisateur().getId()}" th:action="@{/comment/{id}/delete (id=${comment.getId()})}" method="post">
                 <button type="submit" class="delete"></button>
             </form>
         </div>

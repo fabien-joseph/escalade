@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 import static fr.fabien.escalade.business.Departements.departements;
 
 @Controller
-@RequiredArgsConstructor @RequestMapping("/")
+@RequiredArgsConstructor
+@RequestMapping("/")
 public class AccueilController {
     @Autowired
     UtilisateurManagement utilisateurManagement;

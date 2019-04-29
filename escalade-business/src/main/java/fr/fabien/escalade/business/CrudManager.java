@@ -19,7 +19,7 @@ public class CrudManager<T, C extends CrudRepository<T, Long>> {
     }
 
     public void save(T object) {
-        Method method = null;
+        Method method;
         Date date = new Date(System.currentTimeMillis());
         try {
             method = object.getClass().getMethod("setDate", Date.class);

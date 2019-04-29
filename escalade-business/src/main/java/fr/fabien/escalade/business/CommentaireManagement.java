@@ -29,12 +29,4 @@ public class CommentaireManagement extends CrudManager<Commentaire, CommentaireR
     public List<Commentaire> findCommentairesByUtilisateur_id(Long id) {
         return repository.findCommentairesByUtilisateur_id(id);
     }
-
-    public List<Commentaire> findCommentairesBySiteId(Long id) {
-        return repository.findCommentairesBySiteId(id);
-    }
-
-    public List<Commentaire> findCommentairesByTopoId(Long id) {
-        return repository.findCommentairesByTopoId(id);
-    }
 }

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.Optional;
 
 @Transactional
@@ -31,14 +34,23 @@ public class UtilisateurManagement extends CrudManager<Utilisateur, UtilisateurR
         return new UtilisateurPrincipal(utilisateur);
     }
 
-    public Utilisateur findByLogin (String login) {
+    public Utilisateur findByLogin(String login) {
         return repository.findByLogin(login);
     }
 
     public Utilisateur findByRequest(HttpServletRequest request) {
         Utilisateur utilisateur = null;
-        if(request.getUserPrincipal() != null)
+        if (request.getUserPrincipal() != null)
             utilisateur = findByLogin(request.getUserPrincipal().getName());
         return utilisateur;
+    }
+
+    @Override
+    public void save(Utilisateur utilisateur) {
+        Date date = new Date(System.currentTimeMillis());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        utilisateur.setDate(date);
+        utilisateur.setMotDePasse(bCryptPasswordEncoder.encode(utilisateur.getMotDePasse()));
+        repository.save(utilisateur);
     }
 }

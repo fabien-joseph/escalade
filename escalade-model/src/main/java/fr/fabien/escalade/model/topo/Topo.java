@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Topo {
+public class Topo extends Publication {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +37,9 @@ public class Topo {
 
     @OneToMany(mappedBy = "topo")
     private List<Commentaire> commentaires = new ArrayList<>();
+
+    @OneToMany
+    private List<Publication> publications = new ArrayList<>();
 
     // ----- Constructors
 

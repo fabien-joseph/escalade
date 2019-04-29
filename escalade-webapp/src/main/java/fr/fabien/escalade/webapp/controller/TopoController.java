@@ -58,9 +58,9 @@ public class TopoController {
         model.addAttribute("topo", topo);
         Commentaire commentaire = new Commentaire();
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        commentaire.setTopo(topo);
+        //commentaire.setTopo(topo);
         model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesByUtilisateur_id(long_id));
         model.addAttribute("redirectionId", id);
         return "show";
     }
@@ -112,9 +112,9 @@ public class TopoController {
 
         Commentaire commentaire = new Commentaire();
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        commentaire.setSite(site);
+        //commentaire.setSite(site);
         model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesByUtilisateur_id(long_id));
         model.addAttribute("redirectionId", id);
         return "show";
     }
@@ -188,13 +188,7 @@ public class TopoController {
         commentaireManagement.save(commentaire);
 
         String redirection = "redirect:/";
-        if (commentaire.getSite() != null) {
-            redirection += "site";
-        } else if (commentaire.getTopo() != null) {
-            redirection += "topo";
-        } else {
-            redirection += "error";
-        }
+
         redirection += "/";
         redirection += id;
         return redirection;
@@ -206,20 +200,9 @@ public class TopoController {
         String id_redirect = "";
         String redirection = "redirect:/";
         Commentaire commentaire = commentaireManagement.findById(long_id).get();
-        if (commentaire.getSite() != null) {
-            redirection += "site";
-            id_redirect = Long.toString(commentaire.getSite().getId());
-        } else if (commentaire.getTopo() != null) {
-            redirection += "topo";
-            id_redirect = Long.toString(commentaire.getTopo().getId());
-        } else {
-            redirection += "error";
-        }
-        redirection += "/";
-        redirection += id_redirect;
 
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        if(commentaire.getUtilisateur().getId() == utilisateur.getId())
+        if(commentaire.getUtilisateur().getId().equals(utilisateur.getId()))
             commentaireManagement.deleteById(long_id);
         return redirection;
     }

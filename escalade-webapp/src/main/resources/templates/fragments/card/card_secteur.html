@@ -1,0 +1,29 @@
+<div th:fragment="card_secteur" xmlns:th="http://www.thymeleaf.org" class="card">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4 has-text-centered">Secteur</p>
+            </div>
+        </div>
+
+        <!--/*@thymesVar id="secteur" type="fr.fabien.escalade.model.topo.Secteur"*/-->
+        <div class="content">
+            <p th:text="${secteur.getNom()}"></p>
+            <span>Par : <a th:href="@{/profile/{id}(id=${secteur.getSite().getUtilisateur().getId()})}"
+                           th:text="${secteur.getSite().getUtilisateur().getLogin()}"></a></span>
+            <br>
+            <time th:datetime="${secteur.getDate()}" th:text="${secteur.getDate()}"></time>
+        </div>
+
+        <footer class="card-footer">
+            <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
+            <a th:href="@{/secteur/{id}/edit(id=${secteur.getId()})}"
+               th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
+            <a th:href="@{/secteur/{id}(id=${secteur.getId()})}"
+               th:if="${utilisateur_show.getId() != session.user?.getId()}" th:action="@{/secteur/{id} (id=${secteur.getId()})}"
+               class="card-footer-item">Voir</a>
+            <a th:if="${utilisateur_show.getId() == session.user?.getId()}"
+               th:href="@{/secteur/{id}/delete (id=${secteur.getId()})}" class="card-footer-item">Supprimer</a>
+        </footer>
+    </div>
+</div>

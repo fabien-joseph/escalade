@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Site extends Publication {
+public class Site {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

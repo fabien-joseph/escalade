@@ -9,4 +9,9 @@ import java.util.List;
 @Repository
 public interface CommentaireRepository extends CrudRepository<Commentaire, Long> {
     List<Commentaire> findCommentairesByUtilisateur_id(Long utilisateur_id);
+    List<Commentaire> findCommentairesBySiteId(Long id);
+    List<Commentaire> findCommentairesByTopoId(Long id);
+
+    void deleteCommentairesByTopoId(Long id);
+    void deleteCommentairesBySiteId(Long id);
 }

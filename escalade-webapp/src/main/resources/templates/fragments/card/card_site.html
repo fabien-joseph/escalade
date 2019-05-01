@@ -1,6 +1,5 @@
 <div th:fragment="card_site" xmlns:th="http://www.thymeleaf.org" class="card">
-    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
-
+    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.site.Site"*/-->
     <div class="card-image">
         <figure class="image is-4by3">
             <a th:href="@{/site/{id}(id=${site.getId()})}">
@@ -22,5 +21,18 @@
             <br>
             <time th:datetime="${site.getDate()}" th:text="${site.getDate()}"></time>
         </div>
+
+        <footer class="card-footer">
+            <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
+            <a th:href="@{/site/{id}/reserver(id=${site.getId()})}"
+               th:if="${utilisateur_show.getId() != session.user?.getId()}" href="#" class="card-footer-item">Réserver</a>
+            <a th:href="@{/site/{id}/edit(id=${site.getId()})}"
+               th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
+            <a th:href="@{/site/{id}(id=${site.getId()})}"
+               th:if="${utilisateur_show.getId() != session.user?.getId()}" th:action="@{/site/{id} (id=${site.getId()})}"
+               class="card-footer-item">Voir</a>
+            <a th:if="${utilisateur_show.getId() == session.user?.getId()}"
+               th:href="@{/site/{id}/delete (id=${site.getId()})}" class="card-footer-item">Supprimer</a>
+        </footer>
     </div>
 </div>

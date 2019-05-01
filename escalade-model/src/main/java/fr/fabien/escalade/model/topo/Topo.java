@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Topo extends Publication {
+public class Topo {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

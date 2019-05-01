@@ -25,30 +25,8 @@
                     </div>
                     <div class="columns">
                         <table>
-                            <tr class="" th:each="s:${site.getSecteurs()}">
-                                <div class="card column is-one-third">
-                                    <header class="card-header">
-                                        <p class="card-header-title">
-                                            <a th:href="@{/secteur/{id}(id=${s.getId()})}" th:text="${s.getNom()}"></a>
-                                        </p>
-                                    </header>
-                                    <div class="card-content">
-                                        <div class="content">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-                                            iaculis mauris.<br>
-                                            <p>Par : <a
-                                                    th:href="@{/profile/{id}(id=${s.getSite().getUtilisateur().getId()})}"
-                                                    th:text="${s.getSite().getUtilisateur().getLogin()}"></a></p>
-                                            <br>
-                                            <time datetime="2016-1-1" th:text="${s.getDate()}"></time>
-                                        </div>
-                                    </div>
-                                    <footer class="card-footer">
-                                        <a href="#" class="card-footer-item">Save</a>
-                                        <a href="#" class="card-footer-item">Edit</a>
-                                        <a href="#" class="card-footer-item">Delete</a>
-                                    </footer>
-                                </div>
+                            <tr class="" th:each="secteur:${site.getSecteurs()}">
+                                <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
                             </tr>
                             </tbody>
                         </table>

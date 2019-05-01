@@ -58,9 +58,9 @@ public class TopoController {
         model.addAttribute("topo", topo);
         Commentaire commentaire = new Commentaire();
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        //commentaire.setTopo(topo);
+        commentaire.setTopo(topo);
         model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesByUtilisateur_id(long_id));
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
         model.addAttribute("redirectionId", id);
         return "show";
     }
@@ -76,6 +76,21 @@ public class TopoController {
         } else {
             return "/erreur";
         }
+    }
+
+    @GetMapping("/topo/{id}/delete")
+    public String topo_delete(@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        Optional<Topo> topo = topoManagement.findById(long_id);
+        if (topo.isPresent()) {
+            if (utilisateur.getId().equals(topo.get().getUtilisateur().getId())) {
+                if (topo.get().getCommentaires() != null)
+                    commentaireManagement.deleteCommentairesByTopoId(topo.get().getId());
+                topoManagement.deleteById(long_id);
+            }
+        }
+        return "redirect:/profile";
     }
 
     @GetMapping("/site/")
@@ -112,11 +127,27 @@ public class TopoController {
 
         Commentaire commentaire = new Commentaire();
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        //commentaire.setSite(site);
+        commentaire.setSite(site);
         model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesByUtilisateur_id(long_id));
+        model.addAttribute("utilisateur_show", site.getUtilisateur());
+        model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
         model.addAttribute("redirectionId", id);
         return "show";
+    }
+
+    @GetMapping("/site/{id}/delete")
+    public String site_delete(@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        Optional<Site> site = siteManagement.findById(long_id);
+        if (site.isPresent()) {
+            if (site.get().getCommentaires() != null)
+                if (utilisateur.getId().equals(site.get().getUtilisateur().getId())) {
+                    commentaireManagement.deleteCommentairesBySiteId(site.get().getId());
+                    siteManagement.deleteById(long_id);
+                }
+        }
+        return "redirect:/profile";
     }
 
     @GetMapping("/site/{id}/secteur")
@@ -147,6 +178,19 @@ public class TopoController {
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("secteur", secteur);
         model.addAttribute("object_type", object_type);
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/secteur/{id}/delete")
+    public String secteur_delete(@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        Optional<Secteur> secteur = secteurManagement.findById(long_id);
+        if (secteur.isPresent()) {
+            if (utilisateur.getId().equals(secteur.get().getSite().getUtilisateur().getId())) {
+                secteurManagement.deleteById(long_id);
+            }
+        }
         return "redirect:/profile";
     }
 
@@ -182,27 +226,57 @@ public class TopoController {
         return "redirect:/profile";
     }
 
+    @GetMapping("/voie/{id}/delete")
+    public String voie_delete(@PathVariable String id, HttpServletRequest request) {
+        Long long_id = Long.parseLong(id);
+        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+        Optional<Voie> voie= voieManagement.findById(long_id);
+        if (voie.isPresent()) {
+            if (utilisateur.getId().equals(voie.get().getSecteur().getSite().getUtilisateur().getId())) {
+                voieManagement.deleteById(long_id);
+            }
+        }
+        return "redirect:/profile";
+    }
+
     @PostMapping("/comment/{id}")
-    public String comment_add (@ModelAttribute Commentaire commentaire, @PathVariable String id) {
+    public String comment_add(@ModelAttribute Commentaire commentaire, @PathVariable String id) {
         commentaire.setDate(new Date(System.currentTimeMillis()));
         commentaireManagement.save(commentaire);
 
         String redirection = "redirect:/";
-
+        if (commentaire.getSite() != null) {
+            redirection += "site";
+        } else if (commentaire.getTopo() != null) {
+            redirection += "topo";
+        } else {
+            redirection += "error";
+        }
         redirection += "/";
         redirection += id;
         return redirection;
     }
 
     @PostMapping("/comment/{id}/delete")
-    public String comment_delete (@PathVariable String id, HttpServletRequest request) {
+    public String comment_delete(@PathVariable String id, HttpServletRequest request) {
         Long long_id = Long.parseLong(id);
         String id_redirect = "";
         String redirection = "redirect:/";
         Commentaire commentaire = commentaireManagement.findById(long_id).get();
+        if (commentaire.getSite() != null) {
+            redirection += "site";
+            id_redirect = Long.toString(commentaire.getSite().getId());
+        } else if (commentaire.getTopo() != null) {
+            redirection += "topo";
+            id_redirect = Long.toString(commentaire.getTopo().getId());
+        } else {
+            redirection += "error";
+        }
+        redirection += "/";
+        redirection += id_redirect;
 
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        if(commentaire.getUtilisateur().getId().equals(utilisateur.getId()))
+        if (commentaire.getUtilisateur().getId().equals(utilisateur.getId()))
             commentaireManagement.deleteById(long_id);
         return redirection;
     }

@@ -4,59 +4,61 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<form>
-    <input type="text" id="recherche"/>
-</form>
-<div id="resultat">
-</div>
+<div class="bg-img">
+    <form>
+        <input type="text" id="recherche"/>
+    </form>
+    <div id="resultat">
+    </div>
 
-<section class="hero is-fullheight-with-navbar">
-    <div class="hero-body">
-        <div class="container">
-            <div class="has-text-centered">
-                <div th:if="${session.user}"><p class="is-size-1"
-                                                th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
+    <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <div class="has-text-centered">
+                    <div th:if="${session.user}"><p class="is-size-1"
+                                                    th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
 
-            </div>
-            <div class="has-text-centered" id="test">
-                <p class="is-size-3 search">Chercher un topo :</p>
-            </div>
+                </div>
+                <div class="has-text-centered" id="test">
+                    <p class="is-size-3 search">Chercher un topo :</p>
+                </div>
 
-            <form action="/recherche">
-                <div class="field has-addons has-addons-centered">
-                    <div class="control">
-                        <div class="select is-large">
-                            <label>
-                            </label>
-                            <label>
-                                <select name="departement">
-                                    <option selected disabled>Département</option>
-                                    <option th:type="text" th:each="departement : ${departements}"
-                                            th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
-                                            th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
-                                </select>
-                            </label>
+                <form action="/recherche">
+                    <div class="field has-addons has-addons-centered">
+                        <div class="control">
+                            <div class="select is-large">
+                                <label>
+                                </label>
+                                <label>
+                                    <select name="departement" class="departements_list">
+                                        <option selected disabled>Département</option>
+                                        <option th:type="text" th:each="departement : ${departements}"
+                                                th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
+                                                th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control" id="droppable">
+                            <button type="submit" class="button is-primary is-large">Rechercher</button>
                         </div>
                     </div>
-                    <div class="control" id="droppable">
-                        <button type="submit" class="button is-primary is-large">Rechercher</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-<style>
-</style>
-<script>
-    $(function () {
-        $('#recherche').autocomplete({
-            source: "recherche",
-            change: function () {
-                alert('Test' + ui.item.label);
-            }
+    </section>
+    <style>
+    </style>
+    <script>
+        $(function () {
+            $('#recherche').autocomplete({
+                source: "recherche",
+                change: function () {
+                    alert('Test' + ui.item.label);
+                }
+            });
         });
-    });
-</script>
+    </script>
+</div>
 </body>
 </html>

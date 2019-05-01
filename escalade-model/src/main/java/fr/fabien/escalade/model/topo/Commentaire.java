@@ -22,7 +22,17 @@ public class Commentaire {
 
     @ManyToOne
     @JsonManagedReference
+    private Site site;
+
+    @ManyToOne
+    @JsonManagedReference
+    private Topo topo;
+
+    /*
+    @OneToOne
+    @JsonManagedReference
     private Publication publication;
+     */
 
     @ManyToOne
     @JsonManagedReference
@@ -32,9 +42,11 @@ public class Commentaire {
     public Commentaire() {
     }
 
-    public Commentaire(String content, Date date, Utilisateur utilisateur) {
+    public Commentaire(String content, Date date, Site site, Topo topo, Utilisateur utilisateur) {
         this.content = content;
         this.date = date;
+        this.site = site;
+        this.topo = topo;
         this.utilisateur = utilisateur;
     }
 

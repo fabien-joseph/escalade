@@ -4,8 +4,25 @@
 
 .search {
     padding-bottom: 1em;
+    color: white;
+    /* offset-x | offset-y | blur-radius | color */
+    text-shadow: 1px 1px 2px black;
 }
+
+
 
 .table {
     margin-top: 1em;
+}
+
+.comment {
+    margin-bottom: 1em;
+}
+
+.bg-img {
+    background-image: url(https://farm5.staticflickr.com/4312/35463838634_4fc79a297c_k.jpg);
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
 }

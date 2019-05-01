@@ -29,7 +29,9 @@
         <a th:href="@{/topo/{id}/edit(id=${topo.getId()})}"
            th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
         <a th:href="@{/topo/{id}(id=${topo.getId()})}"
-           th:if="${utilisateur_show.getId() != session.user?.getId()}" href="#" class="card-footer-item">Voir</a>
-        <a th:if="${utilisateur_show.getId() == session.user?.getId()}" href="#" class="card-footer-item">Supprimer</a>
+           th:if="${utilisateur_show.getId() != session.user?.getId()}" th:action="@{/topo/{id} (id=${topo.getId()})}"
+           class="card-footer-item">Voir</a>
+        <a th:if="${utilisateur_show.getId() == session.user?.getId()}"
+           th:href="@{/topo/{id}/delete (id=${topo.getId()})}" class="card-footer-item">Supprimer</a>
     </footer>
 </div>

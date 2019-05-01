@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Voie extends Publication {
+public class Voie {
     // ----- Attributs
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

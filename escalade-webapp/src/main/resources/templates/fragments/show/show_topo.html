@@ -8,7 +8,6 @@
                 <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
                 <div class="has-tex-centered" th:if="${topo}">
                     <p th:text="'Nom : ' + ${topo.nom}"></p>
-                    <p th:text="'Département : ' + ${topo.departement}"></p>
                     <p th:text="'Date d\'ajout : ' + ${topo.date}"></p>
                     <p th:text="'Statut : ' + ${topo.isEnable}"></p>
                     <p>Créateur : <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}"
@@ -43,6 +42,12 @@
                         </div>
                     </div>
                 </div>
+
+                <p>Lier un site à ce topo : </p>
+                <form>
+                    <input type="text" id="recherche"/>
+                </form>
+
                 <div th:if="${session.user}">
                     <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
                 </div>
@@ -55,4 +60,15 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $(function () {
+            $('#recherche').autocomplete({
+                source: "recherche",
+                change: function () {
+                    alert('Test' + ui.item.label);
+                }
+            });
+        });
+    </script>
 </div>

@@ -3,6 +3,7 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.*;
 import fr.fabien.escalade.model.topo.*;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.tuple.component.ComponentMetamodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +53,8 @@ public class TopoController {
 
     @GetMapping("/topo/{id}")
     public String listMesTopos(Model model,
-                               HttpServletRequest request, @PathVariable String id) {
+                               HttpServletRequest request, HttpSession session, @PathVariable String id) {
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
         Long long_id = Long.parseLong(id);
         Topo topo = topoManagement.findById(long_id).get();
         model.addAttribute("topo", topo);
@@ -64,6 +66,17 @@ public class TopoController {
         model.addAttribute("redirectionId", id);
         return "show";
     }
+
+    @GetMapping("/topo/{id}/edit")
+    public String topo_edit(Model model, @PathVariable String id) {
+        Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
+        if (topo.isPresent()) {
+            model.addAttribute(topo.get());
+            return "creation";
+        }
+        return "erreur";
+    }
+
 
     @GetMapping("/topo/{id}/reserver")
     public String reservation(@PathVariable String id, HttpServletRequest request) {
@@ -135,6 +148,16 @@ public class TopoController {
         return "show";
     }
 
+    @GetMapping("/site/{id}/edit")
+    public String site_edit(Model model, @PathVariable String id) {
+        Optional<Site> site = siteManagement.findById(Long.parseLong(id));
+        if (site.isPresent()) {
+            model.addAttribute(site.get());
+            return "creation";
+        }
+        return "erreur";
+    }
+
     @GetMapping("/site/{id}/delete")
     public String site_delete(@PathVariable String id, HttpServletRequest request) {
         Long long_id = Long.parseLong(id);
@@ -179,6 +202,16 @@ public class TopoController {
         model.addAttribute("secteur", secteur);
         model.addAttribute("object_type", object_type);
         return "redirect:/profile";
+    }
+
+    @GetMapping("/secteur/{id}/edit")
+    public String secteur_edit(Model model, @PathVariable String id) {
+        Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
+        if (secteur.isPresent()) {
+            model.addAttribute(secteur.get());
+            return "creation";
+        }
+        return "erreur";
     }
 
     @GetMapping("/secteur/{id}/delete")
@@ -226,11 +259,21 @@ public class TopoController {
         return "redirect:/profile";
     }
 
+    @GetMapping("/voie/{id}/edit")
+    public String voie_edit(Model model, @PathVariable String id) {
+        Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
+        if (voie.isPresent()) {
+            model.addAttribute(voie.get());
+            return "creation";
+        }
+        return "erreur";
+    }
+
     @GetMapping("/voie/{id}/delete")
     public String voie_delete(@PathVariable String id, HttpServletRequest request) {
         Long long_id = Long.parseLong(id);
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        Optional<Voie> voie= voieManagement.findById(long_id);
+        Optional<Voie> voie = voieManagement.findById(long_id);
         if (voie.isPresent()) {
             if (utilisateur.getId().equals(voie.get().getSecteur().getSite().getUtilisateur().getId())) {
                 voieManagement.deleteById(long_id);

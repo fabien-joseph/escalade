@@ -28,4 +28,9 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
     public List<Site> findSitesByNom(String nom) {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
+
+    public List<Site> findSitesAdvanced(int hauteurMin, int hauteurMax, String nom, String departement) {
+        return repository.findSitesAdvanced(hauteurMin, hauteurMax, nom, departement);
+    }
+
 }

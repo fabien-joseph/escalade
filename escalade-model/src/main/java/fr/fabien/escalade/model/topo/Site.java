@@ -23,6 +23,7 @@ public class Site {
     private Date date;
     private String cotationMin;
     private String cotationMax;
+    private String departement;
     private Integer hauteurMin;
     private Integer hauteurMax;
     private String orientation;
@@ -33,17 +34,20 @@ public class Site {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    @OneToMany (mappedBy = "site")
+    @OneToMany(mappedBy = "site")
     private List<Commentaire> commentaires = new ArrayList<>();
 
-    @OneToMany List<Note> notes = new ArrayList<>();
+    @OneToMany
+    List<Note> notes = new ArrayList<>();
 
     @ManyToMany
     private List<Topo> topo = new ArrayList<>();
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    @OneToMany (mappedBy = "site")
+    @OneToMany(mappedBy = "site")
     private List<Secteur> secteurs = new ArrayList<>();
+
+
 
 
     // ---- Constructors
@@ -51,11 +55,12 @@ public class Site {
     public Site() {
     }
 
-    public Site(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Note> notes, List<Topo> topo, List<Secteur> secteurs) {
+    public Site(String nom, Date date, String cotationMin, String cotationMax, String departement, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Note> notes, List<Topo> topo, List<Secteur> secteurs) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
         this.cotationMax = cotationMax;
+        this.departement = departement;
         this.hauteurMin = hauteurMin;
         this.hauteurMax = hauteurMax;
         this.orientation = orientation;

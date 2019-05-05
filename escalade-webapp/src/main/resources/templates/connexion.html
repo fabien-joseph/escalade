@@ -5,25 +5,27 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
+<div class="columns">
 <h3>Connexion</h3>
-<form name='f' action="/connexion" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><label>
-                <input type='text' name='username' value=''>
-            </label></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><label>
-                <input type='password' name='password' />
-            </label></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+    <form name='f' action="/connexion" method='POST'>
+        <table>
+            <tr>
+                <td>User:</td>
+                <td><label>
+                    <input type='text' name='username' value=''>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><label>
+                    <input type='password' name='password'/>
+                </label></td>
+            </tr>
+            <tr>
+                <td><input name="submit" type="submit" value="submit"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>

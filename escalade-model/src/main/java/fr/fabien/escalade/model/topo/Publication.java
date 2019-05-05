@@ -6,11 +6,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public abstract class Publication {
+public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToMany
     public List<Commentaire> commentaires;
+
+
 }

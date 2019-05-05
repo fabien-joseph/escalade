@@ -6,13 +6,11 @@
         <p>Nom: <label>
             <input type="text" th:field="*{nom}"/>
         </label></p>
-        <p>Departement: <label>
-            <input type="text" th:field="*{departement}"/>
-        </label></p>
         <p>Statut: <label>
             <input type="checkbox" th:field="*{isEnable}"/>
         </label></p>
         <input type="hidden" th:field="*{utilisateur}" th:value="${topo.utilisateur}">
+        <input type="hidden" th:field="*{id}" th:value="${topo.id}">
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
 </div>

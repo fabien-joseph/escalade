@@ -23,10 +23,6 @@ public class TopoManagement extends CrudManager<Topo, TopoRepository> {
         return repository.findTopoById(id);
     }
 
-    public List<Topo> findToposByDepartement(String departement) {
-        return repository.findToposByDepartement(departement);
-    }
-
     public List<Topo> findAll() {
         return repository.findAll();
     }

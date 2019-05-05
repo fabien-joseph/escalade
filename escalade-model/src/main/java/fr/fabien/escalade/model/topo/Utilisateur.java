@@ -47,7 +47,7 @@ public class Utilisateur {
 
     @OneToMany (mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Topo> reservations = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     // ----- Constructors
     public Utilisateur() {

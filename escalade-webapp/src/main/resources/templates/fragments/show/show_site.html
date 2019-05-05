@@ -16,6 +16,7 @@
                             <p th:text="'Orientation : ' + ${site.orientation}"></p>
                             <p th:text="'Type : ' + ${site.type}"></p>
                             <p th:text="'Description : ' + ${site.description}"></p>
+                            <p th:text="'Département : ' + ${site.departement}"></p>
                             <p th:text="'Localisation : ' + ${site.localisation}"></p>
                             <p>Créateur : <a th:href="@{/profile/{id}(id=${site.utilisateur.id})}"
                                              th:text="${site.utilisateur.login}"></a>

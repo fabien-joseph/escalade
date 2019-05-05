@@ -28,7 +28,7 @@ public class RechercheController {
 
     @RequestMapping(value = "/recherche")
     @ResponseBody
-    public List<String> listTopos(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
+    public List<String> listSites(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
         return siteManagement.findSitesByNom(term)
                 .stream()
                 .map(Site::getNom)

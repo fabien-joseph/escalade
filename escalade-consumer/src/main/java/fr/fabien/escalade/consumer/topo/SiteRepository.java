@@ -15,4 +15,7 @@ public interface SiteRepository extends CrudRepository<Site, Long> {
     List<Site> findSitesByUtilisateurId(Long id);
 
     List<Site> findSitesByNomContainingIgnoreCase(String nom);
+
+    @Query("SELECT s FROM Site s WHERE s.hauteurMin >= ?1 AND s.hauteurMax <= ?2 AND lower(s.nom) like %?3% AND (s.departement = ?4 OR '' = ?4)")
+    List<Site> findSitesAdvanced(int hauteurMin, int hauteurMax, String nom, String departement);
 }

@@ -32,10 +32,17 @@
             <input type="text" th:field="*{description}"/>
         </label></p>
 
+        <p>Département: <label>
+            <input type="text" th:field="*{departement}"/>
+        </label></p>
+
         <p>Localisation: <label>
             <input type="text" th:field="*{localisation}"/>
         </label></p>
+
+
         <input type="hidden" th:field="*{utilisateur}" th:value="${site.utilisateur}">
+        <input type="hidden" th:field="*{id}" th:value="${site.id}">
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
 </div>

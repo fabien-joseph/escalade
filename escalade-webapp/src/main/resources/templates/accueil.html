@@ -1,26 +1,23 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head th:replace="fragments/head.html :: head">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
 </head>
-<body>
+<body class="has-navbar-fixed-top">
 <div th:replace="fragments/header.html :: header"></div>
-<div class="bg-img">
-    <form>
-        <input type="text" id="recherche"/>
-    </form>
-    <div id="resultat">
-    </div>
-
-    <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
+    <section class="hero bg-img is-fullheight-with-navbar">
+        <div class="hero-body darker">
             <div class="container">
+                <form>
+                    <input type="text" id="recherche"/>
+                </form>
                 <div class="has-text-centered">
-                    <div th:if="${session.user}"><p class="is-size-1"
+                    <div th:if="${session.user}"><p class="is-size-1 hello"
                                                     th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
 
                 </div>
                 <div class="has-text-centered" id="test">
-                    <p class="is-size-3 search">Chercher un topo :</p>
+                    <p class="is-size-3 search">Trouve un site :</p>
                 </div>
 
                 <form action="/recherche">
@@ -47,18 +44,12 @@
             </div>
         </div>
     </section>
-    <style>
-    </style>
-    <script>
-        $(function () {
-            $('#recherche').autocomplete({
-                source: "recherche",
-                change: function () {
-                    alert('Test' + ui.item.label);
-                }
-            });
+<script>
+    $(function () {
+        $('#recherche').autocomplete({
+            source: "recherche",
         });
-    </script>
-</div>
+    });
+</script>
 </body>
 </html>

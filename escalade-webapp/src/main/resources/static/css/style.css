@@ -5,11 +5,13 @@
 .search {
     padding-bottom: 1em;
     color: white;
-    /* offset-x | offset-y | blur-radius | color */
     text-shadow: 1px 1px 2px black;
 }
 
-
+.hello {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
 
 .table {
     margin-top: 1em;
@@ -20,9 +22,21 @@
 }
 
 .bg-img {
-    background-image: url(https://farm5.staticflickr.com/4312/35463838634_4fc79a297c_k.jpg);
+    background-image: url(http://image.noelshack.com/fichiers/2019/18/5/1556915323-35463838634-4fc79a297c-k.png);
     background-position: center center;
-    background-repeat:  no-repeat;
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size:  cover;
+    background-size: cover;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.bg-img-error {
+    background-image: url(http://image.noelshack.com/fichiers/2019/18/7/1557063809-prenom-originaux-2018.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }

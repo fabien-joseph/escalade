@@ -21,7 +21,6 @@ public class Topo {
     private Long id;
     private String nom;
     private Date date;
-    private String departement;
     private Boolean isEnable;
 
     @ManyToOne
@@ -41,15 +40,17 @@ public class Topo {
     @OneToMany
     private List<Publication> publications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "topo")
+    private List<Reservation> reservations = new ArrayList<>();
+
     // ----- Constructors
 
     public Topo() {
     }
 
-    public Topo(String nom, Date date, String departement, Boolean isEnable, Utilisateur utilisateur, Utilisateur utilisateurReserv, List<Commentaire> commentaires, List<Site> sites) {
+    public Topo(String nom, Date date, Boolean isEnable, Utilisateur utilisateur, Utilisateur utilisateurReserv, List<Commentaire> commentaires, List<Site> sites) {
         this.nom = nom;
         this.date = date;
-        this.departement = departement;
         this.isEnable = isEnable;
         this.utilisateur = utilisateur;
         this.utilisateurReserv = utilisateurReserv;

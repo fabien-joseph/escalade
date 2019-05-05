@@ -13,6 +13,7 @@
             <input type="text" th:field="*{longueur}"/>
         </label></p>
         <input type="hidden" th:field="*{secteur}" th:value="${voie.secteur}">
+        <input type="hidden" th:field="*{id}" th:value="${voie.id}">
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
 </div>

@@ -5,7 +5,17 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-
-<h1>Opération réussie !</h1>
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="has-text-centered title" th:text="'Résultat des recherches'"></h1>
+                <div class="columns is-multiline">
+                    <div class="column is-one-fifth" th:each="site:${sites}">
+                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

@@ -4,29 +4,24 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: header"></div>
-<!--/*@thymesVar id="title" type="java.lang.String"*/-->
-<div th:if="${title}" class="has-text-centered">
-    <p th:text="${title}" class="is-size-3 search"></p>
-</div>
-<div class="columns is-centered">
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nom</th>
-        <th>Date</th>
-        <th>Département</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="topos" type="java.util.List"*/-->
-    <tr th:each="t:${topos}">
-        <td>
-        <a th:href="@{/topo/{id}(id=${t.getId()})}" th:text="${t.getNom()}"></a></td>
-        <td th:text="${t.getDate()}"></td>
-        <td th:text="${t.getDepartement()}"></td>
-    </tr>
-    </tbody>
-</table>
-</div>
+<!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+<form action="#" th:action="@{/testresult}" th:object="${site}" method=post>
+    <p>Nom: <label>
+        <input type="text" th:field="*{nom}"/>
+    </label></p>
+
+    <p>Hauteur min: <label>
+        <input type="text" th:field="*{hauteurMin}"/>
+    </label></p>
+
+    <p>Hauteur max: <label>
+        <input type="text" th:field="*{hauteurMax}"/>
+    </label></p>
+
+    <p>Département: <label>
+        <input type="text" th:field="*{departement}"/>
+    </label></p>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
 </body>
 </html>

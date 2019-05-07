@@ -1,19 +1,13 @@
 package fr.fabien.escalade.webapp.controller;
 
 import fr.fabien.escalade.business.SiteManagement;
-import fr.fabien.escalade.business.UtilisateurManagement;
 import fr.fabien.escalade.model.topo.Site;
-import fr.fabien.escalade.model.topo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,7 +16,7 @@ public class AvanceController {
     SiteManagement siteManagement;
 
     @GetMapping("/test")
-    public String test(Model model, HttpServletRequest request, HttpSession session) {
+    public String test(Model model) {
         model.addAttribute("site", new Site());
         return "recherche";
 

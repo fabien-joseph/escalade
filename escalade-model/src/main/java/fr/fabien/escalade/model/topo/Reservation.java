@@ -18,7 +18,9 @@ public class Reservation {
     @ManyToOne
     private Topo topo;
 
+    @Temporal(TemporalType.DATE)
     private Date dateDebut;
 
+    @Temporal(TemporalType.DATE)
     private Date dateFin;
 }

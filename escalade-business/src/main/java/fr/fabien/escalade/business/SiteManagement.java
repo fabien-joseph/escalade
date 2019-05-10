@@ -17,10 +17,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         super(repository);
     }
 
-    public List<Site> findSitesByTopo_id(Long id) {
-        return repository.findSitesByTopo_id(id);
-    }
-
     public List<Site> findSitesByUtilisateurId(Long id) {
         return repository.findSitesByUtilisateurId(id);
     }
@@ -31,6 +27,10 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
 
     public List<Site> findSitesAdvanced(int hauteurMin, int hauteurMax, String nom, String departement) {
         return repository.findSitesAdvanced(hauteurMin, hauteurMax, nom, departement);
+    }
+
+    public Site findSiteByNom(String nom) {
+        return repository.findSiteByNom(nom);
     }
 
 }

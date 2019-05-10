@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,12 +27,9 @@ public class Topo {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    @ManyToOne
-    private Utilisateur utilisateurReserv;
-
-
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @ManyToMany
+    @JoinTable(name = "site_topo", joinColumns = @JoinColumn(name = "topo_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"))
     private List<Site> sites = new ArrayList<>();
 
     @OneToMany(mappedBy = "topo")
@@ -48,12 +46,11 @@ public class Topo {
     public Topo() {
     }
 
-    public Topo(String nom, Date date, Boolean isEnable, Utilisateur utilisateur, Utilisateur utilisateurReserv, List<Commentaire> commentaires, List<Site> sites) {
+    public Topo(String nom, Date date, Boolean isEnable, Utilisateur utilisateur, List<Commentaire> commentaires, List<Site> sites) {
         this.nom = nom;
         this.date = date;
         this.isEnable = isEnable;
         this.utilisateur = utilisateur;
-        this.utilisateurReserv = utilisateurReserv;
         this.commentaires = commentaires;
         this.sites = sites;
     }

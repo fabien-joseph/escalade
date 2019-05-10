@@ -3,7 +3,6 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.*;
 import fr.fabien.escalade.model.topo.*;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.tuple.component.ComponentMetamodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,6 +30,8 @@ public class TopoController {
     UtilisateurManagement utilisateurManagement;
     @Autowired
     CommentaireManagement commentaireManagement;
+    @Autowired
+    ReservationManagement reservationManagement;
 
     @GetMapping("/topo/")
     public String topo(Model model, HttpServletRequest request) {
@@ -52,18 +54,29 @@ public class TopoController {
     }
 
     @GetMapping("/topo/{id}")
-    public String listMesTopos(Model model,
-                               HttpServletRequest request, HttpSession session, @PathVariable String id) {
-        session.setAttribute("user", utilisateurManagement.findByRequest(request));
+    public String listMesTopos(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
         Topo topo = topoManagement.findById(long_id).get();
         model.addAttribute("topo", topo);
         Commentaire commentaire = new Commentaire();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        List<Date> dates = new ArrayList<>();
+        dates.add(cal.getTime());
+        for (int i = 1; i < 8; i++) {
+            cal.add(Calendar.DATE, 1);
+            dates.add(cal.getTime());
+        }
+
+        session.setAttribute("user", utilisateurManagement.findByRequest(request));
+
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
         commentaire.setTopo(topo);
         model.addAttribute("commentaire_write", commentaire);
         model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
         model.addAttribute("redirectionId", id);
+        model.addAttribute("dates", dates);
         return "show";
     }
 
@@ -77,18 +90,21 @@ public class TopoController {
         return "erreur";
     }
 
+    @PostMapping("/topo/{id}/reservation")
+    public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin, HttpServletRequest request) throws ParseException {
 
-    @GetMapping("/topo/{id}/reserver")
-    public String reservation(@PathVariable String id, HttpServletRequest request) {
+        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+        Date dateConv = format.parse(dateFin);
+        Reservation reservation = new Reservation();
+        reservation.setDateDebut(new Date());
+        reservation.setDateFin(dateConv);
+        reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
         Long long_id = Long.parseLong(id);
-        Optional<Topo> topoById = topoManagement.findById(long_id);
-        if (topoById.isPresent()) {
-            topoById.get().setUtilisateurReserv(utilisateurManagement.findByRequest(request));
-            topoManagement.save(topoById.get());
-            return "redirect:/topo/{id}";
-        } else {
-            return "/erreur";
-        }
+        reservation.setTopo(topoManagement.findById(long_id).get());
+        if (reservationManagement.isFree(reservation))
+            reservationManagement.save(reservation);
+
+        return "redirect:/topo/{id}";
     }
 
     @GetMapping("/topo/{id}/delete")
@@ -104,6 +120,28 @@ public class TopoController {
             }
         }
         return "redirect:/profile";
+    }
+
+    @PostMapping("/topo/{id}/link")
+    public String topoLinkSite(@PathVariable String id, @RequestParam("stringSite") String stringSite, HttpServletRequest request) {
+        System.out.println("===" + stringSite + "===");
+        Site site = siteManagement.findSiteByNom(stringSite);
+        Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
+        System.out.println("Topo nom = " + topo.get().getNom());
+        System.out.println("Site nom = " + site.getNom());
+
+        if(topo.isPresent() && site != null) {
+            List<Topo> topos = site.getTopos();
+            topos.add(topo.get());
+            site.setTopos(topos);
+            siteManagement.save(site);
+
+            List<Site> sites = topo.get().getSites();
+            sites.add(site);
+            topo.get().setSites(sites);
+            topoManagement.save(topo.get());
+        }
+        return "redirect:/topo/{id}";
     }
 
     @GetMapping("/site/")
@@ -165,10 +203,8 @@ public class TopoController {
         Optional<Site> site = siteManagement.findById(long_id);
         if (site.isPresent()) {
             if (site.get().getCommentaires() != null)
-                if (utilisateur.getId().equals(site.get().getUtilisateur().getId())) {
-                    commentaireManagement.deleteCommentairesBySiteId(site.get().getId());
-                    siteManagement.deleteById(long_id);
-                }
+                commentaireManagement.deleteCommentairesBySiteId(site.get().getId());
+            siteManagement.deleteById(long_id);
         }
         return "redirect:/profile";
     }
@@ -192,7 +228,6 @@ public class TopoController {
     @PostMapping("/secteur/save")
     public String creation_secteur(@ModelAttribute Secteur secteur, Model model, HttpServletRequest request) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         secteur.setDate(date);
         secteurManagement.save(secteur);
@@ -275,9 +310,7 @@ public class TopoController {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         Optional<Voie> voie = voieManagement.findById(long_id);
         if (voie.isPresent()) {
-            if (utilisateur.getId().equals(voie.get().getSecteur().getSite().getUtilisateur().getId())) {
-                voieManagement.deleteById(long_id);
-            }
+            voieManagement.deleteById(long_id);
         }
         return "redirect:/profile";
     }
@@ -286,6 +319,8 @@ public class TopoController {
     public String comment_add(@ModelAttribute Commentaire commentaire, @PathVariable String id) {
         commentaire.setDate(new Date(System.currentTimeMillis()));
         commentaireManagement.save(commentaire);
+
+        System.out.println(commentaire.getUtilisateur());
 
         String redirection = "redirect:/";
         if (commentaire.getSite() != null) {

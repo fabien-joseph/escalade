@@ -27,5 +27,21 @@
         </table>
     </form>
 </div>
+
+<p>Lier un site à ce topo : </p>
+<form>
+    <input type="text" id="recherche"/>
+</form>
+
+<script>
+    $(function () {
+        $('#recherche').autocomplete({
+            source: "recherche",
+            change: function () {
+                alert('Test' + ui.item.label);
+            }
+        });
+    });
+</script>
 </body>
 </html>

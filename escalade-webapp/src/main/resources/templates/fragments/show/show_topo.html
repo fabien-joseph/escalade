@@ -1,11 +1,11 @@
 <div th:fragment="show_topo" xmlns:th="http://www.thymeleaf.org">
+    <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
     <section class="hero">
         <div class="hero-body">
             <div class="container">
                 <h1 class="has-text-centered title">
                     Show topo
                 </h1>
-                <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
                 <div class="has-tex-centered" th:if="${topo}">
                     <p th:text="'Nom : ' + ${topo.nom}"></p>
                     <p th:text="'Date d\'ajout : ' + ${topo.date}"></p>
@@ -44,17 +44,36 @@
                 </div>
 
                 <p>Lier un site à ce topo : </p>
-                <form>
-                    <input type="text" id="recherche"/>
+                <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
+                    <input name="stringSite" type="text" id="recherche"/>
                 </form>
+                <!--/*@thymesVar id="reservation" type="fr.fabien.escalade.model.topo.Reservation"*/-->
 
                 <div th:if="${session.user}">
-                    <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
-                </div>
-                <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
-                <div th:if="${commentaires}">
-                    <div th:each="comment:${commentaires}">
-                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                    <div th:if="${session.user?.getId() != topo.getUtilisateur().getId()}">
+                        <form action="#" th:action="@{/topo/{id}/reservation (id=${topo.getId()})}" method=post>
+                            <label>
+                                <select name="dateFin">
+                                    <option selected disabled>Date de fin</option>
+                                    <option th:type="text" th:each="date : ${dates}"
+                                            th:value="${date}"
+                                            th:utext="${date}">
+
+                                    </option>
+                                </select>
+                            </label>
+                            <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+                        </form>
+                    </div>
+
+                    <div th:if="${session.user}">
+                        <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
+                    </div>
+                    <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                    <div th:if="${commentaires}">
+                        <div th:each="comment:${commentaires}">
+                            <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,10 +83,7 @@
     <script>
         $(function () {
             $('#recherche').autocomplete({
-                source: "recherche",
-                change: function () {
-                    alert('Test' + ui.item.label);
-                }
+                source: "/recherche",
             });
         });
     </script>

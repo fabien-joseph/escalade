@@ -29,7 +29,6 @@
                             <tr class="" th:each="secteur:${site.getSecteurs()}">
                                 <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
                             </tr>
-                            </tbody>
                         </table>
                     </div>
                     <div th:if="${session.user}">

@@ -1,0 +1,38 @@
+<div class="hero-head" th:fragment="header_test" xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../">
+                    <img src="http://bulma.io/images/bulma-type-white.png" alt="Logo">
+                </a>
+                <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                <span class="navbar-item">
+                                <a th:href="@{/}" class="button is-white is-outlined" href="#">
+                                    <span class="icon">
+                                        <i class="fa fa-home"></i>
+                                    </span>
+                                    <span>Accueil</span>
+                                </a>
+                            </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <span class="navbar-item">
+                                <a th:href="@{/inscription}" class="button is-white is-outlined" href="#">
+                                    <span>Inscription</span>
+                                </a>
+                            </span>
+                    <span class="navbar-item">
+                                <a th:href="@{/connexion}" class="button is-white is-outlined" href="https://github.com/dansup/bulma-templates/blob/master/templates/landing.html">
+                                    <span>Connexion</span>
+                                </a>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

@@ -183,7 +183,7 @@ public class TopoController {
         model.addAttribute("utilisateur_show", site.getUtilisateur());
         model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
         model.addAttribute("redirectionId", id);
-        return "show";
+        return "show_test";
     }
 
     @GetMapping("/site/{id}/edit")

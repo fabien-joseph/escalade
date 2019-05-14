@@ -9,6 +9,8 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

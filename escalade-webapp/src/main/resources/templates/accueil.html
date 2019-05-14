@@ -3,47 +3,44 @@
 <head th:replace="fragments/head.html :: head">
     <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
 </head>
-<body class="has-navbar-fixed-top">
-<div th:replace="fragments/header.html :: header"></div>
-    <section class="hero bg-img is-fullheight-with-navbar">
-        <div class="hero-body darker">
-            <div class="container">
-                <form>
-                    <input type="text" id="recherche"/>
-                </form>
-                <div class="has-text-centered">
-                    <div th:if="${session.user}"><p class="is-size-1 hello"
-                                                    th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
+<body>
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container">
+            <div class="has-text-centered">
+                <div th:if="${session.user}"><p class="is-size-1 hello"
+                                                th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
 
-                </div>
-                <div class="has-text-centered" id="test">
-                    <p class="is-size-3 search">Trouve un site :</p>
-                </div>
+            </div>
+            <div class="has-text-centered" id="test">
+                <p class="is-size-3 search">Trouve un site :</p>
+            </div>
 
-                <form action="/topo/{id}/reserver">
-                    <div class="field has-addons has-addons-centered">
-                        <div class="control">
-                            <div class="select is-large">
-                                <label>
-                                </label>
-                                <label>
-                                    <select name="departement" class="departements_list">
-                                        <option selected disabled>Département</option>
-                                        <option th:type="text" th:each="departement : ${departements}"
-                                                th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
-                                                th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="control" id="droppable">
-                            <button type="submit" class="button is-primary is-large">Rechercher</button>
+            <form>
+                <div class="field has-addons has-addons-centered">
+                    <div class="control">
+                        <div class="select is-large">
+                            <label>
+                            </label>
+                            <label>
+                                <select name="departement" class="departements_list">
+                                    <option selected disabled>Département</option>
+                                    <option th:type="text" th:each="departement : ${departements}"
+                                            th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
+                                            th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
+                                </select>
+                            </label>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="control" id="droppable">
+                        <button type="submit" class="button is-primary is-large">Rechercher</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 <script>
     $(function () {
         $('#recherche').autocomplete({

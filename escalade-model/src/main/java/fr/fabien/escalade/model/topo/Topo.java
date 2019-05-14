@@ -8,6 +8,9 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,9 @@ public class Topo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
+    @Size(min = 3, max = 30, message = "Le nom du topo doit contenir entre 3 et 30 caractères")
     private String nom;
     private Date date;
     private Boolean isEnable;

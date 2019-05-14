@@ -6,10 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,7 @@ public class TopoController {
     @Autowired
     ReservationManagement reservationManagement;
 
-    @GetMapping("/topo/")
+    @GetMapping("/topo")
     public String topo(Model model, HttpServletRequest request) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         Topo topo = new Topo();
@@ -44,13 +46,23 @@ public class TopoController {
     }
 
     @PostMapping("/topo/save")
-    public String creation_topo(@ModelAttribute Topo topo, Model model, HttpServletRequest request) {
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        topoManagement.save(topo);
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("topo", topo);
-        model.addAttribute("object_type", "topo");
-        return "redirect:/profile";
+    public String creation_topo(Topo topo, Model model, HttpServletRequest request, BindingResult binding) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Topo>> violations = validator.validate(topo);
+        System.out.println("ICI : " + violations.size());
+        for (ConstraintViolation<Topo> violation : violations) {
+            System.out.println(violation.getMessage());
+        }
+        if (violations.size() == 0) {
+            Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+            topoManagement.save(topo);
+            model.addAttribute("utilisateur", utilisateur);
+            model.addAttribute("topo", topo);
+            model.addAttribute("object_type", "topo");
+            return "redirect:/profile";
+        }
+        return "redirect:/topo";
     }
 
     @GetMapping("/topo/{id}")

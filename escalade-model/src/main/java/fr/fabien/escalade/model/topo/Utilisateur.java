@@ -8,6 +8,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +24,22 @@ public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
     private String login;
+    @NotNull
     private String motDePasse;
+
+    @NotNull
+    @Email(message = "Le courriel doit être valide")
     private String courriel;
+
+    @NotNull
+    @Size(min = 3, max = 60, message = "Le prénom doit contenir entre 3 et 60 caractères")
     private String prenom;
+
+    @Size(min = 3, max = 60, message = "Le nom doit contenir entre 3 et 60 caractères")
     private String nom;
+
     private Boolean isAdmin;
     private Date date;
 

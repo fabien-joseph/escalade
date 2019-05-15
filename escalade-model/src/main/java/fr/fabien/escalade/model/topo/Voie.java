@@ -20,7 +20,7 @@ public class Voie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
-    private Double longueur;
+    private Integer longueur;
     private Date date;
     private String description;
 
@@ -34,7 +34,7 @@ public class Voie {
     public Voie() {
     }
 
-    public Voie(String nom, Double longueur, Date date, String description, Secteur secteur, List<Note> notes) {
+    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, List<Note> notes) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;

@@ -87,7 +87,7 @@
                                         <tr>
                                             <td>Hauteur :</td>
                                             <td>
-                                                <div class="has-text-centered"><p>De 1 à 30 mètres</p></div>
+                                                <div class="has-text-centered"><p th:text="'De '+ ${site.hauteurMin} +' à '+ ${site.hauteurMax} +' mètres'"></p></div>
                                                 <progress class="progress is-small is-danger" value="30"
                                                           max="100"></progress>
                                             </td>

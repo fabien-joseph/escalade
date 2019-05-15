@@ -22,8 +22,8 @@ public class Secteur {
     private Long id;
     private String nom;
     private Date date;
-    private String cotationMin;
-    private String cotationMax;
+    private Integer cotationMin;
+    private Integer cotationMax;
     private Integer hauteurMin;
     private Integer hauteurMax;
 
@@ -38,7 +38,7 @@ public class Secteur {
     public Secteur() {
     }
 
-    public Secteur(String nom, Date date, String cotationMin, String cotationMax, Integer hauteurMin, Integer hauteurMax, List<Voie> voies, Site site) {
+    public Secteur(String nom, Date date, Integer cotationMin, Integer cotationMax, Integer hauteurMin, Integer hauteurMax, List<Voie> voies, Site site) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;

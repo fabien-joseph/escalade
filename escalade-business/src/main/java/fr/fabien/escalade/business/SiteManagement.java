@@ -33,4 +33,27 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSiteByNom(nom);
     }
 
+    public void updateMinMax(Site site) {
+        Integer minValue = null;
+        Integer maxValue = null;
+
+        for (int i = 0; i < site.getSecteurs().size(); i++) {
+            if (i == 0) {
+                minValue = site.getSecteurs().get(i).getHauteurMin();
+                maxValue = site.getSecteurs().get(i).getHauteurMax();
+            } else {
+                if (site.getSecteurs().get(i).getHauteurMin() < minValue) {
+                    minValue = site.getSecteurs().get(i).getHauteurMin();
+                }
+                if (site.getSecteurs().get(i).getHauteurMax() > maxValue) {
+                    maxValue = site.getSecteurs().get(i).getHauteurMax();
+                }
+
+            }
+        }
+
+        site.setHauteurMin(minValue);
+        site.setHauteurMax(maxValue);
+        save(site);
+    }
 }

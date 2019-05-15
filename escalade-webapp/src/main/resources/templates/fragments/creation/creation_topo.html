@@ -13,5 +13,13 @@
         <input type="hidden" th:field="*{id}" th:value="${topo.id}">
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
+    <!--/*@thymesVar id="errors" type="java.util.List<String>"*/-->
+    <div th:if="${errors != null}">
+        <div th:if="${errors.size() > 0}">
+            <div th:each="error:${errors}">
+                <div th:text="${error}"></div>
+            </div>
+        </div>
+    </div>
 </div>
 

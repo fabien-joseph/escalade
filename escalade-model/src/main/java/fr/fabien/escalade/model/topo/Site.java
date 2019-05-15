@@ -1,6 +1,5 @@
 package fr.fabien.escalade.model.topo;
 
-import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonBackReference;
@@ -9,8 +8,7 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

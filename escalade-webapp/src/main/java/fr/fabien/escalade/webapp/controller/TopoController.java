@@ -3,15 +3,17 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.*;
 import fr.fabien.escalade.model.topo.*;
 import lombok.RequiredArgsConstructor;
+import org.hsqldb.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,27 +36,26 @@ public class TopoController {
     CommentaireManagement commentaireManagement;
     @Autowired
     ReservationManagement reservationManagement;
+    @Autowired
+    ValidationModel validationModel = new ValidationModel();
+
 
     @GetMapping("/topo")
-    public String topo(Model model, HttpServletRequest request) {
+    public String topo(Model model, HttpServletRequest request, @RequestParam(value = "errors", required = false) List<String> errors) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         Topo topo = new Topo();
         topo.setUtilisateur(utilisateur);
         model.addAttribute("user", utilisateur);
         model.addAttribute("topo", topo);
+        model.addAttribute("errors", errors);
         return "creation";
     }
 
     @PostMapping("/topo/save")
-    public String creation_topo(Topo topo, Model model, HttpServletRequest request, BindingResult binding) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Topo>> violations = validator.validate(topo);
-        System.out.println("ICI : " + violations.size());
-        for (ConstraintViolation<Topo> violation : violations) {
-            System.out.println(violation.getMessage());
-        }
-        if (violations.size() == 0) {
+    public String creation_topo(Topo topo, Model model, HttpServletRequest request, BindingResult binding, RedirectAttributes ra) {
+        List<String> errors = validationModel.verifyValidity(topo);
+
+        if (errors.size() == 0) {
             Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
             topoManagement.save(topo);
             model.addAttribute("utilisateur", utilisateur);
@@ -62,6 +63,7 @@ public class TopoController {
             model.addAttribute("object_type", "topo");
             return "redirect:/profile";
         }
+        ra.addAttribute("errors", errors);
         return "redirect:/topo";
     }
 
@@ -156,29 +158,34 @@ public class TopoController {
         return "redirect:/topo/{id}";
     }
 
-    @GetMapping("/site/")
-    public String site(Model model, HttpServletRequest request) {
+    @GetMapping("/site")
+    public String site(Model model, HttpServletRequest request, @RequestParam(value = "errors", required = false) List<String> errors) {
         Site site = new Site();
         site.setDate(new Date(System.currentTimeMillis()));
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         site.setUtilisateur(utilisateur);
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("site", site);
+        model.addAttribute("errors", errors);
         return "creation";
     }
 
     @PostMapping("/site/save")
-    public String creation_site(@ModelAttribute Site site, Model model, HttpServletRequest request) {
+    public String creation_site(@ModelAttribute Site site, Model model, HttpServletRequest request, RedirectAttributes ra) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        site.setUtilisateur(utilisateur);
-        siteManagement.save(site);
+        List<String> errors = validationModel.verifyValidity(site);
 
-        String object_type = "site";
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("site", site);
-        model.addAttribute("object_type", object_type);
-        return "redirect:/profile";
+        if(errors.size() == 0) {
+            site.setUtilisateur(utilisateur);
+            siteManagement.save(site);
+            String object_type = "site";
+            model.addAttribute("utilisateur", utilisateur);
+            model.addAttribute("site", site);
+            model.addAttribute("object_type", object_type);
+            return "redirect:/profile";
+        }
+        ra.addAttribute("errors", errors);
+        return "redirect:/site";
     }
 
     @GetMapping("/site/{id}")

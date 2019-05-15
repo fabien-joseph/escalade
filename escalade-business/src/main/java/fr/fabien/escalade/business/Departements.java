@@ -1,6 +1,5 @@
 package fr.fabien.escalade.business;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

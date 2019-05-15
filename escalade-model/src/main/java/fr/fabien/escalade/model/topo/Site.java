@@ -23,8 +23,8 @@ public class Site {
     private Long id;
     private String nom;
     private Date date;
-    private String cotationMin;
-    private String cotationMax;
+    private Integer cotationMin;
+    private Integer cotationMax;
     private String departement;
     private Integer hauteurMin;
     private Integer hauteurMax;
@@ -57,7 +57,7 @@ public class Site {
     public Site() {
     }
 
-    public Site(String nom, Date date, String cotationMin, String cotationMax, String departement, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Note> notes, List<Topo> topos, List<Secteur> secteurs) {
+    public Site(String nom, Date date, Integer cotationMin, Integer cotationMax, String departement, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Note> notes, List<Topo> topos, List<Secteur> secteurs) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;

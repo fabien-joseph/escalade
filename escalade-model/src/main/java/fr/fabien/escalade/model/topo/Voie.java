@@ -23,6 +23,7 @@ public class Voie {
     private Integer longueur;
     private Date date;
     private String description;
+    private Integer cotation;
 
     @ManyToOne
     private Secteur secteur;
@@ -34,12 +35,13 @@ public class Voie {
     public Voie() {
     }
 
-    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, List<Note> notes) {
+    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, List<Note> notes, Integer cotation) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
         this.description = description;
         this.secteur = secteur;
         this.notes = notes;
+        this.cotation = cotation;
     }
 }

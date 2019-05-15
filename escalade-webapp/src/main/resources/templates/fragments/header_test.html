@@ -18,16 +18,41 @@
                                     <span>Accueil</span>
                                 </a>
                             </span>
+                <span th:if="${session.user}" class="navbar-item">
+                                <a th:href="@{/topo}" class="button is-white is-outlined" href="#">
+                                    <span>Créer un topo</span>
+                                </a>
+                            </span>
+                    <span th:if="${session.user}" class="navbar-item">
+                                <a th:href="@{/site}" class="button is-white is-outlined" href="#">
+                                    <span>Créer un site</span>
+                                </a>
+                            </span>
+
             </div>
             <div id="navbarMenu" class="navbar-menu">
                 <div class="navbar-end">
-                    <span class="navbar-item">
+
+                    <span th:if="${session.user}" class="navbar-item">
+                                <a th:href="@{/profile}" class="button is-white is-outlined" href="#">
+                                    <span>Profile</span>
+                                </a>
+                            </span>
+
+                    <span th:if="${session.user}" class="navbar-item">
+                                <a th:href="@{/logout}" class="button is-white is-outlined" href="#">
+                                    <span>Déconnexion</span>
+                                </a>
+                            </span>
+
+                    <span th:if="${session.user == null}" class="navbar-item">
                                 <a th:href="@{/inscription}" class="button is-white is-outlined" href="#">
                                     <span>Inscription</span>
                                 </a>
                             </span>
-                    <span class="navbar-item">
-                                <a th:href="@{/connexion}" class="button is-white is-outlined" href="https://github.com/dansup/bulma-templates/blob/master/templates/landing.html">
+                    <span th:if="${session.user == null}" class="navbar-item">
+                                <a th:href="@{/connexion}" class="button is-white is-outlined"
+                                   href="https://github.com/dansup/bulma-templates/blob/master/templates/landing.html">
                                     <span>Connexion</span>
                                 </a>
                             </span>

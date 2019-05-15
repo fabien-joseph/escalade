@@ -141,8 +141,6 @@ public class TopoController {
         System.out.println("===" + stringSite + "===");
         Site site = siteManagement.findSiteByNom(stringSite);
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
-        System.out.println("Topo nom = " + topo.get().getNom());
-        System.out.println("Site nom = " + site.getNom());
 
         if(topo.isPresent() && site != null) {
             List<Topo> topos = site.getTopos();

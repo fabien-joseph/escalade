@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+</head>
+
+<body>
+<!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
+<!-- Navigation bar -->
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container">
+            <!-- About -->
+            <section class="section" id="topo">
+                <!-- Title -->
+                <div class="section-heading has-text-centered">
+                    <h3 class="title is-2">Topo</h3>
+                    <h4 class="subtitle is-5" th:text="${topo.nom}"></h4>
+                    <div class="container">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="columns has-same-height is-gapless">
+                    <div class="column">
+                        <!-- Profile -->
+                        <div class="card">
+                            <div class="card-content">
+                                <h3 class="title is-4">Informations</h3>
+
+                                <div class="content">
+                                    <table class="table-profile">
+                                        <tr>
+                                            <th colspan="1"></th>
+                                            <th colspan="2"></th>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">Créateur:</td>
+                                            <td width="80%">
+                                                <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}"
+                                                   th:text="${topo.utilisateur.login}"></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dernière mise à jour:</td>
+                                            <td th:text="${topo.date}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disponible:</td>
+                                            <td th:text="${topo.isEnable}"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services -->
+            <section class="section" id="sites">
+                <div class="section-heading has-text-centered">
+                    <h3 class="title is-2">Sites liés au topo</h3>
+                </div>
+
+
+                <div class="field">
+                    <div class="control">
+                        <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
+                            <input class="input is-large" name="stringSite" type="text" id="recherche" placeholder="Lier un nouveau site"/>
+                        </form>
+                    </div>
+                </div>
+                <!--<div class="container">
+                    <div class="columns" th:each="secteur:${site.getSecteurs()}">
+                        <div th:replace="fragments/show/show_secteur_test.html :: show_secteur_test"></div>
+                    </div>
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <a class="button is-outlined is-light is-large" th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
+                                Ajouter un secteur
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </section>
+            <section class="section" id="commentaires">
+                <div th:if="${commentaires}" class="section-heading has-text-centered">
+                    <h3 class="title is-2">Commentaires</h3>
+                </div>
+                <div th:if="${session.user}">
+                    <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
+                </div>
+                <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                <div th:if="${commentaires}">
+                    <div th:each="comment:${commentaires}">
+                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#recherche').autocomplete({
+            source: "/recherche",
+        });
+    });
+</script>
+</body>
+
+</html>

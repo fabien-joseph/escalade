@@ -1,29 +1,58 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       lang="fr">
 <head th:replace="fragments/head.html :: head">
 </head>
 <body>
-<div th:replace="fragments/header.html :: header"></div>
-<h3>Inscription</h3>
-<form action="#" th:action="@{/inscription}" th:object="${utilisateur_insc}" method=post>
-    <p>Mail: <label>
-        <input type="text" th:field="*{courriel}"/>
-    </label></p>
-    <p>Login: <label>
-        <input type="text" th:field="*{login}"/>
-    </label></p>
-    <p>Mot de passe: <label>
-        <input type="password" th:field="*{motDePasse}"/>
-    </label></p>
-    <p>Prénom: <label>
-        <input type="text" th:field="*{prenom}"/>
-    </label></p>
-    <p>Nom: <label>
-        <input type="text" th:field="*{nom}"/>
-    </label></p>
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-white">Inscription</h3>
+                <p class="subtitle has-text-white">Entrez vos accès pour vous connecter.</p>
+                <div class="box box-transparent">
+                    <form action="#" th:action="@{/inscription}" th:object="${utilisateur_insc}" method=post>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{courriel}" class="input is-large" type="email" placeholder="Mail" autofocus="">
+                            </div>
+                        </div>
 
-    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-</form>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{login}" class="input is-large" type="text" placeholder="Nom de compte" autofocus="">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{motDePasse}" class="input is-large" type="password" placeholder="Mot de passe">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{prenom}" class="input is-large" type="text" placeholder="Prénom" autofocus="">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom" autofocus="">
+                            </div>
+                        </div>
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">S'inscrire</button>
+                    </form>
+                </div>
+                <p class="has-text-white">
+                    <a href="/inscription">S'inscrire</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
 </body>
 </html>

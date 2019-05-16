@@ -1,47 +1,38 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       lang="fr">
 <head th:replace="fragments/head.html :: head">
 </head>
 <body>
-<div th:replace="fragments/header.html :: header"></div>
-<div class="columns">
-<h3>Connexion</h3>
-    <form name='f' action="/connexion" method='POST'>
-        <table>
-            <tr>
-                <td>User:</td>
-                <td><label>
-                    <input type='text' name='username' value=''>
-                </label></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><label>
-                    <input type='password' name='password'/>
-                </label></td>
-            </tr>
-            <tr>
-                <td><input name="submit" type="submit" value="submit"/></td>
-            </tr>
-        </table>
-    </form>
-</div>
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-white">Connexion</h3>
+                <p class="subtitle has-text-white">Entrez vos accès pour vous connecter.</p>
+                <div class="box box-transparent">
+                    <form name='f' action="/connexion" method='POST'>
+                        <div class="field">
+                            <div class="control">
+                                <input name='username' class="input is-large" type="text" placeholder="Nom de compte" autofocus="">
+                            </div>
+                        </div>
 
-<p>Lier un site à ce topo : </p>
-<form>
-    <input type="text" id="recherche"/>
-</form>
-
-<script>
-    $(function () {
-        $('#recherche').autocomplete({
-            source: "recherche",
-            change: function () {
-                alert('Test' + ui.item.label);
-            }
-        });
-    });
-</script>
+                        <div class="field">
+                            <div class="control">
+                                <input name='password' class="input is-large" type="password" placeholder="Mot de passe">
+                            </div>
+                        </div>
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Se connecter</button>
+                    </form>
+                </div>
+                <p class="has-text-white">
+                    <a href="/inscription">S'inscrire</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

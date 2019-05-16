@@ -7,7 +7,7 @@
                     alt="Placeholder image"></a>
         </figure>
     </div>
-    <div class="card-content">
+    <div class="card-content has-dark-opacity-background">
         <div class="media">
             <div class="media-content">
                 <p class="title is-4 has-text-centered">Site</p>
@@ -21,18 +21,17 @@
             <br>
             <time th:datetime="${site.getDate()}" th:text="${site.getDate()}"></time>
         </div>
-
-        <footer class="card-footer">
-            <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
-            <a th:href="@{/site/{id}/reserver(id=${site.getId()})}"
-               th:if="${utilisateur_show?.getId() != session.user?.getId()}" href="#" class="card-footer-item">Réserver</a>
-            <a th:href="@{/site/{id}/edit(id=${site.getId()})}"
-               th:if="${utilisateur_show?.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
-            <a th:href="@{/site/{id}(id=${site.getId()})}"
-               th:if="${utilisateur_show?.getId() != session.user?.getId()}" th:action="@{/site/{id} (id=${site.getId()})}"
-               class="card-footer-item">Voir</a>
-            <a th:if="${utilisateur_show?.getId() == session.user?.getId()}"
-               th:href="@{/site/{id}/delete (id=${site.getId()})}" class="card-footer-item">Supprimer</a>
-        </footer>
     </div>
+    <footer class="card-footer has-dark-opacity-background">
+        <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
+        <a th:href="@{/site/{id}/reserver(id=${site.getId()})}"
+           th:if="${utilisateur_show?.getId() != session.user?.getId()}" href="#" class="card-footer-item">Réserver</a>
+        <a th:href="@{/site/{id}/edit(id=${site.getId()})}"
+           th:if="${utilisateur_show?.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
+        <a th:href="@{/site/{id}(id=${site.getId()})}"
+           th:if="${utilisateur_show?.getId() != session.user?.getId()}" th:action="@{/site/{id} (id=${site.getId()})}"
+           class="card-footer-item">Voir</a>
+        <a th:if="${utilisateur_show?.getId() == session.user?.getId()}"
+           th:href="@{/site/{id}/delete (id=${site.getId()})}" class="card-footer-item">Supprimer</a>
+    </footer>
 </div>

@@ -3,9 +3,7 @@ package fr.fabien.escalade.webapp.controller;
 import fr.fabien.escalade.business.*;
 import fr.fabien.escalade.model.topo.*;
 import lombok.RequiredArgsConstructor;
-import org.hsqldb.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +46,7 @@ public class TopoController {
         model.addAttribute("user", utilisateur);
         model.addAttribute("topo", topo);
         model.addAttribute("errors", errors);
-        return "creation";
+        return "topo_creation";
     }
 
     @PostMapping("/topo/save")
@@ -91,7 +89,7 @@ public class TopoController {
         model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
         model.addAttribute("redirectionId", id);
         model.addAttribute("dates", dates);
-        return "show";
+        return "topo_show";
     }
 
     @GetMapping("/topo/{id}/edit")
@@ -159,13 +157,17 @@ public class TopoController {
     @GetMapping("/site")
     public String site(Model model, HttpServletRequest request, @RequestParam(value = "errors", required = false) List<String> errors) {
         Site site = new Site();
+        site.setCotationMin(0);
+        site.setCotationMax(0);
+        site.setHauteurMin(0);
+        site.setHauteurMax(0);
         site.setDate(new Date(System.currentTimeMillis()));
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         site.setUtilisateur(utilisateur);
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("site", site);
         model.addAttribute("errors", errors);
-        return "creation";
+        return "site_creation";
     }
 
     @PostMapping("/site/save")
@@ -200,7 +202,7 @@ public class TopoController {
         model.addAttribute("utilisateur_show", site.getUtilisateur());
         model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
         model.addAttribute("redirectionId", id);
-        return "show_test";
+        return "site_show";
     }
 
     @GetMapping("/site/{id}/edit")
@@ -232,14 +234,14 @@ public class TopoController {
         secteur.setDate(new Date(System.currentTimeMillis()));
         secteur.setSite(siteManagement.findById(Long.parseLong(id)).get());
         model.addAttribute("secteur", secteur);
-        return "creation";
+        return "secteur_creation";
     }
 
     @GetMapping("/secteur/{id}")
     public String secteur(Model model, @PathVariable String id) {
         long long_id = Long.parseLong(id);
         model.addAttribute("secteur", secteurManagement.findSecteurById(long_id));
-        return "show";
+        return "secteur_show";
     }
 
     @PostMapping("/secteur/save")

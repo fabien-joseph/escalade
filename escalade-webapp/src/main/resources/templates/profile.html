@@ -4,8 +4,8 @@
 <head th:replace="fragments/head.html :: head">
 </head>
 <body>
-<div th:replace="fragments/header.html :: header"></div>
-<section class="hero">
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
             <h1 class="has-text-centered title" th:text="'Profil de ' + ${utilisateur_show.getLogin()}">

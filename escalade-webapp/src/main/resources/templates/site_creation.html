@@ -1,0 +1,65 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
+<head th:replace="fragments/head.html :: head">
+</head>
+<body>
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-white">Créer un site</h3>
+                <div class="box box-transparent">
+                    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+                    <form action="#" th:action="@{/site/save}" th:object="${site}" method=post>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du site"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{orientation}" class="input is-large" type="text"
+                                       placeholder="Orientation"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{type}" class="input is-large" type="text" placeholder="Type"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{departement}" class="input is-large" type="text"
+                                       placeholder="Département"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{localisation}" class="input is-large" type="text"
+                                       placeholder="Localisation"
+                                       autofocus="">
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" th:field="*{cotationMin}" th:value="${site.cotationMin}">
+                        <input type="hidden" th:field="*{cotationMax}" th:value="${site.cotationMax}">
+                        <input type="hidden" th:field="*{hauteurMin}" th:value="${site.hauteurMin}">
+                        <input type="hidden" th:field="*{hauteurMax}" th:value="${site.hauteurMax}">
+                        <input type="hidden" th:field="*{utilisateur}" th:value="${site.utilisateur}">
+                        <input type="hidden" th:field="*{id}" th:value="${site.id}">
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

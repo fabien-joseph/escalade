@@ -34,6 +34,6 @@ public class ConnexionController {
             return "error";
         }
         utilisateurManagement.save(utilisateur_insc);
-        return "result";
+        return "redirect:/";
     }
 }

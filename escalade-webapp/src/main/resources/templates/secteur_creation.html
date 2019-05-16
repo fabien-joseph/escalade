@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
+<head th:replace="fragments/head.html :: head">
+</head>
+<body>
+<section class="hero bg-img is-fullheight">
+    <!--/*@thymesVar id="secteur" type="fr.fabien.escalade.model.topo.Secteur"*/-->
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-white">Ajouter un secteur</h3>
+                <div class="box box-transparent">
+                    <form action="#" th:action="@{/secteur/save}" th:object="${secteur}" method=post>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du secteur"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <input type="hidden" th:field="*{site}" th:value="${secteur.site}"/>
+                        <input type="hidden" th:field="*{id}" th:value="${secteur.id}"/>
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

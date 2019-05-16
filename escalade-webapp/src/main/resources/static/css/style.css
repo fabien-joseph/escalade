@@ -40,3 +40,43 @@
     background-attachment: fixed;
     background-size: cover;
 }
+
+body, .title, .subtitle, strong {
+    color: white;
+}
+
+.card {
+    background-color: transparent;
+    box-shadow: 0 0 0;
+}
+
+.card-content {
+    color: white;
+}
+
+a {
+    color : white;
+}
+
+a:hover {
+    color : grey;
+}
+
+.input, .textarea {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.has-dark-opacity-background {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.box-transparent {
+    background-color: transparent;
+    box-shadow: 0 0 0;
+}
+
+::placeholder {
+    color: red;
+    opacity: 1;
+}

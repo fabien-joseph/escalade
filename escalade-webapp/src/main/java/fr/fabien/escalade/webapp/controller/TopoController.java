@@ -141,7 +141,7 @@ public class TopoController {
         Site site = siteManagement.findSiteByNom(stringSite);
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
 
-        if(topo.isPresent() && site != null) {
+        if (topo.isPresent() && site != null) {
             List<Topo> topos = site.getTopos();
             topos.add(topo.get());
             site.setTopos(topos);
@@ -176,7 +176,7 @@ public class TopoController {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         List<String> errors = validationModel.verifyValidity(site);
 
-        if(errors.size() == 0) {
+        if (errors.size() == 0) {
             site.setUtilisateur(utilisateur);
             siteManagement.save(site);
             String object_type = "site";
@@ -283,7 +283,7 @@ public class TopoController {
     }
 
     @GetMapping("/secteur/{id}/voie")
-    public String creation_voie(Model model, @PathVariable String id) {
+    public String creation_voie(Model model, @PathVariable String id, @RequestParam(value = "errors", required = false) List<String> errors) {
         Voie voie = new Voie();
         voie.setDate(new Date(System.currentTimeMillis()));
         voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
@@ -300,17 +300,24 @@ public class TopoController {
     }
 
     @PostMapping("/voie/save")
-    public String creation_voie(@ModelAttribute Voie voie, Model model, HttpServletRequest request) {
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        Date date = new Date(System.currentTimeMillis());
-        voie.setDate(date);
-        voieManagement.save(voie);
+    public String creation_voie(@ModelAttribute Voie voie, Model model, HttpServletRequest request, RedirectAttributes ra) {
+        List<String> errors = validationModel.verifyValidity(voie);
+        String redirect = "redirect:/secteur/" + voie.getSecteur().getId() + "/voie";
 
-        String object_type = "voie";
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("voie", voie);
-        model.addAttribute("object_type", object_type);
-        return "redirect:/profile";
+        if (errors.size() == 0) {
+            Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+            Date date = new Date(System.currentTimeMillis());
+            voie.setDate(date);
+            voieManagement.save(voie);
+
+            String object_type = "voie";
+            model.addAttribute("utilisateur", utilisateur);
+            model.addAttribute("voie", voie);
+            model.addAttribute("object_type", object_type);
+            return "redirect:/profile";
+        }
+        ra.addAttribute("errors", errors);
+        return redirect;
     }
 
     @GetMapping("/voie/{id}/edit")

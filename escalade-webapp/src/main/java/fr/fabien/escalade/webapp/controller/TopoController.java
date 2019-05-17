@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,7 +49,7 @@ public class TopoController {
     }
 
     @PostMapping("/topo/save")
-    public String creation_topo(Topo topo, Model model, HttpServletRequest request, BindingResult binding, RedirectAttributes ra) {
+    public String creation_topo(Topo topo, Model model, HttpServletRequest request, RedirectAttributes ra) {
         List<String> errors = validationModel.verifyValidity(topo);
 
         if (errors.size() == 0) {
@@ -71,7 +70,8 @@ public class TopoController {
         Topo topo = topoManagement.findById(long_id).get();
         model.addAttribute("topo", topo);
         Commentaire commentaire = new Commentaire();
-
+        //List<Site> sites = siteManagement.findSitesByTopo_id(207L);
+        //System.out.println("Size = " + sites.size());
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         List<Date> dates = new ArrayList<>();
@@ -89,6 +89,7 @@ public class TopoController {
         model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
         model.addAttribute("redirectionId", id);
         model.addAttribute("dates", dates);
+        //model.addAttribute("sites", sites);
         return "topo_show";
     }
 
@@ -190,7 +191,7 @@ public class TopoController {
 
     @GetMapping("/site/{id}")
     public String listMesSites(Model model,
-                               HttpServletRequest request, @PathVariable String id, HttpSession session) {
+                               HttpServletRequest request, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
         Site site = siteManagement.findById(long_id).get();
         model.addAttribute("site", site);
@@ -287,7 +288,7 @@ public class TopoController {
         voie.setDate(new Date(System.currentTimeMillis()));
         voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
         model.addAttribute("voie", voie);
-        return "creation";
+        return "voie_creation";
     }
 
     @GetMapping("/voie/{id}")
@@ -301,7 +302,6 @@ public class TopoController {
     @PostMapping("/voie/save")
     public String creation_voie(@ModelAttribute Voie voie, Model model, HttpServletRequest request) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         voie.setDate(date);
         voieManagement.save(voie);
@@ -324,9 +324,8 @@ public class TopoController {
     }
 
     @GetMapping("/voie/{id}/delete")
-    public String voie_delete(@PathVariable String id, HttpServletRequest request) {
+    public String voie_delete(@PathVariable String id) {
         Long long_id = Long.parseLong(id);
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         Optional<Voie> voie = voieManagement.findById(long_id);
         if (voie.isPresent()) {
             voieManagement.deleteById(long_id);

@@ -24,8 +24,8 @@ public class Topo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Le nom du topo ne doit pas être vide")
-    @Size(min = 3, max = 30, message = "Le nom du topo doit contenir entre 3 et 30 caractères")
+    @NotNull(message = "Le nom ne doit pas être vide")
+    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères")
     private String nom;
     private Date date;
     private Boolean isEnable;

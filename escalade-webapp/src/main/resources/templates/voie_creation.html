@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
+<head th:replace="fragments/head.html :: head">
+</head>
+<body>
+<!--/*@thymesVar id="voie" type="fr.fabien.escalade.model.topo.Voie"*/-->
+<section class="hero bg-img is-fullheight">
+    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-white">Ajouter une voie</h3>
+                <div class="box box-transparent">
+                    <form action="#" th:action="@{/voie/save}" th:object="${voie}" method=post>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{nom}" class="input is-large" type="text"
+                                       placeholder="Nom de la voie"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{description}" class="input is-large" type="text"
+                                       placeholder="Description"
+                                       autofocus="">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input th:field="*{longueur}" class="input is-large" type="number"
+                                       placeholder="Longueur"
+                                       autofocus="">
+                            </div>
+                        </div>
+
+                        <input type="hidden" th:field="*{secteur}" th:value="${voie.secteur}"/>
+                        <input type="hidden" th:field="*{id}" th:value="${voie.id}"/>
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

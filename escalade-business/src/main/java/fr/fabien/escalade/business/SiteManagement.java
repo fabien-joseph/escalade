@@ -33,6 +33,10 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSiteByNom(nom);
     }
 
+    public List<Site> findSitesByTopo_id(Long topoId) {
+        return repository.findSitesByTopo_id(topoId);
+    }
+
     public void updateMinMax(Site site) {
         Integer minValue = null;
         Integer maxValue = null;

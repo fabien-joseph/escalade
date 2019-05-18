@@ -25,8 +25,25 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
-    public List<Site> findSitesAdvanced(int hauteurMin, int hauteurMax, String nom, String departement) {
-        return repository.findSitesAdvanced(hauteurMin, hauteurMax, nom, departement);
+    public List<Site> findSitesAdvanced(Integer hauteurMin, Integer hauteurMax, String nom, String departement) {
+        Site site = new Site();
+        site.setNom(nom);
+        site.setDepartement(departement);
+        site.setHauteurMin(hauteurMin);
+        site.setHauteurMax(hauteurMax);
+        if (site.getHauteurMin() == null)
+            site.setHauteurMin(0);
+        if (site.getHauteurMax() == null)
+            site.setHauteurMax(9999);
+        if (site.getNom() == null)
+            site.setNom("");
+
+        System.out.println("Valeur min " + site.getHauteurMin());
+        System.out.println("Valeur max " + site.getHauteurMax());
+        System.out.println("Nom " + site.getNom());
+        System.out.println("Département " + site.getDepartement());
+
+        return repository.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(), site.getNom(), site.getDepartement());
     }
 
     public Site findSiteByNom(String nom) {
@@ -35,6 +52,10 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
 
     public List<Site> findSitesByTopo_id(Long topoId) {
         return repository.findSitesByTopo_id(topoId);
+    }
+
+    public List<Site> findSitesByDepartement(String departement) {
+        return repository.findSitesByDepartement(departement);
     }
 
     public void updateMinMax(Site site) {

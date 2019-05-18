@@ -26,7 +26,7 @@ public class RechercheController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
 
-    @RequestMapping(value = "/recherche")
+    @RequestMapping(value = "/autocompleteSite")
     @ResponseBody
     public List<String> listSites(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
         return siteManagement.findSitesByNom(term)

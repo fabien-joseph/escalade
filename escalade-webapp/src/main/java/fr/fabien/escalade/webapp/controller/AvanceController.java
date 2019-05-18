@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @Controller
@@ -22,24 +24,17 @@ public class AvanceController {
 
     }
 
-    @PostMapping("/testresult")
-    public String result(@ModelAttribute Site site, Model model){
-        if (site.getNom() == null) {
-            site.setNom("");
-        }
-        if (site.getHauteurMin() == null) {
-            site.setHauteurMin(0);
-        }
-        if (site.getHauteurMax() == null) {
-            site.setHauteurMax(99999);
-        }
-        if (site.getDepartement() == null) {
-            site.setDepartement("");
-        }
+    @GetMapping("/recherche")
+    public String listSites(Model model,
+                            @RequestParam(value = "departement", required = false, defaultValue = "") String departement,
+                            @RequestParam(value = "nom", required = false, defaultValue = "") String nom,
+                            @RequestParam(value = "hauteurMin", required = false, defaultValue = "") Integer hauteurMin,
+                            @RequestParam(value = "hauteurMax", required = false, defaultValue = "") Integer hauteurMax) {
+        Site site = new Site();
 
-        List<Site> sites = siteManagement.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(), site.getNom(), site.getDepartement());
 
+        List<Site> sites = siteManagement.findSitesAdvanced(hauteurMin, hauteurMax, nom, departement);
         model.addAttribute("sites", sites);
-        return "result";
+        return "recherche";
     }
 }

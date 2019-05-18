@@ -2,11 +2,7 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -52,11 +48,7 @@ public class Site {
     @OneToMany(mappedBy = "site")
     private List<Secteur> secteurs = new ArrayList<>();
 
-
-
-
     // ---- Constructors
-
     public Site() {
     }
 

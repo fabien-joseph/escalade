@@ -9,11 +9,18 @@
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="site:${sites}">
-                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
+            <div class="columns">
+                <div class="column is-three-quarters">
+                    <div class="columns is-multiline">
+                        <div class="column is-one-quarter" th:each="site:${sites}">
+                            <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="column is-one-quarter is-narrow sidebar">
+                    TESTTESTTEST
+                </div>
+            </div>
             <p th:if="${sites == null}">Aucun site n'a été trouvé !</p>
         </div>
     </div>

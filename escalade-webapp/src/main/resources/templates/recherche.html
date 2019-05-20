@@ -17,8 +17,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="column is-one-quarter is-narrow sidebar">
-                    TESTTESTTEST
+                <div class="column has-text-centered has-dark-opacity-background is-one-quarter is-narrow sidebar">
+                    <h1>Recherche</h1>
+                    <br>
+                    <form th:action="@{/recherche}">
+                        <div class="field">
+                            <div class="control">
+                                <input name="nom" class="input is-rounded" type="text" placeholder="Nom ex: SuperSite">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input name="departement" class="input is-rounded" type="text" placeholder="Département ex: 91">
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column field">
+                                <div class="control">
+                                    <input name="hauteurMin" class="input is-rounded" type="number" min="0" max="9999"
+                                           placeholder="Hauteur min">
+                                </div>
+                            </div>
+                            <div class="column field">
+                                <div class="control">
+                                    <input name="hauteurMax" class="input is-rounded" type="number" min="0" max="9999"
+                                           placeholder="Hauteur max">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="button is-outlined is-light">
+                            <i class="fas fa-search">&nbsp</i>Rechercher
+                        </button>
+                    </form>
                 </div>
             </div>
             <p th:if="${sites == null}">Aucun site n'a été trouvé !</p>

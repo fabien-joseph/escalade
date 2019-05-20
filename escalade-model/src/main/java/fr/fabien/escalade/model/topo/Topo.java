@@ -2,14 +2,11 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,8 +21,9 @@ public class Topo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Le nom ne doit pas être vide")
-    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères")
+    @NotNull(message = "Le nom ne doit pas être vide.")
+    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères.")
+    //@Pattern(regexp = "[\\d\\d\\d[A-F]]", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
     private Boolean isEnable;

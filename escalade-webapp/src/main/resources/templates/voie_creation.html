@@ -15,23 +15,42 @@
                     <form action="#" th:action="@{/voie/save}" th:object="${voie}" method=post>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{nom}" class="input is-large" type="text"
-                                       placeholder="Nom de la voie"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{nom}" class="input is-large" type="text"
+                                           placeholder="Nom de la voie"
+                                           autofocus="">
+                                </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{description}" class="input is-large" type="text"
-                                       placeholder="Description"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{description}" class="input is-large" type="text"
+                                           placeholder="Description"
+                                           autofocus="">
+                                </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{longueur}" class="input is-large" type="number"
-                                       placeholder="Longueur"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{longueur}" class="input is-large" type="number"
+                                           placeholder="Longueur"
+                                           autofocus="">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="select is-large">
+                                <label>
+                                    <select name="cotation" class="departements_list select is-rounded has-dark-opacity-background">
+                                        <option selected disabled>Cotation</option>
+                                        <option th:type="text" th:each="cotation : ${cotations}"
+                                                th:value="${cotation.key}"
+                                                th:utext="${cotation.value}"></option>
+                                    </select>
+                                </label>
                             </div>
                         </div>
 

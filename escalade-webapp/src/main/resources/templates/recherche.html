@@ -23,25 +23,65 @@
                     <form th:action="@{/recherche}">
                         <div class="field">
                             <div class="control">
-                                <input name="nom" class="input is-rounded" type="text" placeholder="Nom ex: SuperSite">
+                                <label>
+                                    <input name="nom" class="input is-rounded" type="text" placeholder="Nom ex: SuperSite">
+                                </label>
                             </div>
                         </div>
                         <div class="field">
-                            <div class="control">
-                                <input name="departement" class="input is-rounded" type="text" placeholder="Département ex: 91">
+                            <div class="select is-large">
+                                <label>
+                                    <select name="departement" class="departements_list select is-rounded has-dark-opacity-background">
+                                        <option selected disabled>Département</option>
+                                        <option th:type="text" th:each="departement : ${departements}"
+                                                th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
+                                                th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
+                                    </select>
+                                </label>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column field">
                                 <div class="control">
-                                    <input name="hauteurMin" class="input is-rounded" type="number" min="0" max="9999"
-                                           placeholder="Hauteur min">
+                                    <label>
+                                        <input name="hauteurMin" class="input is-rounded" type="number" min="0" max="9999"
+                                               placeholder="Hauteur min">
+                                    </label>
                                 </div>
                             </div>
                             <div class="column field">
                                 <div class="control">
-                                    <input name="hauteurMax" class="input is-rounded" type="number" min="0" max="9999"
-                                           placeholder="Hauteur max">
+                                    <label>
+                                        <input name="hauteurMax" class="input is-rounded" type="number" min="0" max="9999"
+                                               placeholder="Hauteur max">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Cotations</p>
+                        <div class="columns">
+                            <div class="column field">
+                                <div class="select">
+                                    <label>
+                                        <select name="cotationMin" class="departements_list select is-rounded has-dark-opacity-background">
+                                            <option selected disabled>Min</option>
+                                            <option th:type="text" th:each="cotation : ${cotations}"
+                                                    th:value="${cotation.key}"
+                                                    th:utext="${cotation.value}"></option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="column field">
+                                <div class="select">
+                                    <label>
+                                        <select name="cotationMax" class="departements_list select is-rounded has-dark-opacity-background">
+                                            <option selected disabled>Max</option>
+                                            <option th:type="text" th:each="cotation : ${cotations}"
+                                                    th:value="${cotation.key}"
+                                                    th:utext="${cotation.value}"></option>
+                                        </select>
+                                    </label>
                                 </div>
                             </div>
                         </div>

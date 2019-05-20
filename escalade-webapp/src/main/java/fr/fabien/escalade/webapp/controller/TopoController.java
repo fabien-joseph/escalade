@@ -16,6 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static fr.fabien.escalade.business.Cotations.cotations;
+
 @Controller
 @RequiredArgsConstructor
 public class TopoController {
@@ -288,6 +290,7 @@ public class TopoController {
         voie.setDate(new Date(System.currentTimeMillis()));
         voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
         model.addAttribute("voie", voie);
+        model.addAttribute("cotations", cotations);
         return "voie_creation";
     }
 

@@ -25,25 +25,40 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
-    public List<Site> findSitesAdvanced(Integer hauteurMin, Integer hauteurMax, String nom, String departement) {
+    public List<Site> findSitesAdvanced(Integer hauteurMin, Integer hauteurMax,
+                                        Integer cotationMin, Integer cotationMax,
+                                        String nom, String departement) {
+
         Site site = new Site();
         site.setNom(nom);
         site.setDepartement(departement);
         site.setHauteurMin(hauteurMin);
         site.setHauteurMax(hauteurMax);
+        site.setCotationMin(cotationMin);
+        site.setCotationMax(cotationMax);
+        System.out.println("Cotation min " + site.getCotationMin());
+        System.out.println("Cotation max " + site.getCotationMax());
         if (site.getHauteurMin() == null)
             site.setHauteurMin(0);
         if (site.getHauteurMax() == null)
             site.setHauteurMax(9999);
+        if (site.getCotationMin() == null)
+            site.setCotationMin(1);
+        if (site.getCotationMax() == null)
+            site.setCotationMax(30);
         if (site.getNom() == null)
             site.setNom("");
 
-        System.out.println("Valeur min " + site.getHauteurMin());
-        System.out.println("Valeur max " + site.getHauteurMax());
+        System.out.println("Hauteur min " + site.getHauteurMin());
+        System.out.println("Hauteur max " + site.getHauteurMax());
         System.out.println("Nom " + site.getNom());
         System.out.println("Département " + site.getDepartement());
+        System.out.println("Cotation min " + site.getCotationMin());
+        System.out.println("Cotation max " + site.getCotationMax());
 
-        return repository.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(), site.getNom(), site.getDepartement());
+        return repository.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(),
+                site.getCotationMin(), site.getCotationMax(),
+                site.getNom(), site.getDepartement());
     }
 
     public Site findSiteByNom(String nom) {
@@ -76,9 +91,29 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
 
             }
         }
-
         site.setHauteurMin(minValue);
         site.setHauteurMax(maxValue);
+
+        minValue = null;
+        maxValue = null;
+
+        for (int i = 0; i < site.getSecteurs().size(); i++) {
+            if (i == 0) {
+                minValue = site.getSecteurs().get(i).getCotationMin();
+                maxValue = site.getSecteurs().get(i).getCotationMin();
+            } else {
+                if (site.getSecteurs().get(i).getCotationMin() < minValue) {
+                    minValue = site.getSecteurs().get(i).getCotationMin();
+                }
+                if (site.getSecteurs().get(i).getCotationMax() > maxValue) {
+                    maxValue = site.getSecteurs().get(i).getCotationMax();
+                }
+
+            }
+        }
+        site.setCotationMin(minValue);
+        site.setCotationMax(maxValue);
+
         save(site);
     }
 }

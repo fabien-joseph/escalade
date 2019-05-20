@@ -22,7 +22,7 @@
                     <div class="control">
                         <div class="select is-large">
                             <label>
-                                <select name="departement" class="departements_list">
+                                <select name="departement">
                                     <option selected disabled>Département</option>
                                     <option th:type="text" th:each="departement : ${departements}"
                                             th:value="${T(java.lang.Integer).toString(departement.key, 16)}"

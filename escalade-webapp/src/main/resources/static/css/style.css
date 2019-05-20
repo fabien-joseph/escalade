@@ -68,7 +68,7 @@ a:hover {
 }
 
 .has-dark-opacity-background {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .box-transparent {
@@ -81,3 +81,10 @@ a:hover {
     opacity: 1 !important;
 }
 
+.departements_list {
+    color: #a9a9a9 !important;
+}
+
+.select.is-rounded {
+    border-radius: 290486px;
+}

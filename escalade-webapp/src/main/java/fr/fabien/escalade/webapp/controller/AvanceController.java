@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static fr.fabien.escalade.business.Cotations.cotations;
+import static fr.fabien.escalade.business.Departements.departements;
+
 @Controller
 public class AvanceController {
     @Autowired
@@ -29,12 +32,18 @@ public class AvanceController {
                             @RequestParam(value = "departement", required = false, defaultValue = "") String departement,
                             @RequestParam(value = "nom", required = false, defaultValue = "") String nom,
                             @RequestParam(value = "hauteurMin", required = false, defaultValue = "") Integer hauteurMin,
-                            @RequestParam(value = "hauteurMax", required = false, defaultValue = "") Integer hauteurMax) {
+                            @RequestParam(value = "hauteurMax", required = false, defaultValue = "") Integer hauteurMax,
+                            @RequestParam(value = "cotationMin", required = false, defaultValue = "") Integer cotationMin,
+                            @RequestParam(value = "cotationMax", required = false, defaultValue = "") Integer cotationMax) {
         Site site = new Site();
-
-
-        List<Site> sites = siteManagement.findSitesAdvanced(hauteurMin, hauteurMax, nom, departement);
+        System.out.println(cotationMin + " ET " + cotationMax);
+        List<Site> sites = siteManagement.findSitesAdvanced(
+                hauteurMin, hauteurMax,
+                cotationMin, cotationMax,
+                nom, departement);
         model.addAttribute("sites", sites);
+        model.addAttribute("departements", departements);
+        model.addAttribute("cotations", cotations);
         return "recherche";
     }
 }

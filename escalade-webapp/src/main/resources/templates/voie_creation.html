@@ -34,13 +34,12 @@
                         <div class="field">
                             <div class="control">
                                 <label>
-                                    <input th:field="*{longueur}" class="input is-large" type="number"
-                                           placeholder="Longueur"
+                                    <input th:field="*{longueur}" min="0" max="1000" class="input is-large" type="number"
+                                           placeholder="Longueur (en mètres)"
                                            autofocus="">
                                 </label>
                             </div>
                         </div>
-
                         <div class="field">
                             <div class="select is-large">
                                 <label>

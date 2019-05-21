@@ -2,6 +2,7 @@ package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.topo.SiteRepository;
 import fr.fabien.escalade.model.topo.Site;
+import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
     public List<Site> findSitesAdvanced(Integer hauteurMin, Integer hauteurMax,
                                         Integer cotationMin, Integer cotationMax,
                                         String nom, String departement) {
-
         Site site = new Site();
         site.setNom(nom);
         site.setDepartement(departement);
@@ -36,8 +36,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         site.setHauteurMax(hauteurMax);
         site.setCotationMin(cotationMin);
         site.setCotationMax(cotationMax);
-        System.out.println("Cotation min " + site.getCotationMin());
-        System.out.println("Cotation max " + site.getCotationMax());
         if (site.getHauteurMin() == null)
             site.setHauteurMin(0);
         if (site.getHauteurMax() == null)
@@ -48,14 +46,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
             site.setCotationMax(30);
         if (site.getNom() == null)
             site.setNom("");
-
-        System.out.println("Hauteur min " + site.getHauteurMin());
-        System.out.println("Hauteur max " + site.getHauteurMax());
-        System.out.println("Nom " + site.getNom());
-        System.out.println("Département " + site.getDepartement());
-        System.out.println("Cotation min " + site.getCotationMin());
-        System.out.println("Cotation max " + site.getCotationMax());
-
         return repository.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(),
                 site.getCotationMin(), site.getCotationMax(),
                 site.getNom(), site.getDepartement());
@@ -67,6 +57,10 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
 
     public List<Site> findSitesByTopo_id(Long topoId) {
         return repository.findSitesByTopo_id(topoId);
+    }
+
+    public List<Site> findAllByTopos_Id(Long id) {
+        return repository.findAllByTopos_Id(id);
     }
 
     public List<Site> findSitesByDepartement(String departement) {

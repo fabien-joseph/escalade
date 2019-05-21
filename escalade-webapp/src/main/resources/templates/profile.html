@@ -11,22 +11,44 @@
             <h1 class="has-text-centered title" th:text="'Profil de ' + ${utilisateur_show.getLogin()}">
             </h1>
             <div th:if="${utilisateur_show}">
-                <div class="columns">
-                    <div class="column">
-                        <p th:text="'Login : ' + ${utilisateur_show.login}"></p>
-                        <p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
-                        <p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
-                    </div>
-                </div>
-                <div class="columns is-multiline">
-                        <div class="column is-one-fifth" th:each="topo:${utilisateur_show.getTopos()}">
-                            <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
+                <section class="section" id="informations">
+                    <div class="columns">
+                        <div class="column">
+                            <p th:text="'Login : ' + ${utilisateur_show.login}"></p>
+                            <p th:text="'Prénom : ' + ${utilisateur_show.prenom}"></p>
+                            <p th:text="'Nom : ' + ${utilisateur_show.nom}"></p>
                         </div>
-                </div>
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="site:${utilisateur_show.getSites()}">
-                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
                     </div>
+                </section>
+                <div th:if="${reservations?.size() > 0}">
+                    <section class="section" id="reservations">
+                        <h3 class="title is-4">Vos réservations</h3>
+                        <div class="columns is-multiline">
+                            <div class="column is-one-fifth" th:each="topo:${reservations}">
+                                <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div th:if="${topos.size() > 0}">
+                    <section class="section" id="topos">
+                        <h3 class="title is-4">Topos</h3>
+                        <div class="columns is-multiline">
+                            <div class="column is-one-fifth" th:each="topo:${utilisateur_show.getTopos()}">
+                                <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div th:if="${sites.size() > 0}">
+                    <section class="section" id="sites">
+                        <h3 class="title is-4">Sites</h3>
+                        <div class="columns is-multiline">
+                            <div class="column is-one-fifth" th:each="site:${utilisateur_show.getSites()}">
+                                <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
             <p th:if="${utilisateur_show == null}">Utilisateur introuvable</p>

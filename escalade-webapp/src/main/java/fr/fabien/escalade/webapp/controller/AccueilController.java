@@ -2,6 +2,7 @@ package fr.fabien.escalade.webapp.controller;
 
 import fr.fabien.escalade.business.ReservationManagement;
 import fr.fabien.escalade.business.SiteManagement;
+import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.business.UtilisateurManagement;
 import fr.fabien.escalade.model.topo.Reservation;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,6 @@ import static fr.fabien.escalade.business.Departements.departements;
 public class AccueilController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
-
-    @Autowired
-    SiteManagement siteManagement;
-
-    @Autowired
-    ReservationManagement reservationManagement;
 
     @GetMapping("/")
     public String accueil(Model model, HttpServletRequest request, HttpSession session) {

@@ -29,7 +29,9 @@ public class Site {
     private Integer hauteurMax;
     private String orientation;
     private String type;
+    @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
     private String description;
+    @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
     private String localisation;
 
     @ManyToOne

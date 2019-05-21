@@ -45,7 +45,7 @@
 
                 <p>Lier un site à ce topo : </p>
                 <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
-                    <input name="stringSite" type="text" id="recherche"/>
+                    <input name="autocompleteSite" type="text" id="autocompleteSite"/>
                 </form>
                 <!--/*@thymesVar id="reservation" type="fr.fabien.escalade.model.topo.Reservation"*/-->
 
@@ -55,6 +55,7 @@
                             <label>
                                 <select name="dateFin">
                                     <option selected disabled>Date de fin</option>
+                                    <!--/*@thymesVar id="dates" type="List<Date>"*/-->
                                     <option th:type="text" th:each="date : ${dates}"
                                             th:value="${date}"
                                             th:utext="${date}">
@@ -82,8 +83,8 @@
 
     <script>
         $(function () {
-            $('#recherche').autocomplete({
-                source: "/recherche",
+            $('#autocompleteSite').autocomplete({
+                source: "/autocompleteSite",
             });
         });
     </script>

@@ -1,8 +1,11 @@
 package fr.fabien.escalade.webapp.controller;
 
+import fr.fabien.escalade.business.ReservationManagement;
 import fr.fabien.escalade.business.SiteManagement;
 import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.business.UtilisateurManagement;
+import fr.fabien.escalade.model.topo.Reservation;
+import fr.fabien.escalade.model.topo.Topo;
 import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,6 +29,8 @@ public class UtilisateurController {
     TopoManagement topoManagement;
     @Autowired
     SiteManagement siteManagement;
+    @Autowired
+    ReservationManagement reservationManagement;
 
     @GetMapping("/profile/{id}")
     public String profile(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
@@ -45,9 +52,19 @@ public class UtilisateurController {
         Utilisateur utilisateur = null;
         if (request.getUserPrincipal() != null)
             utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
+        List<Reservation> reservations = reservationManagement.findAllByUtilisateur_Id(utilisateur.getId());
+        List<Topo> topos_reservations = new ArrayList<>();
+
+        for (Reservation reservation :
+                reservations) {
+            topos_reservations.add(reservation.getTopo());
+        }
+
         model.addAttribute("utilisateur_show", utilisateur);
         model.addAttribute("topos", topoManagement.findToposByUtilisateur_id(utilisateur.getId()));
         model.addAttribute("sites", siteManagement.findSitesByUtilisateurId(utilisateur.getId()));
+        model.addAttribute("reservations", topos_reservations);
+
         return "profile";
     }
 }

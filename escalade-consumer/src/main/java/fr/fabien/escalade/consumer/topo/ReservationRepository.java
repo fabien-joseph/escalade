@@ -2,6 +2,7 @@ package fr.fabien.escalade.consumer.topo;
 
 import fr.fabien.escalade.model.topo.Reservation;
 import fr.fabien.escalade.model.topo.Secteur;
+import fr.fabien.escalade.model.topo.Topo;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,8 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     @Query("SELECT r FROM Reservation r WHERE (r.dateDebut <= :dateStart AND r.dateFin >= :dateStart) OR " +
             "(r.dateDebut <= :dateEnd AND r.dateFin >= :dateEnd)")
     List<Reservation> validDate(@Param("dateStart") Date dateStart, @Param("dateEnd") Date dateEnd);
+
+    List<Reservation> findAllByTopo (Topo topo);
+
+    List<Reservation> findAllByUtilisateur_Id(Long utilisateurId);
 }

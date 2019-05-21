@@ -60,6 +60,41 @@
                 </div>
             </section>
 
+            <div th:if="${sites != null}">
+                <div class="columns is-multiline">
+                    <div class="column is-one-fifth" th:each="site:${sites}">
+                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${session.user?.getId() != topo.getUtilisateur().getId()}">
+                <section class="section" id="reversation">
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Réservation</h3>
+                    </div>
+                    <div class="field has-addons has-addons-centered">
+                        <div class="control">
+                            <form action="#" th:action="@{/topo/{id}/reservation (id=${topo.getId()})}" method=post>
+                                <div class="select is-large">
+                                    <label>
+                                        <select name="dateFin"
+                                                class="departements_list select has-dark-opacity-background">
+                                            <option selected disabled>Date de fin</option>
+                                            <option th:type="text" th:each="date : ${dates}"
+                                                    th:value="${date}"
+                                                    th:utext="${date}">
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <button type="submit" class="button is-outlined is-light is-large">Rechercher</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
             <!-- Services -->
             <section class="section" id="sites">
                 <div class="section-heading has-text-centered">
@@ -70,7 +105,8 @@
                 <div class="field">
                     <div class="control">
                         <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
-                            <input class="input is-large" name="stringSite" type="text" id="recherche" placeholder="Lier un nouveau site"/>
+                            <input class="input is-large" name="stringSite" type="text" id="recherche"
+                                   placeholder="Lier un nouveau site"/>
                         </form>
                     </div>
                 </div>
@@ -89,17 +125,15 @@
                 -->
             </section>
             <section class="section" id="commentaires">
-                <div th:if="${commentaires}" class="section-heading has-text-centered">
+                <div th:if="${commentaires.size() > 0 || session.user != null}" class="section-heading has-text-centered">
                     <h3 class="title is-2">Commentaires</h3>
                 </div>
-                <div th:if="${session.user}">
+                <div th:if="${session.user != null}">
                     <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
                 </div>
                 <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
-                <div th:if="${commentaires}">
-                    <div th:each="comment:${commentaires}">
-                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
-                    </div>
+                <div th:each="comment:${commentaires}">
+                    <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
                 </div>
             </section>
         </div>
@@ -108,7 +142,7 @@
 <script>
     $(function () {
         $('#recherche').autocomplete({
-            source: "/recherche",
+            source: "/autocompleteSite",
         });
     });
 </script>

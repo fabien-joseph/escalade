@@ -2,6 +2,7 @@ package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.topo.ReservationRepository;
 import fr.fabien.escalade.model.topo.Reservation;
+import fr.fabien.escalade.model.topo.Topo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,13 +18,20 @@ public class ReservationManagement extends CrudManager<Reservation, ReservationR
     }
 
     public boolean isFree(Reservation reservation) {
-        List<Reservation> reservations = repository.validDate(reservation.getDateFin(), reservation.getDateFin());
+        List<Reservation> reservations = repository.validDate(reservation.getDateDebut(), reservation.getDateFin());
         return reservations.size() <= 0;
+    }
+
+    public List<Reservation> findAllByTopo (Topo topo) {
+        return repository.findAllByTopo(topo);
+    }
+
+    public List<Reservation> findAllByUtilisateur_Id(Long utilisateurId) {
+        return repository.findAllByUtilisateur_Id(utilisateurId);
     }
 
     @Override
     public void save(Reservation reservation) {
         repository.save(reservation);
     }
-
 }

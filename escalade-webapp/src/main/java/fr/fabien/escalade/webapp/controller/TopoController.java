@@ -72,8 +72,7 @@ public class TopoController {
         Topo topo = topoManagement.findById(long_id).get();
         model.addAttribute("topo", topo);
         Commentaire commentaire = new Commentaire();
-        //List<Site> sites = siteManagement.findSitesByTopo_id(207L);
-        //System.out.println("Size = " + sites.size());
+        List<Site> sites = siteManagement.findAllByTopos_Id(164L);
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         List<Date> dates = new ArrayList<>();
@@ -83,15 +82,15 @@ public class TopoController {
             dates.add(cal.getTime());
         }
 
-        session.setAttribute("user", utilisateurManagement.findByRequest(request));
-
+        //session.setAttribute("user", utilisateurManagement.findByRequest(request));
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
         commentaire.setTopo(topo);
+
         model.addAttribute("commentaire_write", commentaire);
         model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
         model.addAttribute("redirectionId", id);
         model.addAttribute("dates", dates);
-        //model.addAttribute("sites", sites);
+        model.addAttribute("sites", sites);
         return "topo_show";
     }
 
@@ -107,7 +106,7 @@ public class TopoController {
 
     @PostMapping("/topo/{id}/reservation")
     public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin, HttpServletRequest request) throws ParseException {
-
+        System.out.println(dateFin);
         DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         Date dateConv = format.parse(dateFin);
         Reservation reservation = new Reservation();
@@ -116,8 +115,9 @@ public class TopoController {
         reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
         Long long_id = Long.parseLong(id);
         reservation.setTopo(topoManagement.findById(long_id).get());
-        if (reservationManagement.isFree(reservation))
-            reservationManagement.save(reservation);
+        System.out.println("Libre ? " + reservationManagement.isFree(reservation));
+        //if (reservationManagement.isFree(reservation))
+          //  reservationManagement.save(reservation);
 
         return "redirect:/topo/{id}";
     }
@@ -230,6 +230,14 @@ public class TopoController {
         }
         return "redirect:/profile";
     }
+
+    @GetMapping("/site/{id}/reservation")
+    public String site_reservation(@PathVariable String id, HttpServletRequest request) {
+
+        return "redirect:/site/{id}";
+    }
+
+
 
     @GetMapping("/site/{id}/secteur")
     public String creation_secteur(Model model, @PathVariable String id) {

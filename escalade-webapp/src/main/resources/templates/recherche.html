@@ -34,8 +34,8 @@
                                     <select name="departement" class="departements_list select is-rounded has-dark-opacity-background">
                                         <option selected disabled>Département</option>
                                         <option th:type="text" th:each="departement : ${departements}"
-                                                th:value="${T(java.lang.Integer).toString(departement.key, 16)}"
-                                                th:utext="${T(java.lang.Integer).toString(departement.key, 16)} +' - '+${departement.value}"></option>
+                                                th:value="${departement.key}"
+                                                th:utext="${departement.key} +' - '+${departement.value}"></option>
                                     </select>
                                 </label>
                             </div>

@@ -21,33 +21,61 @@
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{orientation}" class="input is-large" type="text"
-                                       placeholder="Orientation"
-                                       autofocus="">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <input th:field="*{type}" class="input is-large" type="text" placeholder="Type"
-                                       autofocus="">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <input th:field="*{departement}" class="input is-large" type="text"
-                                       placeholder="Département"
-                                       autofocus="">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
                                 <input th:field="*{localisation}" class="input is-large" type="text"
                                        placeholder="Localisation"
                                        autofocus="">
                             </div>
                         </div>
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-large">
+                                    <label>
+                                        <select th:field="*{orientation}" name="type"
+                                                class="departements_list select has-dark-opacity-background">
+                                            <option value="" selected disabled>Orientation</option>
+                                            <option th:value="'Nord'" th:text="Nord"></option>
+                                            <option th:value="'Sud'" th:text="Sud"></option>
+                                            <option th:value="'Est'" th:text="Est"></option>
+                                            <option th:value="'Ouest'" th:text="Ouest"></option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-large">
+                                    <label>
+                                        <select th:field="*{type}" name="type"
+                                                class="departements_list select has-dark-opacity-background">
+                                            <option value="" selected disabled>Type</option>
+                                            <option th:value="'Roche'" th:text="Roche"></option>
+                                            <option th:value="'Bloc'" th:text="Bloc"></option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="field">
+                            <div class="control">
+                                <div class="select is-large">
+                                    <label>
+                                        <select th:field="*{departement}" name="departement"
+                                                class="departements_list select has-dark-opacity-background">
+                                            <option value="" selected disabled>Département</option>
+                                            <option th:type="text" th:each="departement : ${departements}"
+                                                    th:value="${departement.key}"
+                                                    th:utext="${departement.key + ' - ' + departement.value}">
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" th:field="*{cotationMin}" th:value="${site.cotationMin}">
                         <input type="hidden" th:field="*{cotationMin}" th:value="${site.cotationMin}">
                         <input type="hidden" th:field="*{cotationMax}" th:value="${site.cotationMax}">
                         <input type="hidden" th:field="*{hauteurMin}" th:value="${site.hauteurMin}">
@@ -56,6 +84,20 @@
                         <input type="hidden" th:field="*{id}" th:value="${site.id}">
                         <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
                     </form>
+                </div>
+            </div>
+            <div th:if="${errors != null}">
+                <div th:if="${errors.size() > 0}">
+                    <article class="message is-danger">
+                        <div class="message-header">
+                            <p>Liste d'erreurs</p>
+                        </div>
+                        <div class="message-body">
+                            <div th:each="error:${errors}">
+                                <div th:text="${error}"></div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>

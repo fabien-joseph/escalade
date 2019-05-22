@@ -26,7 +26,7 @@
                 <div class="columns has-same-height is-gapless">
                     <div class="column">
                         <!-- Profile -->
-                        <div class="card">
+                        <div class="card has-dark-opacity-background">
                             <div class="card-content">
                                 <h3 class="title is-4">Informations</h3>
 
@@ -101,7 +101,6 @@
                     <h3 class="title is-2">Sites liés au topo</h3>
                 </div>
 
-
                 <div class="field">
                     <div class="control">
                         <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
@@ -110,19 +109,6 @@
                         </form>
                     </div>
                 </div>
-                <!--<div class="container">
-                    <div class="columns" th:each="secteur:${site.getSecteurs()}">
-                        <div th:replace="fragments/show/show_secteur_test.html :: show_secteur_test"></div>
-                    </div>
-                    <div class="columns has-same-height is-gapless">
-                        <div class="column">
-                            <a class="button is-outlined is-light is-large" th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
-                                Ajouter un secteur
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                -->
             </section>
             <section class="section" id="commentaires">
                 <div th:if="${commentaires.size() > 0 || session.user != null}" class="section-heading has-text-centered">

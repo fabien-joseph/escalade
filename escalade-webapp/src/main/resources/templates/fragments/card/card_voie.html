@@ -1,0 +1,22 @@
+<div th:fragment="card_voie" xmlns:th="http://www.thymeleaf.org">
+    <!--/*@thymesVar id="voie" type="fr.fabien.escalade.model.topo.Voie"*/-->
+    <div class="card-content has-dark-opacity-background">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4 has-text-centered">Voie</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p th:text="${voie.getNom()}"></p>
+            <span>Par : <a th:href="@{/profile/{id}(id=${voie.getSecteur().getSite().getUtilisateur().getId()})}"
+                           th:text="${voie.getSecteur().getSite().getUtilisateur().getLogin()}"></a></span>
+            <br>
+            <time datetime="2016-1-1" th:text="${voie.getDate()}"></time>
+        </div>
+    </div>
+    <footer class="card-footer has-dark-opacity-background">
+        <a th:if="${voie.getSecteur().getSite().getUtilisateur().getId() == session.user?.getId()}"
+           th:href="@{/voie/{id}/delete (id=${voie.getId()})}" class="card-footer-item">Supprimer</a>
+    </footer>
+</div>

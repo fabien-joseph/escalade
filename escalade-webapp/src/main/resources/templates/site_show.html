@@ -25,7 +25,7 @@
                 <div class="columns has-same-height is-gapless">
                     <div class="column">
                         <!-- Profile -->
-                        <div class="card">
+                        <div class="card has-dark-opacity-background">
                             <div class="card-content">
                                 <h3 class="title is-4">Informations</h3>
 
@@ -69,19 +69,17 @@
                                         <tr>
                                             <td>Cotation :</td>
                                             <td>
-                                                <div class="has-text-centered"><p>De 3C à 6D</p></div>
-                                                <progress class="progress is-small is-danger" value="90"
-                                                          max="100"></progress>
+                                                <div><p
+                                                        th:text="'De '+ ${site.cotationMin} +' à '+ ${site.cotationMax}"></p>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Hauteur :</td>
                                             <td>
-                                                <div class="has-text-centered"><p
+                                                <div><p
                                                         th:text="'De '+ ${site.hauteurMin} +' à '+ ${site.hauteurMax} +' mètres'"></p>
                                                 </div>
-                                                <progress class="progress is-small is-danger" value="30"
-                                                          max="100"></progress>
                                             </td>
                                         </tr>
                                     </table>
@@ -93,21 +91,25 @@
                 </div>
             </section>
 
-            <!-- Services -->
             <section class="section" id="secteurs">
-                <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Secteurs</h3>
-                </div>
-                <div class="container">
-                    <div class="columns" th:each="secteur:${site.getSecteurs()}">
-                        <div th:replace="fragments/show/show_secteur_test.html :: show_secteur_test"></div>
+                <h3 class="title is-4">Secteurs</h3>
+                <div class="columns is-multiline">
+                    <div class="column is-one-fifth" th:each="secteur:${site.getSecteurs()}">
+                        <a th:href="@{/secteur/{id} (id = ${secteur.getId()})}">
+                            <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
+                        </a>
                     </div>
-                    <div class="columns has-same-height is-gapless">
-                        <div class="column">
-                            <a class="button is-outlined is-light is-large" th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
-                                Ajouter un secteur
-                            </a>
-                        </div>
+                </div>
+            </section>
+
+            <!-- Services -->
+            <section class="section" id="AddSecteurs">
+                <div class="columns has-same-height is-gapless">
+                    <div class="column">
+                        <a class="button is-outlined is-light is-large"
+                           th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
+                            Ajouter un secteur
+                        </a>
                     </div>
                 </div>
             </section>

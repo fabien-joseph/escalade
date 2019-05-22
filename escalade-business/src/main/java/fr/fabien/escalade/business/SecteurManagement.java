@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
 public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
     @Autowired
     SiteManagement siteManagement;
+    @Autowired
+    SecteurManagement secteurManagement;
 
     public SecteurManagement(SecteurRepository repository) {
         super(repository);
@@ -47,13 +50,44 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
 
             }
         }
-
         secteur.setHauteurMin(minValue);
         secteur.setHauteurMax(maxValue);
+
+        minValue = null;
+        maxValue = null;
+
+        for (int i = 0; i < secteur.getVoies().size(); i++) {
+            if (i == 0) {
+                minValue = secteur.getVoies().get(i).getCotation();
+                maxValue = secteur.getVoies().get(i).getCotation();
+            } else {
+                if (secteur.getVoies().get(i).getCotation() < minValue) {
+                    minValue = secteur.getVoies().get(i).getCotation();
+                }
+                if (secteur.getVoies().get(i).getCotation() > maxValue) {
+                    maxValue = secteur.getVoies().get(i).getCotation();
+                }
+
+            }
+        }
+        secteur.setCotationMin(minValue);
+        secteur.setCotationMax(maxValue);
 
         Site site = secteur.getSite();
         site.getSecteurs().add(secteur);
         siteManagement.save(site);
         siteManagement.updateMinMax(site);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Optional<Secteur> secteur = secteurManagement.findById(id);
+        if (secteur.isPresent()) {
+            Site site = secteur.get().getSite();
+            site.getSecteurs().remove(secteur.get());
+            siteManagement.save(site);
+            siteManagement.updateMinMax(site);
+            repository.delete(secteur.get());
+        }
     }
 }

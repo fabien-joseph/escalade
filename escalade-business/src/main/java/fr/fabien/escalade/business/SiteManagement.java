@@ -3,12 +3,17 @@ package fr.fabien.escalade.business;
 import fr.fabien.escalade.consumer.topo.SiteRepository;
 import fr.fabien.escalade.model.topo.Site;
 import fr.fabien.escalade.model.topo.Utilisateur;
+import javafx.util.Pair;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static fr.fabien.escalade.business.Departements.departements;
 
 @Transactional
 @Service
@@ -26,6 +31,18 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
+    public List<String> validDepartement(Site site) {
+        List<String> errors = new ArrayList<>();
+        if (site.getDepartement() != null) {
+            for (Map.Entry<String, String> entry : departements.entrySet()) {
+                if (site.getDepartement().equals(entry.getKey()))
+                    return errors;
+            }
+        }
+        errors.add("Le département indiqué n'est pas valide.");
+        return errors;
+    }
+
     public List<Site> findSitesAdvanced(Integer hauteurMin, Integer hauteurMax,
                                         Integer cotationMin, Integer cotationMax,
                                         String nom, String departement) {
@@ -36,6 +53,7 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         site.setHauteurMax(hauteurMax);
         site.setCotationMin(cotationMin);
         site.setCotationMax(cotationMax);
+
         if (site.getHauteurMin() == null)
             site.setHauteurMin(0);
         if (site.getHauteurMax() == null)
@@ -72,17 +90,19 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         Integer maxValue = null;
 
         for (int i = 0; i < site.getSecteurs().size(); i++) {
-            if (i == 0) {
-                minValue = site.getSecteurs().get(i).getHauteurMin();
-                maxValue = site.getSecteurs().get(i).getHauteurMax();
-            } else {
-                if (site.getSecteurs().get(i).getHauteurMin() < minValue) {
+            if (site.getSecteurs().get(i).getHauteurMin() != null && site.getSecteurs().get(i).getHauteurMax() != null) {
+                if (i == 0) {
                     minValue = site.getSecteurs().get(i).getHauteurMin();
-                }
-                if (site.getSecteurs().get(i).getHauteurMax() > maxValue) {
                     maxValue = site.getSecteurs().get(i).getHauteurMax();
-                }
+                } else {
+                    if (site.getSecteurs().get(i).getHauteurMin() < minValue) {
+                        minValue = site.getSecteurs().get(i).getHauteurMin();
+                    }
+                    if (site.getSecteurs().get(i).getHauteurMax() > maxValue) {
+                        maxValue = site.getSecteurs().get(i).getHauteurMax();
+                    }
 
+                }
             }
         }
         site.setHauteurMin(minValue);
@@ -92,17 +112,19 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         maxValue = null;
 
         for (int i = 0; i < site.getSecteurs().size(); i++) {
-            if (i == 0) {
-                minValue = site.getSecteurs().get(i).getCotationMin();
-                maxValue = site.getSecteurs().get(i).getCotationMin();
-            } else {
-                if (site.getSecteurs().get(i).getCotationMin() < minValue) {
+            if (site.getSecteurs().get(i).getCotationMin() != null && site.getSecteurs().get(i).getCotationMax() != null) {
+                if (i == 0) {
                     minValue = site.getSecteurs().get(i).getCotationMin();
-                }
-                if (site.getSecteurs().get(i).getCotationMax() > maxValue) {
-                    maxValue = site.getSecteurs().get(i).getCotationMax();
-                }
+                    maxValue = site.getSecteurs().get(i).getCotationMin();
+                } else {
+                    if (site.getSecteurs().get(i).getCotationMin() < minValue) {
+                        minValue = site.getSecteurs().get(i).getCotationMin();
+                    }
+                    if (site.getSecteurs().get(i).getCotationMax() > maxValue) {
+                        maxValue = site.getSecteurs().get(i).getCotationMax();
+                    }
 
+                }
             }
         }
         site.setCotationMin(minValue);

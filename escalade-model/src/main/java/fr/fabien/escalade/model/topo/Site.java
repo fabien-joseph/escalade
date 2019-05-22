@@ -18,20 +18,26 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Le nom ne doit pas être vide")
-    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères")
+    @NotNull(message = "Le nom ne doit pas être vide.")
+    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères.")
+    @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
     private Integer cotationMin;
     private Integer cotationMax;
-    private String departement;
     private Integer hauteurMin;
     private Integer hauteurMax;
+    @NotNull (message = "L'orientation ne doit pas être vide.")
+    private String departement;
+    @NotNull(message = "L'orientation ne doit pas être vide.")
+    @Pattern(regexp = "^(Nord|Sud|Est|Ouest)", message = "L'orientation indiquée n'est pas valide.")
     private String orientation;
+    @NotNull(message = "Le bloc ne doit pas être vide.")
+    @Pattern(regexp = "^(Roche|Bloc)", message = "Le type indiqué n'est pas valide.")
     private String type;
-    @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
+    @Size(max = 256, message = "La description doit contenir maximum 256 catactères.")
     private String description;
-    @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
+    @Size(max = 256, message = "La description doit contenir maximum 256 catactères.")
     private String localisation;
 
     @ManyToOne

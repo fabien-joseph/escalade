@@ -33,8 +33,6 @@ public class AvanceController {
                             @RequestParam(value = "hauteurMax", required = false, defaultValue = "") Integer hauteurMax,
                             @RequestParam(value = "cotationMin", required = false, defaultValue = "") Integer cotationMin,
                             @RequestParam(value = "cotationMax", required = false, defaultValue = "") Integer cotationMax) {
-        Site site = new Site();
-        System.out.println(cotationMin + " ET " + cotationMax);
         List<Site> sites = siteManagement.findSitesAdvanced(
                 hauteurMin, hauteurMax,
                 cotationMin, cotationMax,

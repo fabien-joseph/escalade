@@ -2,18 +2,12 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -25,13 +19,16 @@ public class Voie {
     private Long id;
     @NotNull(message = "Le nom ne doit pas être vide")
     @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères")
+    @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
+    @NotNull(message = "La longueur ne doit pas être vide.")
     @Min(value = 1, message = "La longueur doit être à 1 minimum")
     @Max(value = 1000, message = "La longueur doit être à 1000 maximum")
     private Integer longueur;
     private Date date;
     @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
     private String description;
+    @NotNull (message = "La cotation ne doit pas être vide.")
     @Min(value = 1, message = "La cotation doit être à 1 minimum")
     @Max(value = 30, message = "La cotation doit être à 9c maximum")
     private Integer cotation;

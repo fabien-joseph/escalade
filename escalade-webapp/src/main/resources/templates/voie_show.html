@@ -8,7 +8,7 @@
 <body>
 <!-- Navigation bar -->
 <section class="hero bg-img is-fullheight">
-    <!--/*@thymesVar id="secteur" type="fr.fabien.escalade.model.topo.Secteur"*/-->
+    <!--/*@thymesVar id="voie" type="fr.fabien.escalade.model.topo.Voie"*/-->
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
@@ -16,8 +16,8 @@
             <section class="section" id="site">
                 <!-- Title -->
                 <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Secteur</h3>
-                    <h4 class="subtitle is-5" th:text="${secteur.nom}"></h4>
+                    <h3 class="title is-2">Voie</h3>
+                    <h4 class="subtitle is-5" th:text="${voie.nom}"></h4>
                     <div class="container">
                         <p></p>
                     </div>
@@ -38,7 +38,7 @@
                                         </tr>
                                         <tr>
                                             <td width="20%">Dernière mise à jour:</td>
-                                            <td width="80%" th:text="${secteur.date}">
+                                            <td width="80%" th:text="${voie.date}">
                                             </td>
 
                                         </tr>
@@ -46,7 +46,7 @@
                                             <td>Cotation :</td>
                                             <td>
                                                 <div><p
-                                                        th:text="'De '+ ${secteur.cotationMin} +' à '+ ${secteur.cotationMax}"></p>
+                                                        th:text="${voie.cotation}"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -54,7 +54,7 @@
                                             <td>Hauteur :</td>
                                             <td>
                                                 <div><p
-                                                        th:text="'De '+ ${secteur.hauteurMin} +' à '+ ${secteur.hauteurMax} +' mètres'"></p>
+                                                        th:text="${voie.longueur} + ' mètres'"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -63,29 +63,6 @@
                                 <br>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="voie">
-                <h3 class="title is-4">Voies</h3>
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="voie:${secteur.getVoies()}">
-                        <a th:href="@{/voie/{id} (id = ${voie.getId()})}">
-                            <div th:replace="fragments/card/card_voie.html :: card_voie"></div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Services -->
-            <section class="section" id="voieAjout">
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <a class="button is-outlined is-light is-large"
-                           th:href="@{/secteur/{id}/voie (id = ${secteur.getId()})}">
-                            Ajouter une voie
-                        </a>
                     </div>
                 </div>
             </section>

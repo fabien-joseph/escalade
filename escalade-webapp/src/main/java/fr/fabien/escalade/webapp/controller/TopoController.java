@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static fr.fabien.escalade.business.Cotations.cotations;
+import static fr.fabien.escalade.business.Departements.departements;
 
 @Controller
 @RequiredArgsConstructor
@@ -69,29 +70,24 @@ public class TopoController {
     @GetMapping("/topo/{id}")
     public String listMesTopos(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
-        Topo topo = topoManagement.findById(long_id).get();
-        model.addAttribute("topo", topo);
-        Commentaire commentaire = new Commentaire();
-        List<Site> sites = siteManagement.findAllByTopos_Id(164L);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        List<Date> dates = new ArrayList<>();
-        dates.add(cal.getTime());
-        for (int i = 1; i < 8; i++) {
-            cal.add(Calendar.DATE, 1);
-            dates.add(cal.getTime());
+        if(topoManagement.findById(long_id).isPresent()) {
+            Topo topo = topoManagement.findById(long_id).get();
+            model.addAttribute("topo", topo);
+            Commentaire commentaire = new Commentaire();
+            List<Site> sites = siteManagement.findAllByTopos_Id(topo.getId());
+
+            commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+            commentaire.setTopo(topo);
+
+            model.addAttribute("commentaire_write", commentaire);
+            model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
+            model.addAttribute("redirectionId", id);
+            model.addAttribute("dates", new Dates().getThisWeek());
+            model.addAttribute("sites", sites);
+            return "topo_show";
+        } else {
+            return "erreur";
         }
-
-        //session.setAttribute("user", utilisateurManagement.findByRequest(request));
-        commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        commentaire.setTopo(topo);
-
-        model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
-        model.addAttribute("redirectionId", id);
-        model.addAttribute("dates", dates);
-        model.addAttribute("sites", sites);
-        return "topo_show";
     }
 
     @GetMapping("/topo/{id}/edit")
@@ -139,7 +135,6 @@ public class TopoController {
 
     @PostMapping("/topo/{id}/link")
     public String topoLinkSite(@PathVariable String id, @RequestParam("stringSite") String stringSite, HttpServletRequest request) {
-        System.out.println("===" + stringSite + "===");
         Site site = siteManagement.findSiteByNom(stringSite);
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
 
@@ -170,6 +165,7 @@ public class TopoController {
         model.addAttribute("utilisateur", utilisateur);
         model.addAttribute("site", site);
         model.addAttribute("errors", errors);
+        model.addAttribute("departements", departements);
         return "site_creation";
     }
 
@@ -177,6 +173,8 @@ public class TopoController {
     public String creation_site(@ModelAttribute Site site, Model model, HttpServletRequest request, RedirectAttributes ra) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         List<String> errors = validationModel.verifyValidity(site);
+
+        errors.addAll(siteManagement.validDepartement(site));
 
         if (errors.size() == 0) {
             site.setUtilisateur(utilisateur);
@@ -196,11 +194,11 @@ public class TopoController {
                                HttpServletRequest request, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
         Site site = siteManagement.findById(long_id).get();
-        model.addAttribute("site", site);
-
         Commentaire commentaire = new Commentaire();
         commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
         commentaire.setSite(site);
+
+        model.addAttribute("site", site);
         model.addAttribute("commentaire_write", commentaire);
         model.addAttribute("utilisateur_show", site.getUtilisateur());
         model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
@@ -237,14 +235,13 @@ public class TopoController {
         return "redirect:/site/{id}";
     }
 
-
-
     @GetMapping("/site/{id}/secteur")
-    public String creation_secteur(Model model, @PathVariable String id) {
+    public String creation_secteur(Model model, @PathVariable String id, @RequestParam(value = "errors", required = false) List<String> errors) {
         Secteur secteur = new Secteur();
         secteur.setDate(new Date(System.currentTimeMillis()));
         secteur.setSite(siteManagement.findById(Long.parseLong(id)).get());
         model.addAttribute("secteur", secteur);
+        model.addAttribute("errors", errors);
         return "secteur_creation";
     }
 
@@ -256,17 +253,24 @@ public class TopoController {
     }
 
     @PostMapping("/secteur/save")
-    public String creation_secteur(@ModelAttribute Secteur secteur, Model model, HttpServletRequest request) {
+    public String creation_secteur(@ModelAttribute Secteur secteur, Model model, HttpServletRequest request, RedirectAttributes ra) {
         Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        Date date = new Date(System.currentTimeMillis());
-        secteur.setDate(date);
-        secteurManagement.save(secteur);
+        List<String> errors = validationModel.verifyValidity(secteur);
 
-        String object_type = "secteur";
-        model.addAttribute("utilisateur", utilisateur);
-        model.addAttribute("secteur", secteur);
-        model.addAttribute("object_type", object_type);
-        return "redirect:/profile";
+        if (errors.size() == 0) {
+            Date date = new Date(System.currentTimeMillis());
+            secteur.setDate(date);
+            secteurManagement.save(secteur);
+
+            String object_type = "secteur";
+            model.addAttribute("utilisateur", utilisateur);
+            model.addAttribute("secteur", secteur);
+            model.addAttribute("object_type", object_type);
+            return "redirect:/site/" + secteur.getSite().getId();
+        }
+        ra.addAttribute("errors", errors);
+        return "redirect:/site/" + secteur.getSite().getId() + "/secteur";
+
     }
 
     @GetMapping("/secteur/{id}/edit")
@@ -288,8 +292,9 @@ public class TopoController {
             if (utilisateur.getId().equals(secteur.get().getSite().getUtilisateur().getId())) {
                 secteurManagement.deleteById(long_id);
             }
+            return "redirect:/site/" + secteur.get().getSite().getId();
         }
-        return "redirect:/profile";
+        return "redirect:/erreur";
     }
 
     @GetMapping("/secteur/{id}/voie")
@@ -299,6 +304,7 @@ public class TopoController {
         voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
         model.addAttribute("voie", voie);
         model.addAttribute("cotations", cotations);
+        model.addAttribute("errors", errors);
         return "voie_creation";
     }
 
@@ -307,7 +313,7 @@ public class TopoController {
         long long_id = Long.parseLong(id);
         session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("voie", voieManagement.findVoieById(long_id));
-        return "show";
+        return "voie_show";
     }
 
     @PostMapping("/voie/save")

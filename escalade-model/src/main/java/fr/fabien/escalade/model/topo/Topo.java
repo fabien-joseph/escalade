@@ -23,7 +23,7 @@ public class Topo {
 
     @NotNull(message = "Le nom ne doit pas être vide.")
     @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères.")
-    //@Pattern(regexp = "[\\d\\d\\d[A-F]]", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
+    @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
     private Boolean isEnable;

@@ -21,8 +21,23 @@
                         </div>
                         <input type="hidden" th:field="*{site}" th:value="${secteur.site}"/>
                         <input type="hidden" th:field="*{id}" th:value="${secteur.id}"/>
+                        <input type="hidden" th:field="*{site.id}" th:value="${secteur.site.id}"/>
                         <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
                     </form>
+                </div>
+            </div>
+            <div th:if="${errors != null}">
+                <div th:if="${errors.size() > 0}">
+                    <article class="message is-danger">
+                        <div class="message-header">
+                            <p>Liste d'erreurs</p>
+                        </div>
+                        <div class="message-body">
+                            <div th:each="error:${errors}">
+                                <div th:text="${error}"></div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>

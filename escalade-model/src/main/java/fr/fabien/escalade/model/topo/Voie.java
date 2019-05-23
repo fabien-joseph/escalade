@@ -36,20 +36,16 @@ public class Voie {
     @ManyToOne
     private Secteur secteur;
 
-    @OneToMany(mappedBy = "voie")
-    private List<Note> notes = new ArrayList<>();
-
     // ----- Constructors
     public Voie() {
     }
 
-    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, List<Note> notes, Integer cotation) {
+    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, Integer cotation) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
         this.description = description;
         this.secteur = secteur;
-        this.notes = notes;
         this.cotation = cotation;
     }
 }

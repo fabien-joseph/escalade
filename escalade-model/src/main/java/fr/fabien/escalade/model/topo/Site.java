@@ -46,9 +46,6 @@ public class Site {
     @OneToMany(mappedBy = "site")
     private List<Commentaire> commentaires = new ArrayList<>();
 
-    @OneToMany
-    List<Note> notes = new ArrayList<>();
-
     @ManyToMany (mappedBy = "sites")
     private List<Topo> topos = new ArrayList<>();
 
@@ -60,7 +57,7 @@ public class Site {
     public Site() {
     }
 
-    public Site(String nom, Date date, Integer cotationMin, Integer cotationMax, String departement, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Note> notes, List<Topo> topos, List<Secteur> secteurs) {
+    public Site(String nom, Date date, Integer cotationMin, Integer cotationMax, String departement, Integer hauteurMin, Integer hauteurMax, String orientation, String type, String description, String localisation, Utilisateur utilisateur, List<Commentaire> commentaires, List<Topo> topos, List<Secteur> secteurs) {
         this.nom = nom;
         this.date = date;
         this.cotationMin = cotationMin;
@@ -74,7 +71,6 @@ public class Site {
         this.localisation = localisation;
         this.utilisateur = utilisateur;
         this.commentaires = commentaires;
-        this.notes = notes;
         this.topos = topos;
         this.secteurs = secteurs;
     }

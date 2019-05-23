@@ -28,12 +28,6 @@ public class Commentaire {
     @JsonManagedReference
     private Topo topo;
 
-    /*
-    @OneToOne
-    @JsonManagedReference
-    private Publication publication;
-     */
-
     @ManyToOne
     @JsonManagedReference
     private Utilisateur utilisateur;

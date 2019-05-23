@@ -53,10 +53,6 @@ public class Utilisateur {
 
     @OneToMany (mappedBy = "utilisateur")
     @JsonIgnore
-    private List<Topo> notes = new ArrayList<>();
-
-    @OneToMany (mappedBy = "utilisateur")
-    @JsonIgnore
     private List<Commentaire> commentaires = new ArrayList<>();
 
     @OneToMany (mappedBy = "utilisateur")
@@ -67,7 +63,7 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public Utilisateur(String login, String motDePasse, String courriel, String prenom, String nom, Boolean isAdmin, List<Topo> topos, List<Topo> notes, List<Commentaire> commentaires) {
+    public Utilisateur(String login, String motDePasse, String courriel, String prenom, String nom, Boolean isAdmin, List<Topo> topos, List<Commentaire> commentaires) {
         this.login = login;
         this.motDePasse = motDePasse;
         this.courriel = courriel;
@@ -75,7 +71,6 @@ public class Utilisateur {
         this.nom = nom;
         this.isAdmin = isAdmin;
         this.topos = topos;
-        this.notes = notes;
         this.commentaires = commentaires;
     }
 }

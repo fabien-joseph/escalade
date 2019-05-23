@@ -39,9 +39,6 @@ public class Topo {
     @OneToMany(mappedBy = "topo")
     private List<Commentaire> commentaires = new ArrayList<>();
 
-    @OneToMany
-    private List<Publication> publications = new ArrayList<>();
-
     @OneToMany(mappedBy = "topo")
     private List<Reservation> reservations = new ArrayList<>();
 

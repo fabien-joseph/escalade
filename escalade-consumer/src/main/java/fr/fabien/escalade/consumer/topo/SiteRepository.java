@@ -27,6 +27,10 @@ public interface SiteRepository extends CrudRepository<Site, Long> {
                                  @Param("cotationMin") int cotationMin, @Param("cotationMax") int cotationMax,
                                  @Param("nom") String nom, @Param("departement") String departement);
 
+    @Query("SELECT s FROM Site s WHERE lower(s.nom) like %:nom% AND (s.departement = :departement OR '' = :departement) AND " +
+            "s.cotationMin >= :cotationMin AND s.cotationMax <= :cotationMax")
+    List<Site> findSitesAdvancedTest(@Param("nom") String nom, @Param("departement") String departement, @Param("cotationMin") int cotationMin, @Param("cotationMax") int cotationMax);
+
     @Query(value = "SELECT s FROM Topo t join site_topo ON t.id = site_topo.topo_id join Site s ON s.id = site_topo.site_id WHERE t.id = ?1", nativeQuery = true)
     List<Site> findSitesByTopo_id(Long topoId);
 

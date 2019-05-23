@@ -31,6 +31,12 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
+    public List<Site> findSitesAdvancedTest(String nom, String departement, Integer cotationMin, Integer cotationMax) {
+
+        return repository.findSitesAdvancedTest(nom, departement, cotationMin, cotationMax);
+    }
+
+
     public List<String> validDepartement(Site site) {
         List<String> errors = new ArrayList<>();
         if (site.getDepartement() != null) {
@@ -59,7 +65,7 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         if (site.getHauteurMax() == null)
             site.setHauteurMax(9999);
         if (site.getCotationMin() == null)
-            site.setCotationMin(1);
+            site.setCotationMin(0);
         if (site.getCotationMax() == null)
             site.setCotationMax(30);
         if (site.getNom() == null)

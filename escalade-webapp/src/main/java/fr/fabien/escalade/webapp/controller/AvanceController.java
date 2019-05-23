@@ -37,6 +37,9 @@ public class AvanceController {
                 hauteurMin, hauteurMax,
                 cotationMin, cotationMax,
                 nom, departement);
+
+
+        //List<Site> sites = siteManagement.findSitesAdvancedTest(nom, departement, cotationMin, cotationMax);
         model.addAttribute("sites", sites);
         model.addAttribute("departements", departements);
         model.addAttribute("cotations", cotations);

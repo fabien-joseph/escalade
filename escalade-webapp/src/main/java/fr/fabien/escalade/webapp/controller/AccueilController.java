@@ -1,5 +1,6 @@
 package fr.fabien.escalade.webapp.controller;
 
+import fr.fabien.escalade.business.ReservationManagement;
 import fr.fabien.escalade.business.UtilisateurManagement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import static fr.fabien.escalade.business.Departements.departements;
 public class AccueilController {
     @Autowired
     UtilisateurManagement utilisateurManagement;
+    @Autowired
+    ReservationManagement reservationManagement;
 
     @GetMapping("/")
     public String accueil(Model model, HttpServletRequest request, HttpSession session) {

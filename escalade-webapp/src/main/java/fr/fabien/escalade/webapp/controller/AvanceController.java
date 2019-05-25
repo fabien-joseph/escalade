@@ -1,7 +1,9 @@
 package fr.fabien.escalade.webapp.controller;
 
 import fr.fabien.escalade.business.SiteManagement;
+import fr.fabien.escalade.business.TopoManagement;
 import fr.fabien.escalade.model.topo.Site;
+import fr.fabien.escalade.model.topo.Topo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ import static fr.fabien.escalade.business.Departements.departements;
 public class AvanceController {
     @Autowired
     SiteManagement siteManagement;
+    @Autowired
+    TopoManagement topoManagement;
 
     @GetMapping("/test")
     public String test(Model model) {
@@ -38,9 +42,10 @@ public class AvanceController {
                 cotationMin, cotationMax,
                 nom, departement);
 
+        List<Topo> topos = topoManagement.findAllBySites_Id(sites);
 
-        //List<Site> sites = siteManagement.findSitesAdvancedTest(nom, departement, cotationMin, cotationMax);
         model.addAttribute("sites", sites);
+        model.addAttribute("topos", topos);
         model.addAttribute("departements", departements);
         model.addAttribute("cotations", cotations);
         return "recherche";

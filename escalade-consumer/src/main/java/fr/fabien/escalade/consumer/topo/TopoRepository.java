@@ -1,8 +1,6 @@
 package fr.fabien.escalade.consumer.topo;
 
-import fr.fabien.escalade.model.topo.Site;
 import fr.fabien.escalade.model.topo.Topo;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +16,6 @@ public interface TopoRepository extends CrudRepository<Topo, Long> {
 
     Topo findFirstByNom (String nom);
 
+    List<Topo> findAllBySitesId (Long topoId);
 }
 

@@ -3,6 +3,8 @@ package fr.fabien.escalade.business;
 import fr.fabien.escalade.consumer.topo.ReservationRepository;
 import fr.fabien.escalade.model.topo.Reservation;
 import fr.fabien.escalade.model.topo.Topo;
+import fr.fabien.escalade.model.topo.Utilisateur;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,11 +20,21 @@ public class ReservationManagement extends CrudManager<Reservation, ReservationR
     }
 
     public boolean isFree(Reservation reservation) {
-        List<Reservation> reservations = repository.validDate(reservation.getDateDebut(), reservation.getDateFin());
+        List<Reservation> reservations = repository.validDate(reservation.getDateDebut(), reservation.getDateFin(), reservation.getTopo());
         return reservations.size() <= 0;
     }
 
-    public List<Reservation> findAllByTopo (Topo topo) {
+    public List<Reservation> actualyReserved(Topo topo) {
+        Date date = new Date(System.currentTimeMillis());
+        return repository.actualyReserved(date, topo);
+    }
+
+    public boolean isReservedByUser(Utilisateur utilisateur) {
+        Date date = new Date(System.currentTimeMillis());
+        return repository.isReservedByUser(date, utilisateur).size() > 0;
+    }
+
+    public List<Reservation> findAllByTopo(Topo topo) {
         return repository.findAllByTopo(topo);
     }
 

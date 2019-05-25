@@ -12,116 +12,130 @@
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
-            <!-- About -->
-            <section class="section" id="topo">
-                <!-- Title -->
-                <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Topo</h3>
-                    <h4 class="subtitle is-5" th:text="${topo.nom}"></h4>
-                    <div class="container">
-                        <p></p>
+            <div th:if="${topo != null}">
+                <!-- About -->
+                <section class="section" id="topo">
+                    <!-- Title -->
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Topo</h3>
+                        <h4 class="subtitle is-5" th:text="${topo.nom}"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <!-- Profile -->
-                        <div class="card has-dark-opacity-background">
-                            <div class="card-content">
-                                <h3 class="title is-4">Informations</h3>
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <!-- Profile -->
+                            <div class="card has-dark-opacity-background">
+                                <div class="card-content">
+                                    <h3 class="title is-4">Informations</h3>
 
-                                <div class="content">
-                                    <table class="table-profile">
-                                        <tr>
-                                            <th colspan="1"></th>
-                                            <th colspan="2"></th>
-                                        </tr>
-                                        <tr>
-                                            <td width="20%">Créateur:</td>
-                                            <td width="80%">
-                                                <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}"
-                                                   th:text="${topo.utilisateur.login}"></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dernière mise à jour:</td>
-                                            <td th:text="${topo.date}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Disponible:</td>
-                                            <td th:text="${topo.isEnable}"></td>
-                                        </tr>
-                                    </table>
+                                    <div class="content">
+                                        <table class="table-profile">
+                                            <tr>
+                                                <th colspan="1"></th>
+                                                <th colspan="2"></th>
+                                            </tr>
+                                            <tr>
+                                                <td width="20%">Créateur:</td>
+                                                <td width="80%">
+                                                    <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}"
+                                                       th:text="${topo.utilisateur.login}"></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dernière mise à jour:</td>
+                                                <td th:text="${topo.date}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Disponible:</td>
+                                                <td th:text="${topo.isEnable}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
                                 </div>
-                                <br>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <div th:if="${sites != null}">
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="site:${sites}">
-                        <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                <div th:if="${sites != null}">
+                    <div class="columns is-multiline">
+                        <div class="column is-one-fifth" th:each="site:${sites}">
+                            <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div th:if="${session.user?.getId() != topo.getUtilisateur().getId()}">
-                <section class="section" id="reversation">
+                <div th:if="${session.user?.getId() != topo.getUtilisateur().getId() && session.user != null}">
+                    <section class="section" id="reversation">
+                        <div class="section-heading has-text-centered">
+                            <h3 class="title is-2">Réservation</h3>
+                        </div>
+                        <div class="field has-addons has-addons-centered">
+                            <div class="control">
+                                <form action="#" th:action="@{/topo/{id}/reservation (id=${topo.getId()})}" method=post>
+                                    <div class="select is-large">
+                                        <label>
+                                            <select name="dateFin"
+                                                    class="departements_list select has-dark-opacity-background">
+                                                <option selected disabled>Date de fin</option>
+                                                <option th:type="text" th:each="date : ${dates}"
+                                                        th:value="${date}"
+                                                        th:utext="${date}">
+                                                </option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="button is-outlined is-light is-large">Rechercher
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Services -->
+                <section th:if="${topo.utilisateur.getId() == session.user?.getId()}" class="section" id="sites">
                     <div class="section-heading has-text-centered">
-                        <h3 class="title is-2">Réservation</h3>
+                        <h3 class="title is-2">Sites liés au topo</h3>
                     </div>
-                    <div class="field has-addons has-addons-centered">
+                    <div class="field">
                         <div class="control">
-                            <form action="#" th:action="@{/topo/{id}/reservation (id=${topo.getId()})}" method=post>
-                                <div class="select is-large">
-                                    <label>
-                                        <select name="dateFin"
-                                                class="departements_list select has-dark-opacity-background">
-                                            <option selected disabled>Date de fin</option>
-                                            <option th:type="text" th:each="date : ${dates}"
-                                                    th:value="${date}"
-                                                    th:utext="${date}">
-                                            </option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <button type="submit" class="button is-outlined is-light is-large">Rechercher</button>
+                            <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
+                                <input class="input is-large" name="stringSite" type="text" id="recherche"
+                                       placeholder="Lier un nouveau site"/>
                             </form>
                         </div>
                     </div>
                 </section>
-            </div>
-
-            <!-- Services -->
-            <section class="section" id="sites">
-                <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Sites liés au topo</h3>
-                </div>
-
-                <div class="field">
-                    <div class="control">
-                        <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
-                            <input class="input is-large" name="stringSite" type="text" id="recherche"
-                                   placeholder="Lier un nouveau site"/>
-                        </form>
+                <section class="section" id="commentaires">
+                    <div th:if="${commentaires.size() > 0 || session.user != null}"
+                         class="section-heading has-text-centered">
+                        <h3 class="title is-2">Commentaires</h3>
                     </div>
-                </div>
-            </section>
-            <section class="section" id="commentaires">
-                <div th:if="${commentaires.size() > 0 || session.user != null}" class="section-heading has-text-centered">
-                    <h3 class="title is-2">Commentaires</h3>
-                </div>
-                <div th:if="${session.user != null}">
-                    <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
-                </div>
-                <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
-                <div th:each="comment:${commentaires}">
-                    <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
-                </div>
-            </section>
+                    <div th:if="${session.user != null}">
+                        <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
+                    </div>
+                    <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                    <div th:each="comment:${commentaires}">
+                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                    </div>
+                </section>
+            </div>
+            <div th:if="${topo == null}">
+                <section class="section" id="null">
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Accès impossible</h3>
+                        <h4 class="subtitle is-5" th:text="'Topo inexistant ou en cours de réservation'"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </section>

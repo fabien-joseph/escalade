@@ -1,7 +1,6 @@
 package fr.fabien.escalade.consumer.topo;
 
 import fr.fabien.escalade.model.topo.Site;
-import fr.fabien.escalade.model.topo.Utilisateur;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

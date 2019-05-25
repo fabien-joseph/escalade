@@ -38,4 +38,8 @@ public class Cotations {
         cotations.put(29, "9b+");
         cotations.put(30, "9c");
     }
+
+    public String convertIntString(int key) {
+        return cotations.get(key);
+    }
 }

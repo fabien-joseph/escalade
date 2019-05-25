@@ -45,8 +45,9 @@
                                         <tr>
                                             <td>Cotation :</td>
                                             <td>
-                                                <div><p
-                                                        th:text="${voie.cotation}"></p>
+                                                <div>
+                                                    <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
+                                                <p th:text="${cotations.convertIntString(voie.cotation)}"></p>
                                                 </div>
                                             </td>
                                         </tr>

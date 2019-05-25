@@ -22,7 +22,7 @@
             <time th:datetime="${site.getDate()}" th:text="${site.getDate()}"></time>
         </div>
     </div>
-    <footer class="card-footer has-dark-opacity-background">
+    <footer th:if="${session.user != null}" class="card-footer has-dark-opacity-background">
         <!--/*@thymesVar id="utilisateur_show" type="fr.fabien.escalade.model.topo.Utilisateur"*/-->
         <a th:href="@{/site/{id}/reserver(id=${site.getId()})}"
            th:if="${utilisateur_show?.getId() != session.user?.getId()}" href="#"

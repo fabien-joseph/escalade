@@ -45,8 +45,9 @@
                                         <tr>
                                             <td>Cotation :</td>
                                             <td>
-                                                <div><p
-                                                        th:text="'De '+ ${secteur.cotationMin} +' à '+ ${secteur.cotationMax}"></p>
+                                                <div>
+                                                    <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
+                                                    <p th:text="'De '+ ${cotations.convertIntString(secteur.cotationMin)} +' à '+ ${cotations.convertIntString(secteur.cotationMax)}"></p>
                                                 </div>
                                             </td>
                                         </tr>

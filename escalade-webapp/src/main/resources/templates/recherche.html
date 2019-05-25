@@ -91,6 +91,15 @@
                     </form>
                 </div>
             </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="columns is-multiline">
+                        <div class="column is-one-fifth" th:each="topo:${topos}">
+                            <div th:replace="fragments/card/card_topo.html :: card_topo"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p th:if="${sites == null}">Aucun site n'a été trouvé !</p>
         </div>
     </div>

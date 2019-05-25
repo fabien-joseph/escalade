@@ -68,17 +68,25 @@ public class TopoController {
     }
 
     @GetMapping("/topo/{id}")
-    public String listMesTopos(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
+    public String listMesTopos(Model model, HttpServletRequest request, @PathVariable String id,
+                               @RequestParam(value = "errors", required = false) List<String> errors) {
         Long long_id = Long.parseLong(id);
-        if(topoManagement.findById(long_id).isPresent()) {
+        if (topoManagement.findById(long_id).isPresent()) {
             Topo topo = topoManagement.findById(long_id).get();
-            model.addAttribute("topo", topo);
             Commentaire commentaire = new Commentaire();
             List<Site> sites = siteManagement.findAllByTopos_Id(topo.getId());
-
             commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
             commentaire.setTopo(topo);
 
+            if (reservationManagement.actualyReserved(topo).size() == 0 ||
+                    reservationManagement.isReservedByUser(utilisateurManagement.findByRequest(request))) {
+                model.addAttribute("topo", topo);
+            }
+            if (utilisateurManagement.findByRequest(request) != null) {
+                if ((topo.getUtilisateur().getId().equals(utilisateurManagement.findByRequest(request).getId()))) {
+                    model.addAttribute("topo", topo);
+                }
+            }
             model.addAttribute("commentaire_write", commentaire);
             model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
             model.addAttribute("redirectionId", id);
@@ -101,8 +109,9 @@ public class TopoController {
     }
 
     @PostMapping("/topo/{id}/reservation")
-    public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin, HttpServletRequest request) throws ParseException {
-        System.out.println(dateFin);
+    public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin,
+                              RedirectAttributes ra, HttpServletRequest request) throws ParseException {
+        List<String> errors = new ArrayList<>();
         DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         Date dateConv = format.parse(dateFin);
         Reservation reservation = new Reservation();
@@ -112,8 +121,11 @@ public class TopoController {
         Long long_id = Long.parseLong(id);
         reservation.setTopo(topoManagement.findById(long_id).get());
         System.out.println("Libre ? " + reservationManagement.isFree(reservation));
-        //if (reservationManagement.isFree(reservation))
-          //  reservationManagement.save(reservation);
+        if (reservationManagement.isFree(reservation)) {
+            reservationManagement.save(reservation);
+        } else {
+            ra.addAttribute("errors", errors);
+        }
 
         return "redirect:/topo/{id}";
     }
@@ -203,6 +215,7 @@ public class TopoController {
         model.addAttribute("utilisateur_show", site.getUtilisateur());
         model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
         model.addAttribute("redirectionId", id);
+        model.addAttribute("cotations", new Cotations());
         return "site_show";
     }
 
@@ -249,6 +262,7 @@ public class TopoController {
     public String secteur(Model model, @PathVariable String id) {
         long long_id = Long.parseLong(id);
         model.addAttribute("secteur", secteurManagement.findSecteurById(long_id));
+        model.addAttribute("cotations", new Cotations());
         return "secteur_show";
     }
 
@@ -313,6 +327,7 @@ public class TopoController {
         long long_id = Long.parseLong(id);
         session.setAttribute("user", utilisateurManagement.findByRequest(request));
         model.addAttribute("voie", voieManagement.findVoieById(long_id));
+        model.addAttribute("cotations", new Cotations());
         return "voie_show";
     }
 

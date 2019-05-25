@@ -39,7 +39,9 @@ public class Cotations {
         cotations.put(30, "9c");
     }
 
-    public String convertIntString(int key) {
+    public String convertIntString(Integer key) {
+        if (key == null || key == 0)
+            return ("0");
         return cotations.get(key);
     }
 }

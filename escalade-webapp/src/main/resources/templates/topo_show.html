@@ -61,13 +61,34 @@
                     </div>
                 </section>
 
-                <div th:if="${sites != null}">
-                    <div class="columns is-multiline">
-                        <div class="column is-one-fifth" th:each="site:${sites}">
-                            <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                <section>
+                    <div th:if="${topo.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                        <div class="field has-addons has-addons-centered">
+                            <div class="columns">
+                                <div class="column">
+                                    <a th:href="@{/topo/{id}/edit (id = ${topo.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">Editer</button>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a th:href="@{/topo/{id}/delete (id = ${topo.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">Supprimer</button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
+
+                <section class="section" id="linkedSites">
+                    <div th:if="${sites != null}">
+                        <div class="columns is-multiline">
+                            <div class="column is-one-fifth" th:each="site:${sites}">
+                                <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 <div th:if="${session.user?.getId() != topo.getUtilisateur().getId() && session.user != null}">
                     <section class="section" id="reversation">
@@ -98,15 +119,16 @@
                 </div>
 
                 <!-- Services -->
-                <section th:if="${topo.utilisateur.getId() == session.user?.getId()}" class="section" id="sites">
+                <section th:if="${topo.utilisateur.getId() == session.user?.getId()}" class="section" id="addSites">
                     <div class="section-heading has-text-centered">
                         <h3 class="title is-2">Sites liés au topo</h3>
                     </div>
                     <div class="field">
                         <div class="control">
                             <form th:action="@{/topo/{id}/link (id = ${topo.getId()})}" method="post">
-                                <input class="input is-large" name="stringSite" type="text" id="recherche"
-                                       placeholder="Lier un nouveau site"/>
+                                <label for="recherche"></label><input class="input is-large" name="stringSite"
+                                                                      type="text" id="recherche"
+                                                                      placeholder="Lier un nouveau site"/>
                             </form>
                         </div>
                     </div>
@@ -119,7 +141,6 @@
                     <div th:if="${session.user != null}">
                         <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
                     </div>
-                    <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
                     <div th:each="comment:${commentaires}">
                         <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
                     </div>

@@ -13,7 +13,7 @@
     <div class="hero-body">
         <div class="container">
             <!-- About -->
-            <section class="section" id="site">
+            <section class="section" id="secteur">
                 <!-- Title -->
                 <div class="section-heading has-text-centered">
                     <h3 class="title is-2">Secteur</h3>
@@ -68,13 +68,30 @@
                 </div>
             </section>
 
+            <section>
+                <div th:if="${secteur.site.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                    <div class="field has-addons has-addons-centered">
+                        <div class="columns">
+                            <div class="column">
+                                <a th:href="@{/secteur/{id}/edit (id = ${secteur.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Editer</button>
+                                </a>
+                            </div>
+                            <div class="column">
+                                <a th:href="@{/secteur/{id}/delete (id = ${secteur.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Supprimer</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="section" id="voie">
                 <h3 class="title is-4">Voies</h3>
                 <div class="columns is-multiline">
                     <div class="column is-one-fifth" th:each="voie:${secteur.getVoies()}">
-                        <a th:href="@{/voie/{id} (id = ${voie.getId()})}">
                             <div th:replace="fragments/card/card_voie.html :: card_voie"></div>
-                        </a>
                     </div>
                 </div>
             </section>

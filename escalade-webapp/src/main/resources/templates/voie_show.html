@@ -13,7 +13,7 @@
     <div class="hero-body">
         <div class="container">
             <!-- About -->
-            <section class="section" id="site">
+            <section class="section" id="voie">
                 <!-- Title -->
                 <div class="section-heading has-text-centered">
                     <h3 class="title is-2">Voie</h3>
@@ -62,6 +62,25 @@
                                     </table>
                                 </div>
                                 <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div th:if="${voie.secteur.site.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                    <div class="field has-addons has-addons-centered">
+                        <div class="columns">
+                            <div class="column">
+                                <a th:href="@{/voie/{id}/edit (id = ${voie.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Editer</button>
+                                </a>
+                            </div>
+                            <div class="column">
+                                <a th:href="@{/voie/{id}/delete (id = ${voie.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Supprimer</button>
+                                </a>
                             </div>
                         </div>
                     </div>

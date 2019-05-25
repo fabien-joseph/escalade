@@ -21,6 +21,10 @@
     margin-bottom: 1em;
 }
 
+.recherche {
+    border-radius: 10px;
+}
+
 .bg-img {
     background-image: url(http://image.noelshack.com/fichiers/2019/18/5/1556915323-35463838634-4fc79a297c-k.png);
     background-position: center center;

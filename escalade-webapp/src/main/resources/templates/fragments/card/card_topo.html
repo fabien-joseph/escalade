@@ -22,13 +22,7 @@
             <time datetime="2016-1-1" th:text="${topo.getDate()}"></time>
         </div>
     </div>
-    <footer th:if="${session.user != null}" class="card-footer has-dark-opacity-background">
-        <a th:href="@{/topo/{id}/edit(id=${topo.getId()})}"
-           th:if="${topo.utilisateur.getId() == session.user?.getId()}" href="#" class="card-footer-item">Gérer</a>
-        <a th:href="@{/topo/{id}(id=${topo.getId()})}"
-           th:if="${topo.utilisateur.getId() != session.user?.getId()}" th:action="@{/topo/{id} (id=${topo.getId()})}"
-           class="card-footer-item">Voir</a>
-        <a th:if="${topo.utilisateur.getId() == session.user?.getId()}"
-           th:href="@{/topo/{id}/delete (id=${topo.getId()})}" class="card-footer-item">Supprimer</a>
+    <footer class="card-footer has-dark-opacity-background">
+       <a th:href="@{/topo/{id}(id=${topo.getId()})}" class="card-footer-item">Voir</a>
     </footer>
 </div>

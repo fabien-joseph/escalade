@@ -71,8 +71,8 @@
                                             <td>
                                                 <div>
                                                     <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
-                                                <p
-                                                        th:text="'De '+ ${cotations.convertIntString(site.cotationMin)} +' à '+ ${cotations.convertIntString(site.cotationMax)}"></p>
+                                                    <p
+                                                            th:text="'De '+ ${cotations.convertIntString(site.cotationMin)} +' à '+ ${cotations.convertIntString(site.cotationMax)}"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -93,13 +93,34 @@
                 </div>
             </section>
 
+            <section>
+                <div th:if="${site.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                    <div class="field has-addons has-addons-centered">
+                        <div class="columns">
+                            <div class="column">
+                                <a th:href="@{/site/{id}/edit (id = ${site.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                        Editer
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="column">
+                                <a th:href="@{/site/{id}/delete (id = ${site.getId()})}">
+                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                        Supprimer
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="section" id="secteurs">
                 <h3 class="title is-4">Secteurs</h3>
                 <div class="columns is-multiline">
                     <div class="column is-one-fifth" th:each="secteur:${site.getSecteurs()}">
-                        <a th:href="@{/secteur/{id} (id = ${secteur.getId()})}">
-                            <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
-                        </a>
+                        <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
                     </div>
                 </div>
             </section>

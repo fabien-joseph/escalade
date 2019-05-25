@@ -16,7 +16,6 @@
         </div>
     </div>
     <footer class="card-footer has-dark-opacity-background">
-        <a th:if="${voie.getSecteur().getSite().getUtilisateur().getId() == session.user?.getId()}"
-           th:href="@{/voie/{id}/delete (id=${voie.getId()})}" class="card-footer-item">Supprimer</a>
+        <a th:href="@{/voie/{id}(id=${voie.getId()})}" class="card-footer-item">Voir</a>
     </footer>
 </div>

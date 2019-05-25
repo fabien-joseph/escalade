@@ -1,5 +1,6 @@
 package fr.fabien.escalade.business;
 
+import fr.fabien.escalade.consumer.topo.SiteRepository;
 import fr.fabien.escalade.consumer.topo.TopoRepository;
 import fr.fabien.escalade.model.topo.Site;
 import fr.fabien.escalade.model.topo.Topo;
@@ -15,6 +16,8 @@ import java.util.List;
 public class TopoManagement extends CrudManager<Topo, TopoRepository> {
     @Autowired
     ReservationManagement reservationManagement;
+    @Autowired
+    SiteManagement siteManagement;
 
     public TopoManagement(TopoRepository repository) {
         super(repository);
@@ -26,6 +29,16 @@ public class TopoManagement extends CrudManager<Topo, TopoRepository> {
 
     public Topo findTopoById(Long id) {
         return repository.findTopoById(id);
+    }
+
+    public boolean isAlreadyLinkWithTopo (Topo topo, Site siteTest) {
+        List<Site> linkedSites = siteManagement.findAllByTopos_Id(topo.getId());
+        for (Site site :
+                linkedSites) {
+            if (site.getId().equals(siteTest.getId()))
+                return true;
+        }
+        return false;
     }
 
     public List<Topo> findAll() {
@@ -53,11 +66,17 @@ public class TopoManagement extends CrudManager<Topo, TopoRepository> {
         List<Topo> topos = new ArrayList<>();
 
         for (Site site : sites) {
-            topos.addAll(repository.findAllBySitesId(site.getId()));
+            topos.addAll(repository.findAllBySites_Id(site.getId()));
         }
 
         topos = toposFilter(topos);
 
         return topos;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteAllInSite_topo(id);
+        repository.deleteById(id);
     }
 }

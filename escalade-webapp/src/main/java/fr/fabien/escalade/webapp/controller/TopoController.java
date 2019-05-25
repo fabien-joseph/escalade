@@ -103,7 +103,8 @@ public class TopoController {
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
         if (topo.isPresent()) {
             model.addAttribute(topo.get());
-            return "creation";
+            model.addAttribute("departements", departements);
+            return "topo_creation";
         }
         return "erreur";
     }
@@ -151,15 +152,17 @@ public class TopoController {
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
 
         if (topo.isPresent() && site != null) {
-            List<Topo> topos = site.getTopos();
-            topos.add(topo.get());
-            site.setTopos(topos);
-            siteManagement.save(site);
+            if (!topoManagement.isAlreadyLinkWithTopo(topo.get(), site)) {
+                List<Topo> topos = site.getTopos();
+                topos.add(topo.get());
+                site.setTopos(topos);
+                siteManagement.save(site);
 
-            List<Site> sites = topo.get().getSites();
-            sites.add(site);
-            topo.get().setSites(sites);
-            topoManagement.save(topo.get());
+                List<Site> sites = topo.get().getSites();
+                sites.add(site);
+                topo.get().setSites(sites);
+                topoManagement.save(topo.get());
+            }
         }
         return "redirect:/topo/{id}";
     }
@@ -224,7 +227,7 @@ public class TopoController {
         Optional<Site> site = siteManagement.findById(Long.parseLong(id));
         if (site.isPresent()) {
             model.addAttribute(site.get());
-            return "creation";
+            return "site_creation";
         }
         return "erreur";
     }
@@ -292,7 +295,7 @@ public class TopoController {
         Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
         if (secteur.isPresent()) {
             model.addAttribute(secteur.get());
-            return "creation";
+            return "secteur_creation";
         }
         return "erreur";
     }
@@ -357,7 +360,7 @@ public class TopoController {
         Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
         if (voie.isPresent()) {
             model.addAttribute(voie.get());
-            return "creation";
+            return "voie_creation";
         }
         return "erreur";
     }

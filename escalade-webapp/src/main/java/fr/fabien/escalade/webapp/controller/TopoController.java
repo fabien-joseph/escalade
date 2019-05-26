@@ -441,6 +441,7 @@ public class TopoController {
             Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
             if (voie.isPresent()) {
                 model.addAttribute(voie.get());
+                model.addAttribute("cotations", cotations);
                 return "voie_creation";
             }
         } catch (Exception ignored) {

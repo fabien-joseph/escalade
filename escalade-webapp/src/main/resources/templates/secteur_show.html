@@ -38,10 +38,14 @@
                                                 <th colspan="2"></th>
                                             </tr>
                                             <tr>
-                                                <td width="20%">Dernière mise à jour:</td>
-                                                <td width="80%" th:text="${secteur.date}">
+                                                <td width="20%">Site :</td>
+                                                <td width="80%"><a th:href="@{/site/{id}(id=${secteur.site.id})}"
+                                                                   th:text="${secteur.site.nom}"></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dernière mise à jour:</td>
+                                                <td th:text="${secteur.date}">
                                                 </td>
-
                                             </tr>
                                             <tr>
                                                 <td>Cotation :</td>
@@ -56,7 +60,7 @@
                                                 <td>Hauteur :</td>
                                                 <td>
                                                     <div><p
-                                                            th:text="'De '+ ${secteur.hauteurMin} +' à '+ ${secteur.hauteurMax} +' mètres'"></p>
+                                                            th:text="'De '+ ${cotations.convertHauteur(secteur.hauteurMin)} +' à '+ ${cotations.convertHauteur(secteur.hauteurMax)} +' mètres'"></p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -102,7 +106,7 @@
                 </section>
 
                 <!-- Services -->
-                <section class="section" id="voieAjout">
+                <section th:if="${secteur.site.utilisateur.id == session.user?.id}" class="section" id="voieAjout">
                     <div class="columns has-same-height is-gapless">
                         <div class="column">
                             <a class="button is-outlined is-light is-large"

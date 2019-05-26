@@ -81,7 +81,7 @@
                                                 <td>Hauteur :</td>
                                                 <td>
                                                     <div><p
-                                                            th:text="'De '+ ${site.hauteurMin} +' à '+ ${site.hauteurMax} +' mètres'"></p>
+                                                            th:text="'De '+ ${cotations.convertHauteur(site.hauteurMin)} +' à '+ ${cotations.convertHauteur(site.hauteurMax)} +' mètres'"></p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -127,7 +127,7 @@
                 </section>
 
                 <!-- Services -->
-                <section class="section" id="AddSecteurs">
+                <section th:if="${site.utilisateur.id == session.user?.id}" class="section" id="AddSecteurs">
                     <div class="columns has-same-height is-gapless">
                         <div class="column">
                             <a class="button is-outlined is-light is-large"

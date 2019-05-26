@@ -92,14 +92,16 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
     }
 
     public void updateMinMax(Site site) {
-        Integer minValue = null;
-        Integer maxValue = null;
+        Integer minValue = 0;
+        Integer maxValue = 0;
 
         for (int i = 0; i < site.getSecteurs().size(); i++) {
             if (site.getSecteurs().get(i).getHauteurMin() != null && site.getSecteurs().get(i).getHauteurMax() != null) {
                 if (i == 0) {
-                    minValue = site.getSecteurs().get(i).getHauteurMin();
-                    maxValue = site.getSecteurs().get(i).getHauteurMax();
+                    if (site.getSecteurs().get(i).getHauteurMin() != null)
+                        minValue = site.getSecteurs().get(i).getHauteurMin();
+                    if (site.getSecteurs().get(i).getHauteurMax() != null)
+                        maxValue = site.getSecteurs().get(i).getHauteurMax();
                 } else {
                     if (site.getSecteurs().get(i).getHauteurMin() < minValue) {
                         minValue = site.getSecteurs().get(i).getHauteurMin();
@@ -114,14 +116,16 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         site.setHauteurMin(minValue);
         site.setHauteurMax(maxValue);
 
-        minValue = null;
-        maxValue = null;
+        minValue = 0;
+        maxValue = 0;
 
         for (int i = 0; i < site.getSecteurs().size(); i++) {
             if (site.getSecteurs().get(i).getCotationMin() != null && site.getSecteurs().get(i).getCotationMax() != null) {
                 if (i == 0) {
-                    minValue = site.getSecteurs().get(i).getCotationMin();
-                    maxValue = site.getSecteurs().get(i).getCotationMin();
+                    if(site.getSecteurs().get(i).getCotationMin() != null)
+                        minValue = site.getSecteurs().get(i).getCotationMin();
+                    if(site.getSecteurs().get(i).getCotationMax() != null)
+                        maxValue = site.getSecteurs().get(i).getCotationMin();
                 } else {
                     if (site.getSecteurs().get(i).getCotationMin() < minValue) {
                         minValue = site.getSecteurs().get(i).getCotationMin();

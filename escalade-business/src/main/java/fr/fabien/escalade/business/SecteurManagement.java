@@ -33,13 +33,15 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
     }
 
     public void updateMinMax(Secteur secteur) {
-        Integer minValue = null;
-        Integer maxValue = null;
+        Integer minValue = 0;
+        Integer maxValue = 0;
 
         for (int i = 0; i < secteur.getVoies().size(); i++) {
             if (i == 0) {
-                minValue = secteur.getVoies().get(i).getLongueur();
-                maxValue = secteur.getVoies().get(i).getLongueur();
+                if (secteur.getVoies().get(i).getLongueur() != null) {
+                    minValue = secteur.getVoies().get(i).getLongueur();
+                    maxValue = secteur.getVoies().get(i).getLongueur();
+                }
             } else {
                 if (secteur.getVoies().get(i).getLongueur() < minValue) {
                     minValue = secteur.getVoies().get(i).getLongueur();
@@ -47,19 +49,25 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
                 if (secteur.getVoies().get(i).getLongueur() > maxValue) {
                     maxValue = secteur.getVoies().get(i).getLongueur();
                 }
-
             }
         }
         secteur.setHauteurMin(minValue);
         secteur.setHauteurMax(maxValue);
 
-        minValue = null;
-        maxValue = null;
+        minValue = 0;
+        maxValue = 0;
 
-        for (int i = 0; i < secteur.getVoies().size(); i++) {
+        for (
+                int i = 0; i < secteur.getVoies().
+
+                size();
+
+                i++) {
             if (i == 0) {
-                minValue = secteur.getVoies().get(i).getCotation();
-                maxValue = secteur.getVoies().get(i).getCotation();
+                if (secteur.getVoies().get(i).getCotation() != null) {
+                    minValue = secteur.getVoies().get(i).getCotation();
+                    maxValue = secteur.getVoies().get(i).getCotation();
+                }
             } else {
                 if (secteur.getVoies().get(i).getCotation() < minValue) {
                     minValue = secteur.getVoies().get(i).getCotation();
@@ -74,7 +82,9 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
         secteur.setCotationMax(maxValue);
 
         Site site = secteur.getSite();
-        site.getSecteurs().add(secteur);
+        site.getSecteurs().
+
+                add(secteur);
         siteManagement.save(site);
         siteManagement.updateMinMax(site);
     }

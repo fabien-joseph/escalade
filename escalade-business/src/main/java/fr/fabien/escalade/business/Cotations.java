@@ -44,4 +44,10 @@ public class Cotations {
             return ("0");
         return cotations.get(key);
     }
+
+    public String convertHauteur(Integer hauteur) {
+        if (hauteur == null)
+            return ("0");
+        return String.valueOf(hauteur);
+    }
 }

@@ -31,7 +31,6 @@ public class Topo {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "site_topo", joinColumns = @JoinColumn(name = "topo_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"))
     private List<Site> sites = new ArrayList<>();

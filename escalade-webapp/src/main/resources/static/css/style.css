@@ -59,7 +59,7 @@ body, .title, .subtitle, strong {
 }
 
 a {
-    color : white;
+    color : rgb(136, 192, 212);
 }
 
 a:hover {

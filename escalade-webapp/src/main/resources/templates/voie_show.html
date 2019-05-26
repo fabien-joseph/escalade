@@ -38,10 +38,14 @@
                                                 <th colspan="2"></th>
                                             </tr>
                                             <tr>
-                                                <td width="20%">Dernière mise à jour:</td>
-                                                <td width="80%" th:text="${voie.date}">
+                                                <td width="20%">Secteur :</td>
+                                                <td width="80%"><a th:href="@{/secteur/{id}(id=${voie.secteur.id})}"
+                                                                   th:text="${voie.secteur.nom}"></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dernière mise à jour:</td>
+                                                <td th:text="${voie.date}">
                                                 </td>
-
                                             </tr>
                                             <tr>
                                                 <td>Cotation :</td>

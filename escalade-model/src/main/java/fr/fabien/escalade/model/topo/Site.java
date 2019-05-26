@@ -43,14 +43,16 @@ public class Site {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    @OneToMany(mappedBy = "site")
+    @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE)
     private List<Commentaire> commentaires = new ArrayList<>();
 
-    @ManyToMany (mappedBy = "sites")
+    @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "site_topo", joinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "topo_id", referencedColumnName = "id"))
     private List<Topo> topos = new ArrayList<>();
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    @OneToMany(mappedBy = "site")
+    @OneToMany(mappedBy = "site", cascade = CascadeType.REMOVE)
     private List<Secteur> secteurs = new ArrayList<>();
 
     // ---- Constructors

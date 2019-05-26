@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -94,6 +92,7 @@ public class TopoController {
                 model.addAttribute("dates", new Dates().getThisWeek());
                 model.addAttribute("sites", sites);
                 model.addAttribute("errors", errors);
+                model.addAttribute("reservation", reservationManagement.findFirstByTopo(topoManagement.findById(Long.parseLong(id)).get()));
             }
         } catch (Exception ignored) {
         }
@@ -127,7 +126,6 @@ public class TopoController {
                 reservation.setDateFin(dateConv);
                 reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
                 reservation.setTopo(topo.get());
-                System.out.println("Libre ? " + reservationManagement.isFree(reservation));
                 if (reservationManagement.isFree(reservation)) {
                     reservationManagement.save(reservation);
                 }
@@ -139,6 +137,26 @@ public class TopoController {
         }
         ra.addAttribute("errors", errors);
         return "redirect:/topo/{id}";
+    }
+
+    @GetMapping("reservation/{id}/cancel")
+    public String reservationCancel(@PathVariable String id, RedirectAttributes ra, HttpServletRequest request) {
+        List<String> errors = new ArrayList<>();
+        try {
+            Optional<Reservation> reservation = reservationManagement.findById(Long.parseLong(id));
+
+            if (reservation.isPresent()) {
+                if (reservation.get().getUtilisateur().getId().equals(utilisateurManagement.findByRequest(request).getId()) ||
+                        reservation.get().getTopo().getUtilisateur().getId().equals(utilisateurManagement.findByRequest(request).getId()))
+                    reservationManagement.delete(reservation.get());
+            } else {
+                errors.add("La réservation que vous tentez de supprimer n'existe pas");
+            }
+        } catch (Exception e) {
+            errors.add("La réservation que vous tentez de supprimer n'existe pas");
+        }
+        ra.addAttribute("errors", errors);
+        return "redirect:/profile";
     }
 
     @GetMapping("/topo/{id}/delete")
@@ -168,11 +186,6 @@ public class TopoController {
 
             if (topo.isPresent() && site != null) {
                 if (!topoManagement.isAlreadyLinkWithTopo(topo.get(), site)) {
-                    List<Topo> topos = site.getTopos();
-                    topos.add(topo.get());
-                    site.setTopos(topos);
-                    siteManagement.save(site);
-
                     List<Site> sites = topo.get().getSites();
                     sites.add(site);
                     topo.get().setSites(sites);
@@ -180,6 +193,27 @@ public class TopoController {
                 }
             }
             return "redirect:/topo/{id}";
+        } catch (Exception e) {
+            return "erreur";
+        }
+    }
+
+    @GetMapping("/topo/{idTopo}/site/{idSite}/unlink")
+    public String topoUnlinkSite(@PathVariable String idTopo, @PathVariable String idSite) {
+        try {
+            Optional<Topo> topo = topoManagement.findById(Long.parseLong(idTopo));
+            if (topo.isPresent()) {
+                Optional<Site> site = siteManagement.findById(Long.parseLong(idSite));
+                if (site.isPresent()) {
+                    if (topo.get().getSites().contains(site.get())){
+                        topo.get().getSites().remove(site.get());
+                        Topo topoNew = topo.get();
+                        topoManagement.delete(topo.get());
+                        topoManagement.save(topoNew);
+                    }
+                }
+            }
+            return "redirect:/profile";
         } catch (Exception e) {
             return "erreur";
         }
@@ -395,7 +429,7 @@ public class TopoController {
             model.addAttribute("utilisateur", utilisateur);
             model.addAttribute("voie", voie);
             model.addAttribute("object_type", object_type);
-            return "redirect:/profile";
+            return "redirect:/secteur/" + voie.getSecteur().getId();
         }
         ra.addAttribute("errors", errors);
         return redirect;

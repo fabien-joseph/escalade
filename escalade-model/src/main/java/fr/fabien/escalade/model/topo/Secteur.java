@@ -30,7 +30,7 @@ public class Secteur {
     private Integer hauteurMax;
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    @OneToMany (mappedBy = "secteur")
+    @OneToMany (mappedBy = "secteur", cascade = CascadeType.REMOVE)
     private List<Voie> voies = new ArrayList<>();
 
     @ManyToOne

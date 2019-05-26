@@ -32,14 +32,14 @@ public class Topo {
     private Utilisateur utilisateur;
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "site_topo", joinColumns = @JoinColumn(name = "topo_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"))
     private List<Site> sites = new ArrayList<>();
 
     @OneToMany(mappedBy = "topo")
     private List<Commentaire> commentaires = new ArrayList<>();
 
-    @OneToMany(mappedBy = "topo")
+    @OneToMany(mappedBy = "topo", cascade = CascadeType.REMOVE)
     private List<Reservation> reservations = new ArrayList<>();
 
     // ----- Constructors

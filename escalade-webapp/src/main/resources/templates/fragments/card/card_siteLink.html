@@ -1,0 +1,34 @@
+<div th:fragment="card_siteLink" xmlns:th="http://www.thymeleaf.org" class="card">
+    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
+    <div class="card-image">
+        <figure class="image is-4by3">
+            <a th:href="@{/site/{id}(id=${site.getId()})}">
+                <img src="https://montemedio.com/wp-content/uploads/2018/03/Grande-voie-escalade-annecy-Zig-Zag.jpg"
+                     alt="Placeholder image"></a>
+        </figure>
+    </div>
+    <div class="card-content has-dark-opacity-background">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4 has-text-centered">Site</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p th:text="${site.getNom()}"></p>
+            <span>Par : <a th:href="@{/profile/{id}(id=${site.getUtilisateur().getId()})}"
+                           th:text="${site.getUtilisateur().getLogin()}"></a></span>
+            <br>
+            <span>Département : <span th:text="${site.departement}"></span></span>
+            <br>
+            <time th:datetime="${site.getDate()}" th:text="${site.getDate()}"></time>
+        </div>
+    </div>
+    <footer class="card-footer has-dark-opacity-background">
+        <a th:href="@{/site/{id}(id=${site.getId()})}" class="card-footer-item">Voir</a>
+        <!--/*@thymesVar id="topo" type="fr.fabien.escalade.model.topo.Topo"*/-->
+        <a th:if="${topo.utilisateur.id == session.user?.id}"
+           th:href="@{/topo/{idTopo}/site/{idSite}/unlink (idTopo = ${topo.id}, idSite = ${site.id})}"
+           class="card-footer-item">Retirer</a>
+    </footer>
+</div>

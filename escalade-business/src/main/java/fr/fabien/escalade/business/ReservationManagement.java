@@ -4,6 +4,7 @@ import fr.fabien.escalade.consumer.topo.ReservationRepository;
 import fr.fabien.escalade.model.topo.Reservation;
 import fr.fabien.escalade.model.topo.Topo;
 import fr.fabien.escalade.model.topo.Utilisateur;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import java.util.List;
 @Transactional
 @Service
 public class ReservationManagement extends CrudManager<Reservation, ReservationRepository> {
+    @Autowired
+    UtilisateurManagement utilisateurManagement;
 
     public ReservationManagement(ReservationRepository repository) {
         super(repository);
@@ -39,7 +42,25 @@ public class ReservationManagement extends CrudManager<Reservation, ReservationR
     }
 
     public List<Reservation> findAllByUtilisateur_Id(Long utilisateurId) {
+        if (utilisateurManagement.findById(utilisateurId).isPresent()) {
+            Utilisateur utilisateur = utilisateurManagement.findById(utilisateurId).get();
+            Date date = new Date(System.currentTimeMillis());
+            return repository.isReservedByUser(date, utilisateur);
+        }
+        return null;
+    }
+
+    public List<Reservation> findAllByUtilisateur_IdAndDate(Long utilisateurId) {
         return repository.findAllByUtilisateur_Id(utilisateurId);
+    }
+
+
+    public Reservation findFirstByTopo(Topo topo) {
+        Date date = new Date(System.currentTimeMillis());
+        List<Reservation> reservations = repository.actualyReserved(date, topo);
+        if (reservations.size() > 0)
+            return reservations.get(0);
+        return null;
     }
 
     @Override

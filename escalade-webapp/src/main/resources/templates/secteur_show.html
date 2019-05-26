@@ -113,17 +113,17 @@
                     </div>
                 </section>
             </div>
-        </div>
-        <div th:if="${secteur == null}">
-            <section class="section" id="null">
-                <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Accès impossible</h3>
-                    <h4 class="subtitle is-5" th:text="'Secteur inexistant'"></h4>
-                    <div class="container">
-                        <p></p>
+            <div th:if="${secteur == null}">
+                <section class="section" id="null">
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Accès impossible</h3>
+                        <h4 class="subtitle is-5" th:text="'Secteur inexistant'"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </div>
 </section>

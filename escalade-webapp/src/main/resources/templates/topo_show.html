@@ -48,10 +48,12 @@
                                                 <td>Dernière mise à jour:</td>
                                                 <td th:text="${topo.date}"></td>
                                             </tr>
-                                            <tr>
-                                                <td>Disponible:</td>
-                                                <td th:text="${topo.isEnable}"></td>
+                                            <tr th:if="${reservation != null}">
+                                                <td>Réservé par:</td>
+                                                <td><a th:href="@{/profile/{id}(id=${reservation.utilisateur.id})}"
+                                                       th:text="${reservation.utilisateur.login}"></a></td>
                                             </tr>
+
                                         </table>
                                     </div>
                                     <br>
@@ -62,17 +64,31 @@
                 </section>
 
                 <section>
-                    <div th:if="${topo.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                    <div th:if="${topo.utilisateur.id == session.user?.id || reservation?.utilisateur?.id == session.user?.id}" class="section" id="buttons_owner">
                         <div class="field has-addons has-addons-centered">
                             <div class="columns">
-                                <div class="column">
+                                <div th:if="${reservation != null}">
+                                    <div th:if="${topo.utilisateur.id == session.user?.id || reservation.utilisateur.id == session.user?.id}"
+                                         class="column">
+                                        <a th:href="@{~/reservation/{id}/cancel (id = ${reservation.getId()})}">
+                                            <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                                Annuler la réservation
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div th:if="${topo.utilisateur.id == session.user?.id}" class="column">
                                     <a th:href="@{/topo/{id}/edit (id = ${topo.getId()})}">
-                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">Editer</button>
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Editer
+                                        </button>
                                     </a>
                                 </div>
-                                <div class="column">
+                                <div th:if="${topo.utilisateur.id == session.user?.id}" class="column">
                                     <a th:href="@{/topo/{id}/delete (id = ${topo.getId()})}">
-                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">Supprimer</button>
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Supprimer
+                                        </button>
                                     </a>
                                 </div>
                             </div>
@@ -80,11 +96,12 @@
                     </div>
                 </section>
 
+
                 <section class="section" id="linkedSites">
                     <div th:if="${sites != null}">
                         <div class="columns is-multiline">
                             <div class="column is-one-fifth" th:each="site:${sites}">
-                                <div th:replace="fragments/card/card_site.html :: card_site"></div>
+                                <div th:replace="fragments/card/card_siteLink.html :: card_siteLink"></div>
                             </div>
                         </div>
                     </div>

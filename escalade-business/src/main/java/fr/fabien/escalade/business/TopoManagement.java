@@ -1,6 +1,5 @@
 package fr.fabien.escalade.business;
 
-import fr.fabien.escalade.consumer.topo.SiteRepository;
 import fr.fabien.escalade.consumer.topo.TopoRepository;
 import fr.fabien.escalade.model.topo.Site;
 import fr.fabien.escalade.model.topo.Topo;
@@ -76,7 +75,6 @@ public class TopoManagement extends CrudManager<Topo, TopoRepository> {
 
     @Override
     public void deleteById(Long id) {
-        repository.deleteAllInSite_topo(id);
         repository.deleteById(id);
     }
 }

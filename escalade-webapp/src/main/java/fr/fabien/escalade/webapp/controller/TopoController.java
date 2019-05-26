@@ -70,64 +70,71 @@ public class TopoController {
     @GetMapping("/topo/{id}")
     public String listMesTopos(Model model, HttpServletRequest request, @PathVariable String id,
                                @RequestParam(value = "errors", required = false) List<String> errors) {
-        Long long_id = Long.parseLong(id);
-        if (topoManagement.findById(long_id).isPresent()) {
-            Topo topo = topoManagement.findById(long_id).get();
-            Commentaire commentaire = new Commentaire();
-            List<Site> sites = siteManagement.findAllByTopos_Id(topo.getId());
-            commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-            commentaire.setTopo(topo);
+        try {
+            Long long_id = Long.parseLong(id);
+            if (topoManagement.findById(long_id).isPresent()) {
+                Topo topo = topoManagement.findById(long_id).get();
+                Commentaire commentaire = new Commentaire();
+                List<Site> sites = siteManagement.findAllByTopos_Id(topo.getId());
+                commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+                commentaire.setTopo(topo);
 
-            if (reservationManagement.actualyReserved(topo).size() == 0 ||
-                    reservationManagement.isReservedByUser(utilisateurManagement.findByRequest(request))) {
-                model.addAttribute("topo", topo);
-            }
-            if (utilisateurManagement.findByRequest(request) != null) {
-                if ((topo.getUtilisateur().getId().equals(utilisateurManagement.findByRequest(request).getId()))) {
+                if (reservationManagement.actualyReserved(topo).size() == 0 ||
+                        reservationManagement.isReservedByUser(utilisateurManagement.findByRequest(request))) {
                     model.addAttribute("topo", topo);
                 }
+                if (utilisateurManagement.findByRequest(request) != null) {
+                    if ((topo.getUtilisateur().getId().equals(utilisateurManagement.findByRequest(request).getId()))) {
+                        model.addAttribute("topo", topo);
+                    }
+                }
+                model.addAttribute("commentaire_write", commentaire);
+                model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
+                model.addAttribute("redirectionId", id);
+                model.addAttribute("dates", new Dates().getThisWeek());
+                model.addAttribute("sites", sites);
+                model.addAttribute("errors", errors);
             }
-            model.addAttribute("commentaire_write", commentaire);
-            model.addAttribute("commentaires", commentaireManagement.findCommentairesByTopoId(long_id));
-            model.addAttribute("redirectionId", id);
-            model.addAttribute("dates", new Dates().getThisWeek());
-            model.addAttribute("sites", sites);
-            model.addAttribute("errors", errors);
+        } catch (Exception ignored) {
         }
-
         return "topo_show";
     }
 
     @GetMapping("/topo/{id}/edit")
     public String topo_edit(Model model, @PathVariable String id) {
-        Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
-        if (topo.isPresent()) {
-            model.addAttribute(topo.get());
+        try {
+            Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
+            topo.ifPresent(model::addAttribute);
             return "topo_creation";
+        } catch (Exception ignored) {
         }
         return "erreur";
     }
 
     @PostMapping("/topo/{id}/reservation")
     public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin,
-                              RedirectAttributes ra, HttpServletRequest request) throws ParseException {
-        Long long_id = Long.parseLong(id);
-        Optional<Topo> topo = topoManagement.findById(long_id);
+                              RedirectAttributes ra, HttpServletRequest request) {
         List<String> errors = new ArrayList<>();
+        try {
+            Long long_id = Long.parseLong(id);
+            Optional<Topo> topo = topoManagement.findById(long_id);
 
-        if (topo.isPresent()) {
-            DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-            Date dateConv = format.parse(dateFin);
-            Reservation reservation = new Reservation();
-            reservation.setDateDebut(new Date());
-            reservation.setDateFin(dateConv);
-            reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
-            reservation.setTopo(topo.get());
-            System.out.println("Libre ? " + reservationManagement.isFree(reservation));
-            if (reservationManagement.isFree(reservation)) {
-                reservationManagement.save(reservation);
+            if (topo.isPresent()) {
+                DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+                Date dateConv = format.parse(dateFin);
+                Reservation reservation = new Reservation();
+                reservation.setDateDebut(new Date());
+                reservation.setDateFin(dateConv);
+                reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
+                reservation.setTopo(topo.get());
+                System.out.println("Libre ? " + reservationManagement.isFree(reservation));
+                if (reservationManagement.isFree(reservation)) {
+                    reservationManagement.save(reservation);
+                }
+            } else {
+                errors.add("Le topo que vous tentez de réserver n'existe pas");
             }
-        } else {
+        } catch (Exception e) {
             errors.add("Le topo que vous tentez de réserver n'existe pas");
         }
         ra.addAttribute("errors", errors);
@@ -136,38 +143,46 @@ public class TopoController {
 
     @GetMapping("/topo/{id}/delete")
     public String topo_delete(@PathVariable String id, HttpServletRequest request) {
-        Long long_id = Long.parseLong(id);
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        Optional<Topo> topo = topoManagement.findById(long_id);
-        if (topo.isPresent()) {
-            if (utilisateur.getId().equals(topo.get().getUtilisateur().getId())) {
-                if (topo.get().getCommentaires() != null)
-                    commentaireManagement.deleteCommentairesByTopoId(topo.get().getId());
-                topoManagement.deleteById(long_id);
+        try {
+            Long long_id = Long.parseLong(id);
+            Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+            Optional<Topo> topo = topoManagement.findById(long_id);
+            if (topo.isPresent()) {
+                if (utilisateur.getId().equals(topo.get().getUtilisateur().getId())) {
+                    if (topo.get().getCommentaires() != null)
+                        commentaireManagement.deleteCommentairesByTopoId(topo.get().getId());
+                    topoManagement.deleteById(long_id);
+                }
             }
+        } catch (Exception ignored) {
         }
+
         return "redirect:/profile";
     }
 
     @PostMapping("/topo/{id}/link")
-    public String topoLinkSite(@PathVariable String id, @RequestParam("stringSite") String stringSite, HttpServletRequest request) {
-        Site site = siteManagement.findSiteByNom(stringSite);
-        Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
+    public String topoLinkSite(@PathVariable String id, @RequestParam("stringSite") String stringSite) {
+        try {
+            Site site = siteManagement.findSiteByNom(stringSite);
+            Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
 
-        if (topo.isPresent() && site != null) {
-            if (!topoManagement.isAlreadyLinkWithTopo(topo.get(), site)) {
-                List<Topo> topos = site.getTopos();
-                topos.add(topo.get());
-                site.setTopos(topos);
-                siteManagement.save(site);
+            if (topo.isPresent() && site != null) {
+                if (!topoManagement.isAlreadyLinkWithTopo(topo.get(), site)) {
+                    List<Topo> topos = site.getTopos();
+                    topos.add(topo.get());
+                    site.setTopos(topos);
+                    siteManagement.save(site);
 
-                List<Site> sites = topo.get().getSites();
-                sites.add(site);
-                topo.get().setSites(sites);
-                topoManagement.save(topo.get());
+                    List<Site> sites = topo.get().getSites();
+                    sites.add(site);
+                    topo.get().setSites(sites);
+                    topoManagement.save(topo.get());
+                }
             }
+            return "redirect:/topo/{id}";
+        } catch (Exception e) {
+            return "erreur";
         }
-        return "redirect:/topo/{id}";
     }
 
     @GetMapping("/site")
@@ -210,39 +225,43 @@ public class TopoController {
     @GetMapping("/site/{id}")
     public String listMesSites(Model model,
                                HttpServletRequest request, @PathVariable String id) {
-        Long long_id = Long.parseLong(id);
-        Optional<Site> site = siteManagement.findById(long_id);
-        if (site.isPresent()) {
-            Commentaire commentaire = new Commentaire();
-            commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-            commentaire.setSite(site.get());
+        try {
+            Long long_id = Long.parseLong(id);
+            Optional<Site> site = siteManagement.findById(long_id);
+            if (site.isPresent()) {
+                Commentaire commentaire = new Commentaire();
+                commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+                commentaire.setSite(site.get());
 
-            model.addAttribute("site", site.get());
-            model.addAttribute("commentaire_write", commentaire);
-            model.addAttribute("utilisateur_show", site.get().getUtilisateur());
-            model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
-            model.addAttribute("redirectionId", id);
-            model.addAttribute("cotations", new Cotations());
+                model.addAttribute("site", site.get());
+                model.addAttribute("commentaire_write", commentaire);
+                model.addAttribute("utilisateur_show", site.get().getUtilisateur());
+                model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
+                model.addAttribute("redirectionId", id);
+                model.addAttribute("cotations", new Cotations());
+            }
+        } catch (Exception ignored) {
         }
-
         return "site_show";
     }
 
     @GetMapping("/site/{id}/edit")
     public String site_edit(Model model, @PathVariable String id) {
-        Optional<Site> site = siteManagement.findById(Long.parseLong(id));
-        if (site.isPresent()) {
-            model.addAttribute(site.get());
-            model.addAttribute("departements", departements);
-            return "site_creation";
+        try {
+            Optional<Site> site = siteManagement.findById(Long.parseLong(id));
+            if (site.isPresent()) {
+                model.addAttribute(site.get());
+                model.addAttribute("departements", departements);
+                return "site_creation";
+            }
+        } catch (Exception ignored) {
         }
         return "erreur";
     }
 
     @GetMapping("/site/{id}/delete")
-    public String site_delete(@PathVariable String id, HttpServletRequest request) {
+    public String site_delete(@PathVariable String id) {
         Long long_id = Long.parseLong(id);
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
         Optional<Site> site = siteManagement.findById(long_id);
         if (site.isPresent()) {
             if (site.get().getCommentaires() != null)
@@ -252,29 +271,32 @@ public class TopoController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/site/{id}/reservation")
-    public String site_reservation(@PathVariable String id, HttpServletRequest request) {
-
-        return "redirect:/site/{id}";
-    }
-
     @GetMapping("/site/{id}/secteur")
     public String creation_secteur(Model model, @PathVariable String id, @RequestParam(value = "errors", required = false) List<String> errors) {
-        Secteur secteur = new Secteur();
-        secteur.setDate(new Date(System.currentTimeMillis()));
-        secteur.setSite(siteManagement.findById(Long.parseLong(id)).get());
-        model.addAttribute("secteur", secteur);
-        model.addAttribute("errors", errors);
-        return "secteur_creation";
+        try {
+            Secteur secteur = new Secteur();
+            secteur.setDate(new Date(System.currentTimeMillis()));
+            Optional<Site> site = siteManagement.findById(Long.parseLong(id));
+            if (site.isPresent()) {
+                secteur.setSite(site.get());
+                model.addAttribute("secteur", secteur);
+            }
+            model.addAttribute("errors", errors);
+            return "secteur_creation";
+        } catch (Exception ignored) {
+        }
+        return "erreur";
     }
 
     @GetMapping("/secteur/{id}")
     public String secteur(Model model, @PathVariable String id) {
-        long long_id = Long.parseLong(id);
-        Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
-        if (secteur.isPresent()) {
-            model.addAttribute("secteur", secteur.get());
-            model.addAttribute("cotations", new Cotations());
+        try {
+            Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
+            if (secteur.isPresent()) {
+                model.addAttribute("secteur", secteur.get());
+                model.addAttribute("cotations", new Cotations());
+            }
+        } catch (Exception ignored) {
         }
         return "secteur_show";
     }
@@ -302,46 +324,58 @@ public class TopoController {
 
     @GetMapping("/secteur/{id}/edit")
     public String secteur_edit(Model model, @PathVariable String id) {
-        Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
-        if (secteur.isPresent()) {
-            model.addAttribute(secteur.get());
-            return "secteur_creation";
+        try {
+            Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
+            if (secteur.isPresent()) {
+                model.addAttribute(secteur.get());
+                return "secteur_creation";
+            }
+        } catch (Exception ignored) {
         }
         return "erreur";
     }
 
     @GetMapping("/secteur/{id}/delete")
     public String secteur_delete(@PathVariable String id, HttpServletRequest request) {
-        Long long_id = Long.parseLong(id);
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        Optional<Secteur> secteur = secteurManagement.findById(long_id);
-        if (secteur.isPresent()) {
-            if (utilisateur.getId().equals(secteur.get().getSite().getUtilisateur().getId())) {
-                secteurManagement.deleteById(long_id);
+        try {
+            Long long_id = Long.parseLong(id);
+            Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+            Optional<Secteur> secteur = secteurManagement.findById(long_id);
+            if (secteur.isPresent()) {
+                if (utilisateur.getId().equals(secteur.get().getSite().getUtilisateur().getId())) {
+                    secteurManagement.deleteById(long_id);
+                }
+                return "redirect:/site/" + secteur.get().getSite().getId();
             }
-            return "redirect:/site/" + secteur.get().getSite().getId();
+        } catch (Exception ignored) {
         }
         return "redirect:/erreur";
     }
 
     @GetMapping("/secteur/{id}/voie")
     public String creation_voie(Model model, @PathVariable String id, @RequestParam(value = "errors", required = false) List<String> errors) {
-        Voie voie = new Voie();
-        voie.setDate(new Date(System.currentTimeMillis()));
-        voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
-        model.addAttribute("voie", voie);
-        model.addAttribute("cotations", cotations);
-        model.addAttribute("errors", errors);
-        return "voie_creation";
+        try {
+            Voie voie = new Voie();
+            voie.setDate(new Date(System.currentTimeMillis()));
+            voie.setSecteur(secteurManagement.findSecteurById(Long.parseLong(id)));
+            model.addAttribute("voie", voie);
+            model.addAttribute("cotations", cotations);
+            model.addAttribute("errors", errors);
+            return "voie_creation";
+        } catch (Exception ignored) {
+        }
+        return "erreur";
     }
 
     @GetMapping("/voie/{id}")
-    public String voie(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
-        long long_id = Long.parseLong(id);
-        Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
-        if (voie.isPresent()) {
-            model.addAttribute("voie", voie.get());
-            model.addAttribute("cotations", new Cotations());
+    public String voie(Model model, @PathVariable String id) {
+        try {
+            Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
+            if (voie.isPresent()) {
+                model.addAttribute("voie", voie.get());
+                model.addAttribute("cotations", new Cotations());
+            }
+        } catch (Exception ignored) {
         }
         return "voie_show";
     }
@@ -369,30 +403,36 @@ public class TopoController {
 
     @GetMapping("/voie/{id}/edit")
     public String voie_edit(Model model, @PathVariable String id) {
-        Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
-        if (voie.isPresent()) {
-            model.addAttribute(voie.get());
-            return "voie_creation";
+        try {
+            Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
+            if (voie.isPresent()) {
+                model.addAttribute(voie.get());
+                return "voie_creation";
+            }
+        } catch (Exception ignored) {
         }
         return "erreur";
     }
 
     @GetMapping("/voie/{id}/delete")
     public String voie_delete(@PathVariable String id) {
-        Long long_id = Long.parseLong(id);
-        Optional<Voie> voie = voieManagement.findById(long_id);
-        if (voie.isPresent()) {
-            voieManagement.deleteById(long_id);
+        try {
+            Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
+            if (voie.isPresent()) {
+                voieManagement.deleteById(Long.parseLong(id));
+            }
+        } catch (Exception ignored) {
         }
         return "redirect:/profile";
     }
 
     @PostMapping("/comment/{id}")
     public String comment_add(@ModelAttribute Commentaire commentaire, @PathVariable String id) {
-        commentaire.setDate(new Date(System.currentTimeMillis()));
-        commentaireManagement.save(commentaire);
-
-        System.out.println(commentaire.getUtilisateur());
+        try {
+            commentaire.setDate(new Date(System.currentTimeMillis()));
+            commentaireManagement.save(commentaire);
+        } catch (Exception ignored) {
+        }
 
         String redirection = "redirect:/";
         if (commentaire.getSite() != null) {
@@ -409,25 +449,31 @@ public class TopoController {
 
     @PostMapping("/comment/{id}/delete")
     public String comment_delete(@PathVariable String id, HttpServletRequest request) {
-        Long long_id = Long.parseLong(id);
-        String id_redirect = "";
-        String redirection = "redirect:/";
-        Commentaire commentaire = commentaireManagement.findById(long_id).get();
-        if (commentaire.getSite() != null) {
-            redirection += "site";
-            id_redirect = Long.toString(commentaire.getSite().getId());
-        } else if (commentaire.getTopo() != null) {
-            redirection += "topo";
-            id_redirect = Long.toString(commentaire.getTopo().getId());
-        } else {
-            redirection += "error";
-        }
-        redirection += "/";
-        redirection += id_redirect;
+        try {
+            Long long_id = Long.parseLong(id);
+            String id_redirect = "";
+            String redirection = "redirect:/";
+            Optional<Commentaire> commentaire = commentaireManagement.findById(long_id);
+            if (commentaire.isPresent()) {
+                if (commentaire.get().getSite() != null) {
+                    redirection += "site";
+                    id_redirect = Long.toString(commentaire.get().getSite().getId());
+                } else if (commentaire.get().getTopo() != null) {
+                    redirection += "topo";
+                    id_redirect = Long.toString(commentaire.get().getTopo().getId());
+                } else {
+                    redirection += "error";
+                }
+                redirection += "/";
+                redirection += id_redirect;
 
-        Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
-        if (commentaire.getUtilisateur().getId().equals(utilisateur.getId()))
-            commentaireManagement.deleteById(long_id);
-        return redirection;
+                Utilisateur utilisateur = utilisateurManagement.findByRequest(request);
+                if (commentaire.get().getUtilisateur().getId().equals(utilisateur.getId()))
+                    commentaireManagement.deleteById(long_id);
+                return redirection;
+            }
+        } catch (Exception ignored) {
+        }
+        return "erreur";
     }
 }

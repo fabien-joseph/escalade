@@ -12,98 +12,115 @@
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
-            <!-- About -->
-            <section class="section" id="secteur">
-                <!-- Title -->
+            <div th:if="${secteur != null}">
+                <!-- About -->
+                <section class="section" id="secteur">
+                    <!-- Title -->
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Secteur</h3>
+                        <h4 class="subtitle is-5" th:text="${secteur.nom}"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
+                    </div>
+
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <!-- Profile -->
+                            <div class="card has-dark-opacity-background">
+                                <div class="card-content">
+                                    <h3 class="title is-4">Informations</h3>
+
+                                    <div class="content">
+                                        <table class="table-profile">
+                                            <tr>
+                                                <th colspan="1"></th>
+                                                <th colspan="2"></th>
+                                            </tr>
+                                            <tr>
+                                                <td width="20%">Dernière mise à jour:</td>
+                                                <td width="80%" th:text="${secteur.date}">
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Cotation :</td>
+                                                <td>
+                                                    <div>
+                                                        <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
+                                                        <p th:text="'De '+ ${cotations.convertIntString(secteur.cotationMin)} +' à '+ ${cotations.convertIntString(secteur.cotationMax)}"></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hauteur :</td>
+                                                <td>
+                                                    <div><p
+                                                            th:text="'De '+ ${secteur.hauteurMin} +' à '+ ${secteur.hauteurMax} +' mètres'"></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div th:if="${secteur.site.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                        <div class="field has-addons has-addons-centered">
+                            <div class="columns">
+                                <div class="column">
+                                    <a th:href="@{/secteur/{id}/edit (id = ${secteur.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Editer
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a th:href="@{/secteur/{id}/delete (id = ${secteur.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Supprimer
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="voie">
+                    <h3 class="title is-4">Voies</h3>
+                    <div class="columns is-multiline">
+                        <div class="column is-one-fifth" th:each="voie:${secteur.getVoies()}">
+                            <div th:replace="fragments/card/card_voie.html :: card_voie"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services -->
+                <section class="section" id="voieAjout">
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <a class="button is-outlined is-light is-large"
+                               th:href="@{/secteur/{id}/voie (id = ${secteur.getId()})}">
+                                Ajouter une voie
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div th:if="${secteur == null}">
+            <section class="section" id="null">
                 <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Secteur</h3>
-                    <h4 class="subtitle is-5" th:text="${secteur.nom}"></h4>
+                    <h3 class="title is-2">Accès impossible</h3>
+                    <h4 class="subtitle is-5" th:text="'Secteur inexistant'"></h4>
                     <div class="container">
                         <p></p>
-                    </div>
-                </div>
-
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <!-- Profile -->
-                        <div class="card has-dark-opacity-background">
-                            <div class="card-content">
-                                <h3 class="title is-4">Informations</h3>
-
-                                <div class="content">
-                                    <table class="table-profile">
-                                        <tr>
-                                            <th colspan="1"></th>
-                                            <th colspan="2"></th>
-                                        </tr>
-                                        <tr>
-                                            <td width="20%">Dernière mise à jour:</td>
-                                            <td width="80%" th:text="${secteur.date}">
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Cotation :</td>
-                                            <td>
-                                                <div>
-                                                    <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
-                                                    <p th:text="'De '+ ${cotations.convertIntString(secteur.cotationMin)} +' à '+ ${cotations.convertIntString(secteur.cotationMax)}"></p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hauteur :</td>
-                                            <td>
-                                                <div><p
-                                                        th:text="'De '+ ${secteur.hauteurMin} +' à '+ ${secteur.hauteurMax} +' mètres'"></p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <div th:if="${secteur.site.utilisateur.id == session.user?.id}" class="section" id="buttons">
-                    <div class="field has-addons has-addons-centered">
-                        <div class="columns">
-                            <div class="column">
-                                <a th:href="@{/secteur/{id}/edit (id = ${secteur.getId()})}">
-                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Editer</button>
-                                </a>
-                            </div>
-                            <div class="column">
-                                <a th:href="@{/secteur/{id}/delete (id = ${secteur.getId()})}">
-                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">Supprimer</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="voie">
-                <h3 class="title is-4">Voies</h3>
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="voie:${secteur.getVoies()}">
-                            <div th:replace="fragments/card/card_voie.html :: card_voie"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Services -->
-            <section class="section" id="voieAjout">
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <a class="button is-outlined is-light is-large"
-                           th:href="@{/secteur/{id}/voie (id = ${secteur.getId()})}">
-                            Ajouter une voie
-                        </a>
                     </div>
                 </div>
             </section>

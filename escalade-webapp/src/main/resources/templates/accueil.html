@@ -13,7 +13,7 @@
                                                 th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
             </div>
             <div class="has-text-centered" id="test">
-                <p class="is-size-3 search">Trouve un site :</p>
+                <p class="is-size-3 search">Trouve un site ou un topo :</p>
             </div>
 
             <form th:action="@{/recherche}">
@@ -21,8 +21,8 @@
                     <div class="control">
                         <div class="select is-large">
                             <label>
-                                <select name="departement">
-                                    <option selected disabled>Département</option>
+                                <select class="departements_list box-transparent has-dark-opacity-background" name="departement">
+                                    <option th:value="''" selected disabled>Département</option>
                                     <option th:type="text" th:each="departement : ${departements}"
                                             th:value="${departement.key}"
                                             th:utext="${departement.key} +' - '+${departement.value}"></option>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="control" id="droppable">
-                        <button type="submit" class="button is-primary is-large">Rechercher</button>
+                        <button type="submit" class="button is-white is-outlined is-large">Rechercher</button>
                     </div>
                 </div>
             </form>

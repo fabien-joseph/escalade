@@ -19,6 +19,8 @@
             <span>Par : <a th:href="@{/profile/{id}(id=${site.getUtilisateur().getId()})}"
                            th:text="${site.getUtilisateur().getLogin()}"></a></span>
             <br>
+            <span>Département : <span th:text="${site.departement}"></span></span>
+            <br>
             <time th:datetime="${site.getDate()}" th:text="${site.getDate()}"></time>
         </div>
     </div>

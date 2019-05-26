@@ -11,145 +11,158 @@
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
-            <!-- About -->
-            <section class="section" id="site">
-                <!-- Title -->
-                <div class="section-heading has-text-centered">
-                    <h3 class="title is-2">Site</h3>
-                    <h4 class="subtitle is-5" th:text="${site.nom}"></h4>
-                    <div class="container">
-                        <p></p>
+            <div th:if="${site != null}">
+                <!-- About -->
+                <section class="section" id="site">
+                    <!-- Title -->
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Site</h3>
+                        <h4 class="subtitle is-5" th:text="${site.nom}"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <!-- Profile -->
-                        <div class="card has-dark-opacity-background">
-                            <div class="card-content">
-                                <h3 class="title is-4">Informations</h3>
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <!-- Profile -->
+                            <div class="card has-dark-opacity-background">
+                                <div class="card-content">
+                                    <h3 class="title is-4">Informations</h3>
 
-                                <div class="content">
-                                    <table class="table-profile">
-                                        <tr>
-                                            <th colspan="1"></th>
-                                            <th colspan="2"></th>
-                                        </tr>
-                                        <tr>
-                                            <td width="20%">Créateur:</td>
-                                            <td width="80%">
-                                                <a th:href="@{/profile/{id}(id=${site.utilisateur.id})}"
-                                                   th:text="${site.utilisateur.login}"></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dernière mise à jour:</td>
-                                            <td th:text="${site.date}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Département:</td>
-                                            <td th:text="${site.departement}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Localisation:</td>
-                                            <td th:text="${site.localisation}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Orientation:</td>
-                                            <td th:text="${site.orientation}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Type:</td>
-                                            <td th:text="${site.type}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Description:</td>
-                                            <td th:text="${site.description}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cotation :</td>
-                                            <td>
-                                                <div>
-                                                    <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
-                                                    <p
-                                                            th:text="'De '+ ${cotations.convertIntString(site.cotationMin)} +' à '+ ${cotations.convertIntString(site.cotationMax)}"></p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hauteur :</td>
-                                            <td>
-                                                <div><p
-                                                        th:text="'De '+ ${site.hauteurMin} +' à '+ ${site.hauteurMax} +' mètres'"></p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <div class="content">
+                                        <table class="table-profile">
+                                            <tr>
+                                                <th colspan="1"></th>
+                                                <th colspan="2"></th>
+                                            </tr>
+                                            <tr>
+                                                <td width="20%">Créateur:</td>
+                                                <td width="80%">
+                                                    <a th:href="@{/profile/{id}(id=${site.utilisateur.id})}"
+                                                       th:text="${site.utilisateur.login}"></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dernière mise à jour:</td>
+                                                <td th:text="${site.date}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Département:</td>
+                                                <td th:text="${site.departement}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Localisation:</td>
+                                                <td th:text="${site.localisation}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Orientation:</td>
+                                                <td th:text="${site.orientation}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Type:</td>
+                                                <td th:text="${site.type}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Description:</td>
+                                                <td th:text="${site.description}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cotation :</td>
+                                                <td>
+                                                    <div>
+                                                        <!--/*@thymesVar id="cotations" type="fr.fabien.escalade.business.Cotations"*/-->
+                                                        <p
+                                                                th:text="'De '+ ${cotations.convertIntString(site.cotationMin)} +' à '+ ${cotations.convertIntString(site.cotationMax)}"></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hauteur :</td>
+                                                <td>
+                                                    <div><p
+                                                            th:text="'De '+ ${site.hauteurMin} +' à '+ ${site.hauteurMax} +' mètres'"></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
                                 </div>
-                                <br>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section>
-                <div th:if="${site.utilisateur.id == session.user?.id}" class="section" id="buttons">
-                    <div class="field has-addons has-addons-centered">
-                        <div class="columns">
-                            <div class="column">
-                                <a th:href="@{/site/{id}/edit (id = ${site.getId()})}">
-                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">
-                                        Editer
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="column">
-                                <a th:href="@{/site/{id}/delete (id = ${site.getId()})}">
-                                    <button class="button has-dark-opacity-background is-outlined is-light is-large">
-                                        Supprimer
-                                    </button>
-                                </a>
+                <section>
+                    <div th:if="${site.utilisateur.id == session.user?.id}" class="section" id="buttons">
+                        <div class="field has-addons has-addons-centered">
+                            <div class="columns">
+                                <div class="column">
+                                    <a th:href="@{/site/{id}/edit (id = ${site.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Editer
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a th:href="@{/site/{id}/delete (id = ${site.getId()})}">
+                                        <button class="button has-dark-opacity-background is-outlined is-light is-large">
+                                            Supprimer
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section class="section" id="secteurs">
-                <h3 class="title is-4">Secteurs</h3>
-                <div class="columns is-multiline">
-                    <div class="column is-one-fifth" th:each="secteur:${site.getSecteurs()}">
-                        <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
+                <section class="section" id="secteurs">
+                    <h3 class="title is-4">Secteurs</h3>
+                    <div class="columns is-multiline">
+                        <div class="column is-one-fifth" th:each="secteur:${site.getSecteurs()}">
+                            <div th:replace="fragments/card/card_secteur.html :: card_secteur"></div>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Services -->
-            <section class="section" id="AddSecteurs">
-                <div class="columns has-same-height is-gapless">
-                    <div class="column">
-                        <a class="button is-outlined is-light is-large"
-                           th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
-                            Ajouter un secteur
-                        </a>
+                <!-- Services -->
+                <section class="section" id="AddSecteurs">
+                    <div class="columns has-same-height is-gapless">
+                        <div class="column">
+                            <a class="button is-outlined is-light is-large"
+                               th:href="@{/site/{id}/secteur (id = ${site.getId()})}">
+                                Ajouter un secteur
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </section>
-            <section class="section" id="commentaires">
-                <div th:if="${commentaires}" class="section-heading has-text-centered">
-                    <h3 class="title is-2">Commentaires</h3>
-                </div>
-                <div th:if="${session.user}">
-                    <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
-                </div>
-                <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
-                <div th:if="${commentaires}">
-                    <div th:each="comment:${commentaires}">
-                        <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                </section>
+                <section class="section" id="commentaires">
+                    <div th:if="${commentaires}" class="section-heading has-text-centered">
+                        <h3 class="title is-2">Commentaires</h3>
                     </div>
-                </div>
-            </section>
+                    <div th:if="${session.user}">
+                        <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
+                    </div>
+                    <!--/*@thymesVar id="commentaires" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                    <div th:if="${commentaires}">
+                        <div th:each="comment:${commentaires}">
+                            <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div th:if="${site == null}">
+                <section class="section" id="null">
+                    <div class="section-heading has-text-centered">
+                        <h3 class="title is-2">Accès impossible</h3>
+                        <h4 class="subtitle is-5" th:text="'Site inexistant'"></h4>
+                        <div class="container">
+                            <p></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </section>

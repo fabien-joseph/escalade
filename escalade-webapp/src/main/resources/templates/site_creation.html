@@ -32,7 +32,7 @@
                                     <label>
                                         <select th:field="*{orientation}" name="type"
                                                 class="departements_list select has-dark-opacity-background">
-                                            <option value="" selected disabled>Orientation</option>
+                                            <option value="" selected="selected" disabled>Orientation</option>
                                             <option th:value="'Nord'" th:text="Nord"></option>
                                             <option th:value="'Sud'" th:text="Sud"></option>
                                             <option th:value="'Est'" th:text="Est"></option>
@@ -49,7 +49,7 @@
                                     <label>
                                         <select th:field="*{type}" name="type"
                                                 class="departements_list select has-dark-opacity-background">
-                                            <option value="" selected disabled>Type</option>
+                                            <option value="" selected="selected" disabled>Type</option>
                                             <option th:value="'Roche'" th:text="Roche"></option>
                                             <option th:value="'Bloc'" th:text="Bloc"></option>
                                         </select>
@@ -64,7 +64,7 @@
                                     <label>
                                         <select th:field="*{departement}" name="departement"
                                                 class="departements_list select has-dark-opacity-background">
-                                            <option value="" selected disabled>Département</option>
+                                            <option th:value="''" selected="selected" disabled>Département</option>
                                             <option th:type="text" th:each="departement : ${departements}"
                                                     th:value="${departement.key}"
                                                     th:utext="${departement.key + ' - ' + departement.value}">

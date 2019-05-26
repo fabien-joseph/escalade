@@ -92,10 +92,10 @@ public class TopoController {
             model.addAttribute("redirectionId", id);
             model.addAttribute("dates", new Dates().getThisWeek());
             model.addAttribute("sites", sites);
-            return "topo_show";
-        } else {
-            return "erreur";
+            model.addAttribute("errors", errors);
         }
+
+        return "topo_show";
     }
 
     @GetMapping("/topo/{id}/edit")
@@ -103,7 +103,6 @@ public class TopoController {
         Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
         if (topo.isPresent()) {
             model.addAttribute(topo.get());
-            model.addAttribute("departements", departements);
             return "topo_creation";
         }
         return "erreur";
@@ -112,22 +111,26 @@ public class TopoController {
     @PostMapping("/topo/{id}/reservation")
     public String reservation(@PathVariable String id, @RequestParam(value = "dateFin") String dateFin,
                               RedirectAttributes ra, HttpServletRequest request) throws ParseException {
-        List<String> errors = new ArrayList<>();
-        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-        Date dateConv = format.parse(dateFin);
-        Reservation reservation = new Reservation();
-        reservation.setDateDebut(new Date());
-        reservation.setDateFin(dateConv);
-        reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
         Long long_id = Long.parseLong(id);
-        reservation.setTopo(topoManagement.findById(long_id).get());
-        System.out.println("Libre ? " + reservationManagement.isFree(reservation));
-        if (reservationManagement.isFree(reservation)) {
-            reservationManagement.save(reservation);
-        } else {
-            ra.addAttribute("errors", errors);
-        }
+        Optional<Topo> topo = topoManagement.findById(long_id);
+        List<String> errors = new ArrayList<>();
 
+        if (topo.isPresent()) {
+            DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+            Date dateConv = format.parse(dateFin);
+            Reservation reservation = new Reservation();
+            reservation.setDateDebut(new Date());
+            reservation.setDateFin(dateConv);
+            reservation.setUtilisateur(utilisateurManagement.findByRequest(request));
+            reservation.setTopo(topo.get());
+            System.out.println("Libre ? " + reservationManagement.isFree(reservation));
+            if (reservationManagement.isFree(reservation)) {
+                reservationManagement.save(reservation);
+            }
+        } else {
+            errors.add("Le topo que vous tentez de réserver n'existe pas");
+        }
+        ra.addAttribute("errors", errors);
         return "redirect:/topo/{id}";
     }
 
@@ -208,17 +211,20 @@ public class TopoController {
     public String listMesSites(Model model,
                                HttpServletRequest request, @PathVariable String id) {
         Long long_id = Long.parseLong(id);
-        Site site = siteManagement.findById(long_id).get();
-        Commentaire commentaire = new Commentaire();
-        commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
-        commentaire.setSite(site);
+        Optional<Site> site = siteManagement.findById(long_id);
+        if (site.isPresent()) {
+            Commentaire commentaire = new Commentaire();
+            commentaire.setUtilisateur(utilisateurManagement.findByRequest(request));
+            commentaire.setSite(site.get());
 
-        model.addAttribute("site", site);
-        model.addAttribute("commentaire_write", commentaire);
-        model.addAttribute("utilisateur_show", site.getUtilisateur());
-        model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
-        model.addAttribute("redirectionId", id);
-        model.addAttribute("cotations", new Cotations());
+            model.addAttribute("site", site.get());
+            model.addAttribute("commentaire_write", commentaire);
+            model.addAttribute("utilisateur_show", site.get().getUtilisateur());
+            model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
+            model.addAttribute("redirectionId", id);
+            model.addAttribute("cotations", new Cotations());
+        }
+
         return "site_show";
     }
 
@@ -227,6 +233,7 @@ public class TopoController {
         Optional<Site> site = siteManagement.findById(Long.parseLong(id));
         if (site.isPresent()) {
             model.addAttribute(site.get());
+            model.addAttribute("departements", departements);
             return "site_creation";
         }
         return "erreur";
@@ -264,8 +271,11 @@ public class TopoController {
     @GetMapping("/secteur/{id}")
     public String secteur(Model model, @PathVariable String id) {
         long long_id = Long.parseLong(id);
-        model.addAttribute("secteur", secteurManagement.findSecteurById(long_id));
-        model.addAttribute("cotations", new Cotations());
+        Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
+        if (secteur.isPresent()) {
+            model.addAttribute("secteur", secteur.get());
+            model.addAttribute("cotations", new Cotations());
+        }
         return "secteur_show";
     }
 
@@ -328,9 +338,11 @@ public class TopoController {
     @GetMapping("/voie/{id}")
     public String voie(Model model, HttpServletRequest request, HttpSession session, @PathVariable String id) {
         long long_id = Long.parseLong(id);
-        session.setAttribute("user", utilisateurManagement.findByRequest(request));
-        model.addAttribute("voie", voieManagement.findVoieById(long_id));
-        model.addAttribute("cotations", new Cotations());
+        Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
+        if (voie.isPresent()) {
+            model.addAttribute("voie", voie.get());
+            model.addAttribute("cotations", new Cotations());
+        }
         return "voie_show";
     }
 

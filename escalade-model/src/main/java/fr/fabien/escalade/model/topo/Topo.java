@@ -2,7 +2,6 @@ package fr.fabien.escalade.model.topo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +25,6 @@ public class Topo {
     @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
-    private Boolean isEnable;
 
     @ManyToOne
     private Utilisateur utilisateur;
@@ -46,10 +44,9 @@ public class Topo {
     public Topo() {
     }
 
-    public Topo(String nom, Date date, Boolean isEnable, Utilisateur utilisateur, List<Commentaire> commentaires, List<Site> sites) {
+    public Topo(String nom, Date date, Utilisateur utilisateur, List<Commentaire> commentaires, List<Site> sites) {
         this.nom = nom;
         this.date = date;
-        this.isEnable = isEnable;
         this.utilisateur = utilisateur;
         this.commentaires = commentaires;
         this.sites = sites;

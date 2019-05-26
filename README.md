@@ -34,4 +34,4 @@ Pour configurer la base de donner il faut créer deux variables d'environnement 
 
 Pour générer la base de données :
 - Exécuter le programme, il créera lui-même la structure de la base de donnée avec Spring Data JPA
-- !TODO! pour un jeu de donénes
+- Pour utiliser le jeu de données il faut utiliser le fichier dumpExample.

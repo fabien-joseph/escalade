@@ -15,15 +15,28 @@
                     <form action="#" th:action="@{/site/save}" th:object="${site}" method=post>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du site"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du site"
+                                           autofocus="">
+                                </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{localisation}" class="input is-large" type="text"
-                                       placeholder="Localisation"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{localisation}" class="input is-large" type="text"
+                                           placeholder="Localisation"
+                                           autofocus="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label>
+                                    <input th:field="*{description}" class="input is-large" type="text"
+                                           placeholder="Description"
+                                           autofocus="">
+                                </label>
                             </div>
                         </div>
                         <div class="field">

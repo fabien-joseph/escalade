@@ -24,6 +24,16 @@ Ce projet a entièrement été réalisé avec [Intellij IDEA](https://www.jetbra
 - `escalade-model` : contient les entités
 - `escalade-webapp` : contient la vue
 
+### Schémas
+
+#### Diagramme de classes
+
+![](http://image.noelshack.com/fichiers/2019/22/1/1558962835-diagramme-classes.png)
+
+#### Model physique de données
+
+![](http://image.noelshack.com/fichiers/2019/22/1/1558962836-model-physique-de-donnees.png)
+
 ### Déploiement
 
 - Importer le projet dans votre IDE (celui utilisé par la réalisé de celui-ci a été Intellij IDEA)

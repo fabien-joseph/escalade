@@ -14,9 +14,6 @@ Ce dépôt est associé au projet [Créez un site communautaire autour de l’es
 - Spring Web MVC 5.1.4
 - Bulma 0.7.4
 
-
-Ce projet a entièrement été réalisé avec [Intellij IDEA](https://www.jetbrains.com/idea/).
-
 ### Modules
 
 - `escalade-business` : contient la logique métier

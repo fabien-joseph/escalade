@@ -12,7 +12,7 @@
                 <h3 class="title has-text-white">Connexion</h3>
                 <p class="subtitle has-text-white">Entrez vos accès pour vous connecter.</p>
                 <div class="box box-transparent">
-                    <form name='f' action="/connexion" method='POST'>
+                    <form name='f' th:action="@{/connexion}" method='POST'>
                         <div class="field">
                             <div class="control">
                                 <input name='username' class="input is-large" type="text" placeholder="Nom de compte" autofocus="">

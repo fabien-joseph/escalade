@@ -16,7 +16,7 @@
 
         <div class="content">
             <p th:text="${site.getNom()}"></p>
-            <span>Par : <a th:href="@{/profile/{id}(id=${site.getUtilisateur().getId()})}"
+            <span>Par : <a th:href="@{/profil/{id}(id=${site.getUtilisateur().getId()})}"
                            th:text="${site.getUtilisateur().getLogin()}"></a></span>
             <br>
             <span>Département : <span th:text="${site.departement}"></span></span>

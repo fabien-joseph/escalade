@@ -9,7 +9,7 @@
 
         <div class="content">
             <p th:text="${voie.getNom()}"></p>
-            <span>Par : <a th:href="@{/profile/{id}(id=${voie.getSecteur().getSite().getUtilisateur().getId()})}"
+            <span>Par : <a th:href="@{/profil/{id}(id=${voie.getSecteur().getSite().getUtilisateur().getId()})}"
                            th:text="${voie.getSecteur().getSite().getUtilisateur().getLogin()}"></a></span>
             <br>
             <time datetime="2016-1-1" th:text="${voie.getDate()}"></time>

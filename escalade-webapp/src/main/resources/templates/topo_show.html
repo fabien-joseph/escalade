@@ -26,13 +26,13 @@
 
                     <div class="columns has-same-height is-gapless">
                         <div class="column">
-                            <!-- Profile -->
+                            <!-- Profil -->
                             <div class="card has-dark-opacity-background">
                                 <div class="card-content">
                                     <h3 class="title is-4">Informations</h3>
 
                                     <div class="content">
-                                        <table class="table-profile">
+                                        <table class="table-profil">
                                             <tr>
                                                 <th colspan="1"></th>
                                                 <th colspan="2"></th>
@@ -40,7 +40,7 @@
                                             <tr>
                                                 <td width="20%">Créateur:</td>
                                                 <td width="80%">
-                                                    <a th:href="@{/profile/{id}(id=${topo.utilisateur.id})}"
+                                                    <a th:href="@{/profil/{id}(id=${topo.utilisateur.id})}"
                                                        th:text="${topo.utilisateur.login}"></a>
                                                 </td>
                                             </tr>
@@ -50,7 +50,7 @@
                                             </tr>
                                             <tr th:if="${reservation != null}">
                                                 <td>Réservé par:</td>
-                                                <td><a th:href="@{/profile/{id}(id=${reservation.utilisateur.id})}"
+                                                <td><a th:href="@{/profil/{id}(id=${reservation.utilisateur.id})}"
                                                        th:text="${reservation.utilisateur.login}"></a></td>
                                             </tr>
 

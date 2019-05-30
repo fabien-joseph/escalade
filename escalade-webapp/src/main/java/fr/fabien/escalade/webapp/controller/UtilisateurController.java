@@ -32,8 +32,8 @@ public class UtilisateurController {
     @Autowired
     ReservationManagement reservationManagement;
 
-    @GetMapping("/profile/{id}")
-    public String profile(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
+    @GetMapping("/profil/{id}")
+    public String profilOther(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
         Long long_id = Long.parseLong(id);
         Utilisateur utilisateur_show = null;
         Optional<Utilisateur> optional = utilisateurManagement.findById(long_id);
@@ -44,11 +44,11 @@ public class UtilisateurController {
         model.addAttribute("topos", topoManagement.findToposByUtilisateur_id(long_id));
         model.addAttribute("sites", siteManagement.findSitesByUtilisateurId(long_id));
 
-        return "profile";
+        return "profil";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request) {
+    @GetMapping("/profil")
+    public String profil(Model model, HttpServletRequest request) {
         Utilisateur utilisateur = null;
         if (request.getUserPrincipal() != null)
             utilisateur = utilisateurManagement.findByLogin(request.getUserPrincipal().getName());
@@ -65,6 +65,6 @@ public class UtilisateurController {
         model.addAttribute("sites", siteManagement.findSitesByUtilisateurId(utilisateur.getId()));
         model.addAttribute("reservations", topos_reservations);
 
-        return "profile";
+        return "profil";
     }
 }

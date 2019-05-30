@@ -10,7 +10,7 @@
         <div class="content">
             <p th:text="${secteur.getNom()}"></p>
             <p th:text="${'Nombre de voies : ' + secteur.getVoies().size()}"></p>
-            <span>Par : <a th:href="@{/profile/{id}(id=${secteur.getSite().getUtilisateur().getId()})}"
+            <span>Par : <a th:href="@{/profil/{id}(id=${secteur.getSite().getUtilisateur().getId()})}"
                            th:text="${secteur.getSite().getUtilisateur().getLogin()}"></a></span>
             <br>
             <time datetime="2016-1-1" th:text="${secteur.getDate()}"></time>

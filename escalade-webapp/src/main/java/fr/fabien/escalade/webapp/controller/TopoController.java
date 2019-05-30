@@ -59,7 +59,7 @@ public class TopoController {
             model.addAttribute("utilisateur", utilisateur);
             model.addAttribute("topo", topo);
             model.addAttribute("object_type", "topo");
-            return "redirect:/profile";
+            return "redirect:/profil";
         }
         ra.addAttribute("errors", errors);
         return "redirect:/topo";
@@ -156,7 +156,7 @@ public class TopoController {
             errors.add("La réservation que vous tentez de supprimer n'existe pas");
         }
         ra.addAttribute("errors", errors);
-        return "redirect:/profile";
+        return "redirect:/profil";
     }
 
     @GetMapping("/topo/{id}/delete")
@@ -175,7 +175,7 @@ public class TopoController {
         } catch (Exception ignored) {
         }
 
-        return "redirect:/profile";
+        return "redirect:/profil";
     }
 
     @PostMapping("/topo/{id}/link")
@@ -213,7 +213,7 @@ public class TopoController {
                     }
                 }
             }
-            return "redirect:/profile";
+            return "redirect:/profil";
         } catch (Exception e) {
             return "erreur";
         }
@@ -250,7 +250,7 @@ public class TopoController {
             model.addAttribute("utilisateur", utilisateur);
             model.addAttribute("site", site);
             model.addAttribute("object_type", object_type);
-            return "redirect:/profile";
+            return "redirect:/profil";
         }
         ra.addAttribute("errors", errors);
         return "redirect:/site";
@@ -302,7 +302,7 @@ public class TopoController {
                 commentaireManagement.deleteCommentairesBySiteId(site.get().getId());
             siteManagement.deleteById(long_id);
         }
-        return "redirect:/profile";
+        return "redirect:/profil";
     }
 
     @GetMapping("/site/{id}/secteur")
@@ -458,7 +458,7 @@ public class TopoController {
             }
         } catch (Exception ignored) {
         }
-        return "redirect:/profile";
+        return "redirect:/profil";
     }
 
     @PostMapping("/comment/{id}")

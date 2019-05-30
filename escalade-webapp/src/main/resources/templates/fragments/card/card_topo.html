@@ -16,7 +16,7 @@
 
         <div class="content">
             <p th:text="${topo.getNom()}"></p>
-            <span>Par : <a th:href="@{/profile/{id}(id=${topo.getUtilisateur().getId()})}"
+            <span>Par : <a th:href="@{/profil/{id}(id=${topo.getUtilisateur().getId()})}"
                            th:text="${topo.getUtilisateur().getLogin()}"></a></span>
             <br>
             <time datetime="2016-1-1" th:text="${topo.getDate()}"></time>

@@ -71,8 +71,7 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
             site.setCotationMax(30);
         if (site.getNom() == null)
             site.setNom("");
-        return repository.findSitesAdvanced(
-                site.getHauteurMin(), site.getHauteurMax(),
+        return repository.findSitesAdvancedTest(
                 site.getCotationMin(), site.getCotationMax(),
                 site.getNom(), site.getDepartement());
     }

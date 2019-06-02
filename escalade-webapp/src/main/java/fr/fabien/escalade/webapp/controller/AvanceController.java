@@ -41,6 +41,7 @@ public class AvanceController {
                 hauteurMin, hauteurMax,
                 cotationMin, cotationMax,
                 nom, departement);
+        System.out.println(sites.size());
 
         List<Topo> topos = topoManagement.findAllBySites_Id(sites);
 

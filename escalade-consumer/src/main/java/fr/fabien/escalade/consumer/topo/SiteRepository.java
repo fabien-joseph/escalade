@@ -18,13 +18,8 @@ public interface SiteRepository extends CrudRepository<Site, Long> {
 
     Site findSiteByNom(String nom);
 
-    @Query("SELECT s FROM Site s WHERE " +
-            "s.hauteurMin >= :hauteurMin AND s.hauteurMax <= :hauteurMax " +
-            "AND s.cotationMin >= :cotationMin AND s.cotationMax <= :cotationMax " +
-            "AND lower(s.nom) like %:nom% AND (s.departement = :departement OR '' = :departement)")
-    List<Site> findSitesAdvanced(@Param("hauteurMin") int hauteurMin, @Param("hauteurMax") int hauteurMax,
-                                 @Param("cotationMin") int cotationMin, @Param("cotationMax") int cotationMax,
-                                 @Param("nom") String nom, @Param("departement") String departement);
+    @Query("SELECT s FROM Site s WHERE lower(s.nom) like %:nom% AND (s.departement = :departement OR '' = :departement)")
+    List<Site> findSitesAdvanced(@Param("nom") String nom, @Param("departement") String departement);
 
     @Query("SELECT s FROM Site s WHERE " +
             "s.cotationMin >= :cotationMin AND s.cotationMax <= :cotationMax " +

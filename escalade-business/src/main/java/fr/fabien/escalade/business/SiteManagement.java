@@ -2,10 +2,6 @@ package fr.fabien.escalade.business;
 
 import fr.fabien.escalade.consumer.topo.SiteRepository;
 import fr.fabien.escalade.model.topo.Site;
-import fr.fabien.escalade.model.topo.Utilisateur;
-import javafx.util.Pair;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,13 +27,6 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
-    /*
-    public List<Site> findSitesAdvancedTest(String nom, String departement, Integer cotationMin, Integer cotationMax) {
-
-        return repository.findSitesAdvancedTest(nom, departement, cotationMax);
-    }
-*/
-
     public List<String> validDepartement(Site site) {
         List<String> errors = new ArrayList<>();
         if (site.getDepartement() != null) {
@@ -56,24 +45,38 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         Site site = new Site();
         site.setNom(nom);
         site.setDepartement(departement);
-        site.setHauteurMin(hauteurMin);
-        site.setHauteurMax(hauteurMax);
-        site.setCotationMin(cotationMin);
-        site.setCotationMax(cotationMax);
+        List<Site> sites = repository.findSitesAdvanced(site.getNom(), site.getDepartement());
+        if (hauteurMin == null)
+            hauteurMin = 0;
+        if (hauteurMax == null)
+            hauteurMax = 9999;
+        if (cotationMin == null)
+            cotationMin = 0;
+        if (cotationMax == null)
+            cotationMax = 999;
 
-        if (site.getHauteurMin() == null)
-            site.setHauteurMin(0);
-        if (site.getHauteurMax() == null)
-            site.setHauteurMax(9999);
-        if (site.getCotationMin() == null)
-            site.setCotationMin(0);
-        if (site.getCotationMax() == null)
-            site.setCotationMax(30);
-        if (site.getNom() == null)
-            site.setNom("");
-        return repository.findSitesAdvancedTest(
-                site.getCotationMin(), site.getCotationMax(),
-                site.getNom(), site.getDepartement());
+        for (int i = 0; i < sites.size(); i++) {
+            if (sites.get(i).getCotationMin() == null)
+                sites.get(i).setCotationMin(-1);
+            if (sites.get(i).getCotationMax() == null)
+                sites.get(i).setCotationMax(-1);
+            if (sites.get(i).getHauteurMin() == null)
+                sites.get(i).setHauteurMin(-1);
+            if (sites.get(i).getHauteurMax() == null)
+                sites.get(i).setHauteurMax(-1);
+
+            System.out.println(sites.get(i).getId() + " : POUR NOM : " + sites.get(i).getNom() +
+                    " hauteur " + sites.get(i).getHauteurMin() + "/" + sites.get(i).getHauteurMax() +
+                    " cotation " + sites.get(i).getCotationMin() + "/" + sites.get(i).getCotationMax());
+
+            if (!((sites.get(i).getCotationMin() >= cotationMin && sites.get(i).getCotationMax() <= cotationMax) &&
+                    (sites.get(i).getHauteurMin() >= hauteurMin && sites.get(i).getHauteurMax() <= hauteurMax))) {
+                sites.remove(i);
+                i--;
+            }
+        }
+        System.out.println("==========");
+        return sites;
     }
 
     public Site findSiteByNom(String nom) {

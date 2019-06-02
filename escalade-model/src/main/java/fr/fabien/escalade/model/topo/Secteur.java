@@ -3,6 +3,10 @@ package fr.fabien.escalade.model.topo;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.JoinColumnOrFormula;
+import org.hibernate.annotations.JoinFormula;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -24,9 +28,13 @@ public class Secteur {
     @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
+    @Formula("(SELECT min(v.cotation) FROM Voie v WHERE v.secteur_id = id)")
     private Integer cotationMin;
+    @Formula("(SELECT max(v.cotation) FROM Voie v WHERE v.secteur_id = id)")
     private Integer cotationMax;
+    @Formula("(SELECT min(v.longueur) FROM Voie v WHERE v.secteur_id = id)")
     private Integer hauteurMin;
+    @Formula("(SELECT max(v.longueur) FROM Voie v WHERE v.secteur_id = id)")
     private Integer hauteurMax;
 
     @Cascade({org.hibernate.annotations.CascadeType.ALL})

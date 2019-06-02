@@ -28,6 +28,7 @@ public class VoieManagement extends CrudManager<Voie, VoieRepository> {
         return repository.findVoieById(id);
     }
 
+    /*
     @Override
     public void save(Voie voie) {
         Secteur secteur = voie.getSecteur();
@@ -36,6 +37,8 @@ public class VoieManagement extends CrudManager<Voie, VoieRepository> {
         secteurManagement.updateMinMax(secteur);
     }
 
+     */
+/*
     @Override
     public void deleteById(Long id) {
         Optional<Voie> voie = voieManagement.findById(id);
@@ -47,4 +50,6 @@ public class VoieManagement extends CrudManager<Voie, VoieRepository> {
             repository.delete(voie.get());
         }
     }
+
+ */
 }

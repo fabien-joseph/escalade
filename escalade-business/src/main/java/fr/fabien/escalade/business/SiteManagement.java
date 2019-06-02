@@ -31,11 +31,12 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByNomContainingIgnoreCase(nom);
     }
 
+    /*
     public List<Site> findSitesAdvancedTest(String nom, String departement, Integer cotationMin, Integer cotationMax) {
 
-        return repository.findSitesAdvancedTest(nom, departement, cotationMin, cotationMax);
+        return repository.findSitesAdvancedTest(nom, departement, cotationMax);
     }
-
+*/
 
     public List<String> validDepartement(Site site) {
         List<String> errors = new ArrayList<>();
@@ -70,7 +71,8 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
             site.setCotationMax(30);
         if (site.getNom() == null)
             site.setNom("");
-        return repository.findSitesAdvanced(site.getHauteurMin(), site.getHauteurMax(),
+        return repository.findSitesAdvanced(
+                site.getHauteurMin(), site.getHauteurMax(),
                 site.getCotationMin(), site.getCotationMax(),
                 site.getNom(), site.getDepartement());
     }
@@ -91,6 +93,7 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
         return repository.findSitesByDepartement(departement);
     }
 
+    /*
     public void updateMinMax(Site site) {
         Integer minValue = 0;
         Integer maxValue = 0;
@@ -142,4 +145,5 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
 
         save(site);
     }
+     */
 }

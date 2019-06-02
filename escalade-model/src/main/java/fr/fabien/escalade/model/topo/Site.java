@@ -3,6 +3,8 @@ package fr.fabien.escalade.model.topo;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -23,9 +25,13 @@ public class Site {
     @Pattern(regexp = "\\w+", message = "Le nom ne doit contenir que des caractères de A à Z et de 0 à 9.")
     private String nom;
     private Date date;
+    @Formula("(SELECT min(s.cotation_min) FROM Secteur s WHERE s.site_id = id)")
     private Integer cotationMin;
+    @Formula("(SELECT max(s.cotation_max) FROM Secteur s WHERE s.site_id = id)")
     private Integer cotationMax;
+    @Formula("(SELECT min(s.hauteur_min) FROM Secteur s WHERE s.site_id = id)")
     private Integer hauteurMin;
+    @Formula("(SELECT max(s.hauteur_max) FROM Secteur s WHERE s.site_id = id)")
     private Integer hauteurMax;
     @NotNull (message = "L'orientation ne doit pas être vide.")
     private String departement;

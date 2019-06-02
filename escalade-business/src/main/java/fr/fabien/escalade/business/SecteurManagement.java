@@ -32,6 +32,7 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
         return repository.findSecteurById(id);
     }
 
+    /*
     public void updateMinMax(Secteur secteur) {
         Integer minValue = 0;
         Integer maxValue = 0;
@@ -89,6 +90,8 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
         siteManagement.updateMinMax(site);
     }
 
+     */
+/*
     @Override
     public void deleteById(Long id) {
         Optional<Secteur> secteur = secteurManagement.findById(id);
@@ -100,4 +103,5 @@ public class SecteurManagement extends CrudManager<Secteur, SecteurRepository> {
             repository.delete(secteur.get());
         }
     }
+    */
 }

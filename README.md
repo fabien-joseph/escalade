@@ -26,7 +26,7 @@ Ce dépôt est associé au projet [Créez un site communautaire autour de l’es
 
 #### Diagramme de classes
 
-![](http://image.noelshack.com/fichiers/2019/22/1/1558962835-diagramme-classes.png)
+![](http://image.noelshack.com/fichiers/2019/23/1/1559577482-capture1.png)
 
 #### Model physique de données
 

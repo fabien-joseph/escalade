@@ -21,7 +21,8 @@
                     <div class="control">
                         <div class="select is-large">
                             <label>
-                                <select class="departements_list box-transparent has-dark-opacity-background" name="departement">
+                                <select class="departements_list box-transparent has-dark-opacity-background"
+                                        name="departement">
                                     <option th:value="''" selected disabled>Département</option>
                                     <option th:type="text" th:each="departement : ${departements}"
                                             th:value="${departement.key}"
@@ -31,7 +32,10 @@
                         </div>
                     </div>
                     <div class="control" id="droppable">
-                        <button type="submit" class="button departements_list has-dark-opacity-background is-outlined is-large">Rechercher</button>
+                        <button type="submit"
+                                class="button departements_list has-dark-opacity-background is-outlined is-large">
+                            Rechercher
+                        </button>
                     </div>
                 </div>
             </form>

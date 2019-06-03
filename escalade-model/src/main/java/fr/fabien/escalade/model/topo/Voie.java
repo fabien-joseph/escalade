@@ -26,8 +26,6 @@ public class Voie {
     @Max(value = 1000, message = "La longueur doit être à 1000 maximum")
     private Integer longueur;
     private Date date;
-    @Size(max = 256, message = "La description doit contenir maximum 256 catactères")
-    private String description;
     @NotNull (message = "La cotation ne doit pas être vide.")
     @Min(value = 1, message = "La cotation doit être à 1 minimum")
     @Max(value = 30, message = "La cotation doit être à 9c maximum")
@@ -40,11 +38,10 @@ public class Voie {
     public Voie() {
     }
 
-    public Voie(String nom, Integer longueur, Date date, String description, Secteur secteur, Integer cotation) {
+    public Voie(String nom, Integer longueur, Date date, Secteur secteur, Integer cotation) {
         this.nom = nom;
         this.longueur = longueur;
         this.date = date;
-        this.description = description;
         this.secteur = secteur;
         this.cotation = cotation;
     }

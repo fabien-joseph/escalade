@@ -4,13 +4,13 @@ Ce dépôt est associé au projet [Créez un site communautaire autour de l’es
 
 ## Technologies
 
-- Java FDK 8
+- Java JDK 8
 - Apache Tomcat 8.5.34
 - Apache Maven 4.0.0
 - PostgreSQL 9.4
 - Spring Boot 2.0.5
 - Spring Security 2.0.5
-- Spring Data JPA 2.1.4
+- Spring Data JPA 2.1.6
 - Spring Web MVC 5.1.4
 - Bulma 0.7.4
 
@@ -29,7 +29,7 @@ Ce dépôt est associé au projet [Créez un site communautaire autour de l’es
 
 #### Model physique de données
 
-![](http://image.noelshack.com/fichiers/2019/22/1/1558962836-model-physique-de-donnees.png)
+![](http://image.noelshack.com/fichiers/2019/23/1/1559572493-capture.png)
 
 ### Déploiement
 

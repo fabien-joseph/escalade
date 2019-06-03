@@ -12,6 +12,7 @@ Ce dépôt est associé au projet [Créez un site communautaire autour de l’es
 - Spring Security 2.0.5
 - Spring Data JPA 2.1.6
 - Spring Web MVC 5.1.4
+- Thymeleaf 3.0.11
 - Bulma 0.7.4
 
 ### Modules

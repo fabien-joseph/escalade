@@ -8,37 +8,48 @@
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
         <div class="container">
-            <div class="has-text-centered">
-                <div th:if="${session.user}"><p class="is-size-1 hello"
-                                                th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p></div>
-            </div>
-            <div class="has-text-centered" id="test">
-                <p class="is-size-3 search">Trouve un site ou un topo :</p>
-            </div>
-
-            <form th:action="@{/recherche}">
-                <div class="field has-addons has-addons-centered">
-                    <div class="control">
-                        <div class="select is-large">
-                            <label>
-                                <select class="departements_list box-transparent has-dark-opacity-background"
-                                        name="departement">
-                                    <option th:value="''" selected disabled>Département</option>
-                                    <option th:type="text" th:each="departement : ${departements}"
-                                            th:value="${departement.key}"
-                                            th:utext="${departement.key} +' - '+${departement.value}"></option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="control" id="droppable">
-                        <button type="submit"
-                                class="button departements_list has-dark-opacity-background is-outlined is-large">
-                            Rechercher
-                        </button>
+            <div th:if="${session.user}" class="has-text-centered">
+                <div class="columns">
+                    <div class="column">
+                        <p class="is-size-1 hello" th:text="'Bonjour '+ ${session.user.prenom} + ' !'"></p>
                     </div>
                 </div>
-            </form>
+            </div>
+            <div class="has-text-centered" id="test">
+                <div class="columns">
+                    <div class="column">
+                        <p class="is-size-3 search">Trouve un site ou un topo :</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <form th:action="@{/recherche}">
+                        <div class="field has-addons has-addons-centered">
+                            <div class="control">
+                                <div class="select is-large is-fullwidth">
+                                    <label>
+                                        <select class="departements_list box-transparent has-dark-opacity-background"
+                                                name="departement">
+                                            <option th:value="''" selected disabled>Département</option>
+                                            <option th:type="text" th:each="departement : ${departements}"
+                                                    th:value="${departement.key}"
+                                                    th:utext="${departement.key} +' - '+${departement.value}"></option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="control" id="droppable">
+                                <button type="submit"
+                                        class="button departements_list has-dark-opacity-background is-outlined is-large">
+                                    Rechercher
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </section>

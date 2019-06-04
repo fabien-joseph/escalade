@@ -4,6 +4,7 @@
 <head th:replace="fragments/head.html :: head">
 </head>
 <body>
+
 <section class="hero bg-img is-fullheight">
     <div th:replace="fragments/header_test.html :: header_test"></div>
     <div class="hero-body">
@@ -11,12 +12,13 @@
             <div class="column is-4 is-offset-4">
                 <h3 class="title has-text-white">Créer un site</h3>
                 <div class="box box-transparent">
-                    <!--/*@thymesVar id="site" type="fr.fabien.escalade.model.topo.Site"*/-->
                     <form action="#" th:action="@{/site/save}" th:object="${site}" method=post>
                         <div class="field">
                             <div class="control">
                                 <label>
-                                    <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du site"
+                                    <input th:field="*{nom}" class="input is-large is-fullwidth"
+                                           type="text"
+                                           placeholder="Nom du site"
                                            autofocus="">
                                 </label>
                             </div>
@@ -24,7 +26,9 @@
                         <div class="field">
                             <div class="control">
                                 <label>
-                                    <input th:field="*{localisation}" class="input is-large" type="text"
+                                    <input th:field="*{localisation}"
+                                           class="input is-large is-fullwidth"
+                                           type="text"
                                            placeholder="Localisation"
                                            autofocus="">
                                 </label>
@@ -33,7 +37,8 @@
                         <div class="field">
                             <div class="control">
                                 <label>
-                                    <input th:field="*{description}" class="input is-large" type="text"
+                                    <input th:field="*{description}" class="input is-large is-fullwidth"
+                                           type="text"
                                            placeholder="Description"
                                            autofocus="">
                                 </label>
@@ -41,11 +46,12 @@
                         </div>
                         <div class="field">
                             <div class="control">
-                                <div class="select is-large">
+                                <div class="select is-large is-fullwidth">
                                     <label>
                                         <select th:field="*{orientation}" name="type"
                                                 class="departements_list select has-dark-opacity-background">
-                                            <option value="" selected="selected" disabled>Orientation</option>
+                                            <option value="" selected="selected" disabled>Orientation
+                                            </option>
                                             <option th:value="'Nord'" th:text="Nord"></option>
                                             <option th:value="'Sud'" th:text="Sud"></option>
                                             <option th:value="'Est'" th:text="Est"></option>
@@ -55,10 +61,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="field">
                             <div class="control">
-                                <div class="select is-large">
+                                <div class="select is-large is-fullwidth">
                                     <label>
                                         <select th:field="*{type}" name="type"
                                                 class="departements_list select has-dark-opacity-background">
@@ -70,15 +75,17 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="field">
                             <div class="control">
-                                <div class="select is-large">
+                                <div class="select is-large is-fullwidth">
                                     <label>
                                         <select th:field="*{departement}" name="departement"
                                                 class="departements_list select has-dark-opacity-background">
-                                            <option th:value="''" selected="selected" disabled>Département</option>
-                                            <option th:type="text" th:each="departement : ${departements}"
+                                            <option th:value="''" selected="selected" disabled>
+                                                Département
+                                            </option>
+                                            <option th:type="text"
+                                                    th:each="departement : ${departements}"
                                                     th:value="${departement.key}"
                                                     th:utext="${departement.key + ' - ' + departement.value}">
                                             </option>
@@ -95,22 +102,25 @@
                         <input type="hidden" th:field="*{hauteurMax}" th:value="${site.hauteurMax}">
                         <input type="hidden" th:field="*{utilisateur}" th:value="${site.utilisateur}">
                         <input type="hidden" th:field="*{id}" th:value="${site.id}">
-                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
+                        <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer
+                        </button>
                     </form>
                 </div>
             </div>
             <div th:if="${errors != null}">
                 <div th:if="${errors.size() > 0}">
-                    <article class="message is-danger">
-                        <div class="message-header">
-                            <p>Liste d'erreurs</p>
-                        </div>
-                        <div class="message-body">
-                            <div th:each="error:${errors}">
-                                <div th:text="${error}"></div>
+                    <div class="column is-4 is-offset-one-quarter">
+                        <article class="message is-danger">
+                            <div class="message-header">
+                                <p>Liste d'erreurs</p>
                             </div>
-                        </div>
-                    </article>
+                            <div class="message-body">
+                                <div th:each="error:${errors}">
+                                    <div th:text="${error}"></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>

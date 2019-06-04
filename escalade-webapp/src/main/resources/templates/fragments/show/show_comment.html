@@ -1,19 +1,13 @@
 <div th:fragment="show_comment" xmlns:th="http://www.thymeleaf.org">
     <article class="media">
-        <!--/*@thymesVar id="comment" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
         <div class="media-content">
             <div class="content">
-                <p>
-                    <strong th:text="${comment.getUtilisateur().getLogin()}"></strong>
-                    <br>
-                    <span th:text="${comment.getContent()}"></span>
-                </p>
+                <!--/*@thymesVar id="comment" type="fr.fabien.escalade.model.topo.Commentaire"*/-->
+                <p th:text="${comment.content}"></p>
             </div>
         </div>
         <div class="media-right">
-            <form th:if="${session.user?.getId() == comment.getUtilisateur().getId()}" th:action="@{/comment/{id}/delete (id=${comment.getId()})}" method="post">
-                <button type="submit" class="delete"></button>
-            </form>
+            <button class="delete"></button>
         </div>
     </article>
 </div>

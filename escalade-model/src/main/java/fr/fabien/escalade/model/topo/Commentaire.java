@@ -1,11 +1,8 @@
 package fr.fabien.escalade.model.topo;
 
-import fr.fabien.escalade.model.topo.Voie;
-import fr.fabien.escalade.model.topo.Utilisateur;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Date;
 

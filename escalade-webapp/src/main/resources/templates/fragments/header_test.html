@@ -10,6 +10,9 @@
                             <span></span>
                             <span></span>
                         </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+
                 <span class="navbar-item">
                                 <a th:href="@{/}" class="button is-white is-outlined" href="#">
                                     <span class="icon">
@@ -29,9 +32,7 @@
                                 </a>
                             </span>
 
-            </div>
-            <div id="navbarMenu" class="navbar-menu">
-                <div class="navbar-end">
+             <div class="navbar-end">
 
                     <span th:if="${session.user}" class="navbar-item">
                                 <a th:href="@{/profil}" class="button is-white is-outlined" href="#">
@@ -51,8 +52,7 @@
                                 </a>
                             </span>
                     <span th:if="${session.user == null}" class="navbar-item">
-                                <a th:href="@{/connexion}" class="button is-white is-outlined"
-                                   href="https://github.com/dansup/bulma-templates/blob/master/templates/landing.html">
+                                <a th:href="@{/connexion}" class="button is-white is-outlined">
                                     <span>Connexion</span>
                                 </a>
                             </span>

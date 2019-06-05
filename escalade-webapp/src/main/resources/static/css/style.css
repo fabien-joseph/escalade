@@ -59,11 +59,11 @@ body, .title, .subtitle, strong {
 }
 
 a {
-    color : rgb(136, 192, 212);
+    color: rgb(136, 192, 212);
 }
 
 a:hover {
-    color : grey;
+    color: grey;
 }
 
 .input, .textarea {
@@ -95,4 +95,8 @@ a:hover {
 
 .media-content .content p {
     word-break: break-word;
+}
+
+.is-active {
+    background-color: #1a1a1a;
 }

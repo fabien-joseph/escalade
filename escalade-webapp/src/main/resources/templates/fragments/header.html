@@ -3,9 +3,10 @@
         <div class="container">
             <div class="navbar-brand">
                 <a class="navbar-item" th:href="@{/}">
-                    <img src="https://raw.githubusercontent.com/Ronflonflon/Images/master/escalade/escalade-logo.png" alt="Logo">
+                    <img src="https://raw.githubusercontent.com/Ronflonflon/Images/master/escalade/escalade-logo.png"
+                         alt="Logo">
                 </a>
-                <span class="navbar-burger burger" data-target="navbarMenu">
+                <span class="navbar-burger burger" data-target="navbarMenu" aria-label="menu" aria-expanded="true">
                             <span></span>
                             <span></span>
                             <span></span>
@@ -26,13 +27,13 @@
                                     <span>Créer un topo</span>
                                 </a>
                             </span>
-                    <span th:if="${session.user}" class="navbar-item">
+                <span th:if="${session.user}" class="navbar-item">
                                 <a th:href="@{/site}" class="button is-white is-outlined" href="#">
                                     <span>Créer un site</span>
                                 </a>
                             </span>
 
-             <div class="navbar-end">
+                <div class="navbar-end">
 
                     <span th:if="${session.user}" class="navbar-item">
                                 <a th:href="@{/profil}" class="button is-white is-outlined" href="#">
@@ -60,4 +61,17 @@
             </div>
         </div>
     </nav>
+    <script>
+        $(document).ready(function () {
+
+            // Check for click events on the navbar burger icon
+            $(".navbar-burger").click(function () {
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                $(".navbar-burger").toggleClass("is-active");
+                $(".navbar-menu").toggleClass("is-active");
+
+            });
+        });
+    </script>
 </div>

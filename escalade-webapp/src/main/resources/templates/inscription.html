@@ -5,7 +5,7 @@
 </head>
 <body>
 <section class="hero bg-img is-fullheight">
-    <div th:replace="fragments/header_test.html :: header_test"></div>
+    <div th:replace="fragments/header.html :: header"></div>
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
@@ -15,31 +15,41 @@
                     <form action="#" th:action="@{/inscription}" th:object="${utilisateur_insc}" method=post>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{courriel}" class="input is-large" type="email" placeholder="Mail" autofocus="">
+                                <label>
+                                    <input th:field="*{courriel}" class="input is-large" type="email" placeholder="Mail" autofocus="">
+                                </label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{login}" class="input is-large" type="text" placeholder="Nom de compte" autofocus="">
+                                <label>
+                                    <input th:field="*{login}" class="input is-large" type="text" placeholder="Nom de compte" autofocus="">
+                                </label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{motDePasse}" class="input is-large" type="password" placeholder="Mot de passe">
+                                <label>
+                                    <input th:field="*{motDePasse}" class="input is-large" type="password" placeholder="Mot de passe">
+                                </label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{prenom}" class="input is-large" type="text" placeholder="Prénom" autofocus="">
+                                <label>
+                                    <input th:field="*{prenom}" class="input is-large" type="text" placeholder="Prénom" autofocus="">
+                                </label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom" autofocus="">
+                                <label>
+                                    <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom" autofocus="">
+                                </label>
                             </div>
                         </div>
                         <button class="button is-block is-white is-outlined is-large is-fullwidth">S'inscrire</button>
@@ -52,7 +62,5 @@
         </div>
     </div>
 </section>
-</body>
-</html>
 </body>
 </html>

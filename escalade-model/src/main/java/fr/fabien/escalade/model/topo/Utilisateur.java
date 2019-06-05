@@ -25,8 +25,10 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
+    @Size (min = 3, max = 60, message = "Le mot de passe doit contenir entre 3 et 60 caractères")
     private String login;
     @NotNull
+    @Size (min = 3, max = 60, message = "Le mot de passe doit contenir entre 3 et 60 caractères")
     private String motDePasse;
 
     @NotNull

@@ -158,6 +158,22 @@
                     <div th:if="${session.user != null}">
                         <div th:replace="fragments/creation/creation_comment.html :: creation_comment"></div>
                     </div>
+                    <div th:if="${errors != null}">
+                        <div th:if="${errors.size() > 0}">
+                            <div class="column">
+                                <article class="message is-danger">
+                                    <div class="message-header">
+                                        <p>Liste d'erreurs</p>
+                                    </div>
+                                    <div class="message-body">
+                                        <div th:each="error:${errors}">
+                                            <div th:text="${error}"></div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
                     <div th:each="comment:${commentaires}">
                         <div th:replace="fragments/show/show_comment.html :: show_comment"></div>
                     </div>
@@ -173,20 +189,6 @@
                         </div>
                     </div>
                 </section>
-            </div>
-            <div th:if="${errors != null}">
-                <div th:if="${errors.size() > 0}">
-                    <article class="message is-danger">
-                        <div class="message-header">
-                            <p>Liste d'erreurs</p>
-                        </div>
-                        <div class="message-body">
-                            <div th:each="error:${errors}">
-                                <div th:text="${error}"></div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
             </div>
         </div>
     </div>

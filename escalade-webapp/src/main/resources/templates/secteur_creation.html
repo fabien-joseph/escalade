@@ -15,8 +15,10 @@
                     <form action="#" th:action="@{/secteur/save}" th:object="${secteur}" method=post>
                         <div class="field">
                             <div class="control">
-                                <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du secteur"
-                                       autofocus="">
+                                <label>
+                                    <input th:field="*{nom}" class="input is-large" type="text" placeholder="Nom du secteur"
+                                           autofocus="">
+                                </label>
                             </div>
                         </div>
                         <input type="hidden" th:field="*{site}" th:value="${secteur.site}"/>
@@ -25,19 +27,21 @@
                         <button class="button is-block is-white is-outlined is-large is-fullwidth">Créer</button>
                     </form>
                 </div>
-            </div>
-            <div th:if="${errors != null}">
-                <div th:if="${errors.size() > 0}">
-                    <article class="message is-danger">
-                        <div class="message-header">
-                            <p>Liste d'erreurs</p>
+                <div th:if="${errors != null}">
+                    <div th:if="${errors.size() > 0}">
+                        <div class="column">
+                            <article class="message is-danger">
+                                <div class="message-header">
+                                    <p>Liste d'erreurs</p>
+                                </div>
+                                <div class="message-body">
+                                    <div th:each="error:${errors}">
+                                        <div th:text="${error}"></div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <div class="message-body">
-                            <div th:each="error:${errors}">
-                                <div th:text="${error}"></div>
-                            </div>
-                        </div>
-                    </article>
+                    </div>
                 </div>
             </div>
         </div>

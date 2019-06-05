@@ -257,8 +257,8 @@ public class TopoController {
     }
 
     @GetMapping("/site/{id}")
-    public String listMesSites(Model model,
-                               HttpServletRequest request, @PathVariable String id) {
+    public String listMesSites(Model model, HttpServletRequest request, @PathVariable String id,
+                               @RequestParam(value = "errors", required = false) List<String> errors) {
         try {
             Long long_id = Long.parseLong(id);
             Optional<Site> site = siteManagement.findById(long_id);
@@ -273,6 +273,7 @@ public class TopoController {
                 model.addAttribute("commentaires", commentaireManagement.findCommentairesBySiteId(long_id));
                 model.addAttribute("redirectionId", id);
                 model.addAttribute("cotations", new Cotations());
+                model.addAttribute("errors", errors);
             }
         } catch (Exception ignored) {
         }
@@ -462,10 +463,15 @@ public class TopoController {
     }
 
     @PostMapping("/comment/{id}")
-    public String comment_add(@ModelAttribute Commentaire commentaire, @PathVariable String id) {
+    public String comment_add(@ModelAttribute Commentaire commentaire, @PathVariable String id, RedirectAttributes ra) {
         try {
-            commentaire.setDate(new Date(System.currentTimeMillis()));
-            commentaireManagement.save(commentaire);
+            List<String> errors = validationModel.verifyValidity(commentaire);
+            if (errors.size() == 0) {
+                commentaire.setDate(new Date(System.currentTimeMillis()));
+                commentaireManagement.save(commentaire);
+            } else {
+                ra.addAttribute("errors", errors);
+            }
         } catch (Exception ignored) {
         }
 

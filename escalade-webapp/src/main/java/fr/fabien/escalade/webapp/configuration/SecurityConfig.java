@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/connexion")
                 .loginProcessingUrl("/connexion")
                 .defaultSuccessUrl("/", true)
-                //.failureUrl("/login.html?error=true")
+                .failureUrl("/connexion?errors=Nom+de+compte+ou+mot+de+passe+incorrect.")
                 .and()
                 .logout().invalidateHttpSession(true)
                 .clearAuthentication(true)

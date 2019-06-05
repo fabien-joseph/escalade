@@ -128,12 +128,14 @@ public class TopoController {
                 reservation.setTopo(topo.get());
                 if (reservationManagement.isFree(reservation)) {
                     reservationManagement.save(reservation);
+                } else {
+                    errors.add("Le topo que vous tentez de réserver est déjà en cours de réservation.");
                 }
             } else {
-                errors.add("Le topo que vous tentez de réserver n'existe pas");
+                errors.add("Le topo que vous tentez de réserver n'existe pas.");
             }
         } catch (Exception e) {
-            errors.add("Le topo que vous tentez de réserver n'existe pas");
+            errors.add("Le topo que vous tentez de réserver n'existe pas.");
         }
         ra.addAttribute("errors", errors);
         return "redirect:/topo/{id}";

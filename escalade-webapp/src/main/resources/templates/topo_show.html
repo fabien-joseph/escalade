@@ -115,20 +115,28 @@
                         <div class="field has-addons has-addons-centered">
                             <div class="control">
                                 <form action="#" th:action="@{/topo/{id}/reservation (id=${topo.getId()})}" method=post>
-                                    <div class="select is-large">
-                                        <label>
-                                            <select name="dateFin"
-                                                    class="departements_list select has-dark-opacity-background">
-                                                <option selected disabled>Date de fin</option>
-                                                <option th:type="text" th:each="date : ${dates}"
-                                                        th:value="${date}"
-                                                        th:utext="${date}">
-                                                </option>
-                                            </select>
-                                        </label>
+                                    <div class="field has-addons has-addons-centered">
+                                        <div class="control">
+                                            <div class="select is-large is-fullwidth">
+                                                <label>
+                                                    <select name="dateFin"
+                                                            class="departements_list select has-dark-opacity-background">
+                                                        <option selected disabled>Date de fin</option>
+                                                        <option th:type="text" th:each="date : ${dates}"
+                                                                th:value="${date}"
+                                                                th:utext="${date}">
+                                                        </option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="control" id="droppable">
+                                            <button type="submit"
+                                                    class="button departements_list has-dark-opacity-background is-outlined is-large">
+                                                Réserver
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="button is-outlined is-light is-large">Rechercher
-                                    </button>
                                 </form>
                             </div>
                         </div>

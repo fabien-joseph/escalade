@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -100,11 +101,17 @@ public class TopoController {
     }
 
     @GetMapping("/topo/{id}/edit")
-    public String topo_edit(Model model, @PathVariable String id) {
+    public String topo_edit(Model model, @PathVariable String id, HttpServletRequest request) {
         try {
             Optional<Topo> topo = topoManagement.findById(Long.parseLong(id));
-            topo.ifPresent(model::addAttribute);
-            return "topo_creation";
+            if (topo.isPresent()) {
+                if (utilisateurManagement.findByRequest(request).getId().equals(topo.get().getUtilisateur().getId())) {
+                    model.addAttribute("topo", topo.get());
+                    return "topo_creation";
+                } else {
+                    return "redirect:/topo/{id}";
+                }
+            }
         } catch (Exception ignored) {
         }
         return "erreur";
@@ -207,7 +214,7 @@ public class TopoController {
             if (topo.isPresent()) {
                 Optional<Site> site = siteManagement.findById(Long.parseLong(idSite));
                 if (site.isPresent()) {
-                    if (topo.get().getSites().contains(site.get())){
+                    if (topo.get().getSites().contains(site.get())) {
                         topo.get().getSites().remove(site.get());
                         Topo topoNew = topo.get();
                         topoManagement.delete(topo.get());
@@ -283,13 +290,17 @@ public class TopoController {
     }
 
     @GetMapping("/site/{id}/edit")
-    public String site_edit(Model model, @PathVariable String id) {
+    public String site_edit(Model model, @PathVariable String id, HttpServletRequest request) {
         try {
             Optional<Site> site = siteManagement.findById(Long.parseLong(id));
             if (site.isPresent()) {
-                model.addAttribute(site.get());
-                model.addAttribute("departements", departements);
-                return "site_creation";
+                if (utilisateurManagement.findByRequest(request).getId().equals(site.get().getUtilisateur().getId())) {
+                    model.addAttribute(site.get());
+                    model.addAttribute("departements", departements);
+                    return "site_creation";
+                } else {
+                    return "redirect:/site/{id}";
+                }
             }
         } catch (Exception ignored) {
         }
@@ -360,12 +371,16 @@ public class TopoController {
     }
 
     @GetMapping("/secteur/{id}/edit")
-    public String secteur_edit(Model model, @PathVariable String id) {
+    public String secteur_edit(Model model, @PathVariable String id, HttpServletRequest request) {
         try {
             Optional<Secteur> secteur = secteurManagement.findById(Long.parseLong(id));
             if (secteur.isPresent()) {
-                model.addAttribute(secteur.get());
-                return "secteur_creation";
+                if (utilisateurManagement.findByRequest(request).getId().equals(secteur.get().getSite().getUtilisateur().getId())) {
+                    model.addAttribute(secteur.get());
+                    return "secteur_creation";
+                } else {
+                    return "redirect:/secteur/{id}";
+                }
             }
         } catch (Exception ignored) {
         }
@@ -405,16 +420,17 @@ public class TopoController {
     }
 
     @GetMapping("/voie/{id}")
-    public String voie(Model model, @PathVariable String id) {
+    public String voie(Model model, @PathVariable String id, HttpServletRequest request) {
         try {
             Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
             if (voie.isPresent()) {
                 model.addAttribute("voie", voie.get());
                 model.addAttribute("cotations", new Cotations());
+                return "voie_show";
             }
         } catch (Exception ignored) {
         }
-        return "voie_show";
+        return "erreur";
     }
 
     @PostMapping("/voie/save")
@@ -439,13 +455,17 @@ public class TopoController {
     }
 
     @GetMapping("/voie/{id}/edit")
-    public String voie_edit(Model model, @PathVariable String id) {
+    public String voie_edit(Model model, @PathVariable String id, HttpServletRequest request) {
         try {
             Optional<Voie> voie = voieManagement.findById(Long.parseLong(id));
             if (voie.isPresent()) {
-                model.addAttribute(voie.get());
-                model.addAttribute("cotations", cotations);
-                return "voie_creation";
+                if (utilisateurManagement.findByRequest(request).getId().equals(voie.get().getSecteur().getSite().getUtilisateur().getId())) {
+                    model.addAttribute(voie.get());
+                    model.addAttribute("cotations", cotations);
+                    return "voie_creation";
+                } else {
+                    return "redirect:/voie/{id}";
+                }
             }
         } catch (Exception ignored) {
         }

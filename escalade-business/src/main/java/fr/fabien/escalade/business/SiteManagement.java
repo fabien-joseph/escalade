@@ -65,17 +65,12 @@ public class SiteManagement extends CrudManager<Site, SiteRepository> {
             if (sites.get(i).getHauteurMax() == null)
                 sites.get(i).setHauteurMax(-1);
 
-            System.out.println(sites.get(i).getId() + " : POUR NOM : " + sites.get(i).getNom() +
-                    " hauteur " + sites.get(i).getHauteurMin() + "/" + sites.get(i).getHauteurMax() +
-                    " cotation " + sites.get(i).getCotationMin() + "/" + sites.get(i).getCotationMax());
-
             if (!((sites.get(i).getCotationMin() >= cotationMin && sites.get(i).getCotationMax() <= cotationMax) &&
                     (sites.get(i).getHauteurMin() >= hauteurMin && sites.get(i).getHauteurMax() <= hauteurMax))) {
                 sites.remove(i);
                 i--;
             }
         }
-        System.out.println("==========");
         return sites;
     }
 

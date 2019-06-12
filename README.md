@@ -43,5 +43,5 @@ Pour configurer la base de donner il faut créer deux variables d'environnement 
 
 Pour générer la base de données :
 - Exécuter le programme, il créera lui-même la structure de la base de donnée avec Spring Data JPA
-- Pour utiliser le jeu de données il faut utiliser le fichier dumpExample
+- Pour utiliser le jeu de données il faut utiliser le fichier dumpExample dans le dossier assets
 Pour le jeu de données deux comptes sont déjà créés, les noms de compte sont Compte1 et Compte2, leur mot de passe est "mdp" à chacun.
